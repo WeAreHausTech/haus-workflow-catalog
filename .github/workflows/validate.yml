@@ -16,8 +16,7 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install haus-workflow CLI
-        run: npm install -g @haus-tech/haus-workflow
-
       - name: Validate catalog manifest
-        run: haus validate-catalog ./manifest.json
+        run: node scripts/validate.mjs
+        # TODO(P9): once @haus-tech/haus-workflow is published, replace with:
+        #   npm install -g @haus-tech/haus-workflow && haus validate-catalog ./manifest.json
