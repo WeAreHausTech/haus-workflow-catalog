@@ -17,19 +17,22 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  FORBIDDEN_TAGS,
+  BANNED_AGENT_PHRASES,
+  REQUIRED_SKILL_SECTIONS,
+  REQUIRED_AGENT_SECTIONS,
+  RISKY_INSTALL_PATTERNS,
+  ALLOWED_NPX_PATTERN,
+  ANY_NPX_PATTERN,
+  HTTP_URL_PATTERN,
+  PLACEHOLDER_PATTERN,
+} from "./validation-rules.mjs";
+
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const MANIFEST = path.join(ROOT, "manifest.json");
 
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/;
-
-const FORBIDDEN_TAGS = [
-  "python", "django", "go", "rust", "java", "spring", "kotlin",
-  "swift", "android", "flutter", "dart", "c++", "perl", "defi", "trading",
-];
-
-const BANNED_AGENT_PHRASES = [
-  "autonomous", "swarm", "delegate", "orchestrat", "marketplace",
-];
 
 let failures = 0;
 
@@ -92,8 +95,9 @@ function checkItems(items) {
             fail(`${item.id}: missing ${path.relative(ROOT, skillMd)}`);
           } else {
             const text = fs.readFileSync(skillMd, "utf8");
-            if (!text.includes("## Use when")) fail(`${item.id}: SKILL.md missing ## Use when`);
-            if (!text.includes("## Do not use when")) fail(`${item.id}: SKILL.md missing ## Do not use when`);
+            for (const section of REQUIRED_SKILL_SECTIONS) {
+              if (!text.includes(section)) fail(`${item.id}: SKILL.md missing ${section}`);
+            }
           }
         } else if (item.type === "agent") {
           if (!fs.existsSync(abs)) {
@@ -101,9 +105,9 @@ function checkItems(items) {
           } else {
             const text = fs.readFileSync(abs, "utf8");
             if (!text.startsWith("---")) fail(`${item.id}: agent file missing YAML frontmatter`);
-            if (!text.includes("## Use when")) fail(`${item.id}: agent file missing ## Use when`);
-            if (!text.includes("## Do not use when")) fail(`${item.id}: agent file missing ## Do not use when`);
-            if (!text.includes("## Verification")) fail(`${item.id}: agent file missing ## Verification`);
+            for (const section of REQUIRED_AGENT_SECTIONS) {
+              if (!text.includes(section)) fail(`${item.id}: agent file missing ${section}`);
+            }
             const lower = text.toLowerCase();
             for (const ban of BANNED_AGENT_PHRASES) {
               if (lower.includes(ban)) fail(`${item.id}: agent file contains disallowed phrase "${ban}"`);
@@ -117,7 +121,7 @@ function checkItems(items) {
       }
 
       for (const ref of item.references ?? []) {
-        if (/^http:\/\//i.test(ref)) {
+        if (HTTP_URL_PATTERN.test(ref)) {
           fail(`${item.id}: reference uses insecure http:// URL: ${ref}`);
         }
         if (/^https?:\/\//i.test(ref)) continue;
@@ -149,13 +153,13 @@ function checkShippedMarkdown() {
       const lines = text.split(/\r?\n/);
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i] ?? "";
-        if (/\bTODO\b|\bPLACEHOLDER\b/i.test(line)) {
+        if (PLACEHOLDER_PATTERN.test(line)) {
           fail(`${rel}:${i + 1}: TODO or placeholder in shipped content`);
         }
-        if (/\bnpx\s+-y\b|\bnpx\s+--yes\b|\byarn\s+dlx\b|\bpnpm\s+dlx\b/i.test(line)) {
+        if (RISKY_INSTALL_PATTERNS.some((re) => re.test(line))) {
           fail(`${rel}:${i + 1}: risky install pattern`);
         }
-        if (/\bnpx\s+(?!tsx\b)\S+/i.test(line)) {
+        if (ANY_NPX_PATTERN.test(line) && !ALLOWED_NPX_PATTERN.test(line)) {
           fail(`${rel}:${i + 1}: disallowed npx (only npx tsx allowed)`);
         }
       }

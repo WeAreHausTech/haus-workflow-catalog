@@ -714,8 +714,8 @@ Before closing a finding's session, verify:
 | F9 — ecosystem audit | ✅ DONE | 2026-05-27 |
 | F5 — JSON Schema | ✅ DONE | 2026-05-27 |
 | F3 — Release workflow + git tags | ✅ DONE | 2026-05-27 |
-| F4 — pinnedRef + CATALOG_REF | 🔲 TODO | — |
-| F6 — Validator parity | 🔲 TODO | — |
+| F4 — pinnedRef + CATALOG_REF | ✅ DONE | 2026-05-27 |
+| F6 — Validator parity | ✅ DONE | 2026-05-27 |
 | F8 — Lock schema SSOT | 🔲 TODO | — |
 | F4b — Templates in manifest | 🔲 TODO | — |
 | F7 — Fixture sync | 🔲 TODO | — |
