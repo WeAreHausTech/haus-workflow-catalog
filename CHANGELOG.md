@@ -11,6 +11,17 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ## [Unreleased]
 
+### Fixed
+- `haus.typescript6-patterns`: add missing `ecosystem: "typescript"`
+- `haus.playwright-patterns`: add missing `ecosystem: "playwright"`
+- `haus.tailwind-scss-patterns`: correct `ecosystem` from `"react"` to `"tailwind"`
+- `haus.auth-oidc-azure-bankid-patterns`: add missing `ecosystem: "auth"`
+- `haus.database-patterns`: add missing `ecosystem: "database"`
+- `haus.package-manager-yarn4-pnpm89`: add missing `ecosystem: "packagemanager"`
+- `haus.testing-library-patterns`: add missing `ecosystem: "testing"`
+- `haus.security-review`: add missing `ecosystem: "security"`, set `default: true` so recommender selects it for all projects
+- `haus.production-readiness-review`: add missing `ecosystem: "production"`, set `default: true` so recommender selects it for all projects
+
 ---
 
 ## [1.0.0] - 2026-05-27

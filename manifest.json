@@ -145,7 +145,8 @@
         }
       ],
       "tokenEstimate": 2200,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "typescript"
     },
     {
       "id": "haus.vite8-patterns",
@@ -375,7 +376,8 @@
         }
       ],
       "tokenEstimate": 2200,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "playwright"
     },
     {
       "id": "haus.code-reviewer-agent",
@@ -745,7 +747,7 @@
           "dependency": "scss"
         }
       ],
-      "ecosystem": "react",
+      "ecosystem": "tailwind",
       "tokenEstimate": 1800,
       "installMode": "copy-selected"
     },
@@ -960,7 +962,8 @@
         }
       ],
       "tokenEstimate": 1700,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "auth"
     },
     {
       "id": "haus.database-patterns",
@@ -1000,7 +1003,8 @@
         }
       ],
       "tokenEstimate": 1700,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "database"
     },
     {
       "id": "haus.package-manager-yarn4-pnpm89",
@@ -1032,7 +1036,8 @@
         }
       ],
       "tokenEstimate": 1200,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "packagemanager"
     },
     {
       "id": "haus.testing-library-patterns",
@@ -1070,7 +1075,8 @@
         }
       ],
       "tokenEstimate": 1500,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "testing"
     },
     {
       "id": "haus.phpunit-patterns",
@@ -1175,7 +1181,9 @@
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1200,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "security",
+      "default": true
     },
     {
       "id": "haus.production-readiness-review",
@@ -1202,7 +1210,9 @@
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1200,
-      "installMode": "copy-selected"
+      "installMode": "copy-selected",
+      "ecosystem": "production",
+      "default": true
     }
   ]
 }
