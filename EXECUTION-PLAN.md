@@ -719,4 +719,4 @@ Before closing a finding's session, verify:
 | F8 — Lock schema SSOT | ✅ DONE | 2026-05-27 |
 | F4b — Templates in manifest | ✅ DONE | 2026-05-27 |
 | F7 — Fixture sync | ✅ DONE | 2026-05-27 |
-| F10 — Per-item changelog | 🔲 TODO | — |
+| F10 — Per-item changelog | ✅ DONE | 2026-05-27 |

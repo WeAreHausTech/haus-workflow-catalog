@@ -30,8 +30,12 @@ haus validate-catalog ./manifest.json
 
 ## Schema
 
-Each item in `manifest.json` is a `CatalogItem` — see the type definition in the CLI repo.
-Key fields: `id`, `version`, `type` (`skill`|`agent`), `source` (`haus`), `path`, `tags`, `requiresAny`.
+Each item in `manifest.json` is a `CatalogItem` — canonical JSON Schema:
+- [`schema/catalog-item.schema.json`](schema/catalog-item.schema.json)
+- [`schema/manifest.schema.json`](schema/manifest.schema.json)
+- [`schema/haus-lock.schema.json`](schema/haus-lock.schema.json)
+
+Key fields: `id`, `version`, `type` (`skill`|`agent`|`template`), `source` (`haus`), `path`, `tags`, `requiresAny`, `ecosystem`.
 
 ## Versioning
 
@@ -44,6 +48,35 @@ Every catalog item carries a `version` field following semver (`X.Y.Z`). Bump ru
 | Removed section, breaking scope change | `MAJOR` |
 
 The top-level `manifest.json#version` tracks the catalog schema itself, not item content.
+
+## Contributing
+
+### Bumping a skill or agent version
+
+When you change a skill's content (`SKILL.md` or any `references/` file), or an agent's `.md` file:
+
+1. **Bump the item's `version`** in `manifest.json`:
+
+   | Change | Bump |
+   |--------|------|
+   | New guideline, extended scope, new reference file | `MINOR` (x.1.x) |
+   | Wording fix, typo, reordering | `PATCH` (x.x.1) |
+   | Removed section, breaking scope change, renamed skill | `MAJOR` (1.x.x) |
+
+2. **Add entry to `CHANGELOG.md`** under `## [Unreleased]`:
+   ```markdown
+   ### Changed
+   - **nextjs-patterns** `1.0.0 → 1.1.0`: Added RSC caching patterns to workflow.md
+   ```
+
+3. PRs without a CHANGELOG entry for bumped items will be flagged by the validator.
+
+### Releasing
+
+1. Move `## [Unreleased]` entries to a new `## [X.Y.Z] - YYYY-MM-DD` section
+2. Add a fresh empty `## [Unreleased]` section at the top
+3. Push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`
+4. GitHub Actions validates, creates GitHub Release, attaches `manifest.json` artifact
 
 ### Lock file
 

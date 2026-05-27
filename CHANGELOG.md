@@ -18,6 +18,8 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ### Changed
 - `scripts/validate.mjs`: handles `type: "template"` items — checks file existence, resolves refs from file's parent directory
+- `scripts/validate.mjs`: added `checkChangelogCoverage()` — warns when item version > 1.0.0 has no CHANGELOG.md entry
+- `README.md`: added `## Contributing` section with per-item bump guide and release process; updated Schema section to reference JSON Schema files
 
 ### Changed
 - `scripts/validate.mjs`: refactored to import all rule constants from `validation-rules.mjs` instead of inline declarations
