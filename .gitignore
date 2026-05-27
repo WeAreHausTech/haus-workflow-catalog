@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Node (for scripts/ development)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Editor artifacts
+.idea/
+.vscode/
+*.sublime-workspace
+*.swp
+*.swo
+
+# Git worktrees (used by Claude Code agents)
+.claude/worktrees/
+
+# Runtime / test output
+dist/
+coverage/
+*.log
+
+# OS
+Thumbs.db
+ehthumbs.db
