@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/WeAreHausTech/haus-workflow-catalog/main/schema/haus-lock.schema.json",
+  "title": "HausLockFile",
+  "description": "Written by `haus install` / `haus apply`. Read by `haus update`. Tracks installed catalog items per project.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "type", "source", "version", "hash", "installMode", "paths"],
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Catalog item identifier (e.g. haus.nextjs-patterns)."
+      },
+      "type": {
+        "type": "string",
+        "enum": ["skill", "agent", "template", "rule", "command"],
+        "description": "Item type. Must match catalog-item.schema.json type enum."
+      },
+      "source": {
+        "type": "string",
+        "enum": ["haus", "curated"],
+        "description": "\"haus\" for first-party items. \"curated\" for approved external items."
+      },
+      "version": {
+        "type": "string",
+        "description": "haus CLI package version when this row was written."
+      },
+      "catalogRef": {
+        "type": "string",
+        "description": "Git ref (tag or branch) the catalog was fetched from at install time. Matches HAUS_CATALOG_REF env var. Defaults to 'main'."
+      },
+      "hash": {
+        "type": "string",
+        "description": "sha256 digest of installed files listed in paths. Placeholder when paths is empty."
+      },
+      "installMode": {
+        "type": "string",
+        "description": "How the item was installed (e.g. 'copied')."
+      },
+      "paths": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Relative paths (from project root) of all files installed for this item."
+      },
+      "originSourceId": {
+        "type": "string",
+        "description": "For source:\"curated\" items — references the sourceId from sources.yaml."
+      },
+      "useMode": {
+        "type": "string",
+        "enum": ["copy", "adapted", "wrapped", "rewritten", "reference-only"],
+        "description": "How the upstream item was incorporated."
+      },
+      "license": {
+        "type": "string",
+        "description": "SPDX license identifier of the upstream source (e.g. MIT)."
+      },
+      "riskLevel": {
+        "type": "string",
+        "enum": ["low", "medium", "high", "blocked"],
+        "description": "Risk level assessed during curation review."
+      },
+      "reviewStatus": {
+        "type": "string",
+        "enum": ["approved", "candidate", "needs-review", "rejected", "deprecated"],
+        "description": "Curation review gate status. Only approved items are installed."
+      }
+    }
+  }
+}

@@ -716,7 +716,7 @@ Before closing a finding's session, verify:
 | F3 — Release workflow + git tags | ✅ DONE | 2026-05-27 |
 | F4 — pinnedRef + CATALOG_REF | ✅ DONE | 2026-05-27 |
 | F6 — Validator parity | ✅ DONE | 2026-05-27 |
-| F8 — Lock schema SSOT | 🔲 TODO | — |
+| F8 — Lock schema SSOT | ✅ DONE | 2026-05-27 |
 | F4b — Templates in manifest | 🔲 TODO | — |
 | F7 — Fixture sync | 🔲 TODO | — |
 | F10 — Per-item changelog | 🔲 TODO | — |
