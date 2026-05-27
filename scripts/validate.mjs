@@ -12,6 +12,8 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const MANIFEST = path.join(ROOT, "manifest.json");
 
+const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/;
+
 const FORBIDDEN_TAGS = [
   "python", "django", "go", "rust", "java", "spring", "kotlin",
   "swift", "android", "flutter", "dart", "c++", "perl", "defi", "trading",
@@ -50,6 +52,11 @@ function checkItems(items) {
 
     if (!item.id) { fail(`item[${i}]: missing id`); continue; }
     if (!item.type) { fail(`${item.id}: missing type`); continue; }
+    if (!item.version) {
+      fail(`${item.id}: missing version`);
+    } else if (!SEMVER_RE.test(item.version)) {
+      fail(`${item.id}: version "${item.version}" is not valid semver (expected X.Y.Z)`);
+    }
     if (!item.source) fail(`${item.id}: missing source`);
     if (!item.title) fail(`${item.id}: missing title`);
 
@@ -159,6 +166,9 @@ function walkMd(dir, fn) {
 // Run
 const manifest = checkManifest();
 if (manifest) {
+  if (!manifest.version || !SEMVER_RE.test(manifest.version)) {
+    fail(`manifest.json: top-level "version" missing or not valid semver`);
+  }
   if (!Array.isArray(manifest.items)) {
     fail("manifest.json: missing or invalid 'items' array");
   } else {
