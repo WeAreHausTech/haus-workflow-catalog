@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/WeAreHausTech/haus-workflow-catalog/main/schema/manifest.schema.json",
+  "title": "CatalogManifest",
+  "description": "Top-level structure of manifest.json in haus-workflow-catalog.",
+  "type": "object",
+  "required": ["version", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Manifest schema version (semver). Bump MAJOR on breaking schema changes."
+    },
+    "items": {
+      "type": "array",
+      "description": "All catalog items: skills, agents, templates.",
+      "items": {
+        "$ref": "./catalog-item.schema.json"
+      }
+    }
+  }
+}

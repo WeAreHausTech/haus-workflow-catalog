@@ -712,7 +712,7 @@ Before closing a finding's session, verify:
 |---------|--------|-----------|
 | F1 — CHANGELOG.md | ✅ DONE | 2026-05-27 |
 | F9 — ecosystem audit | ✅ DONE | 2026-05-27 |
-| F5 — JSON Schema | 🔲 TODO | — |
+| F5 — JSON Schema | ✅ DONE | 2026-05-27 |
 | F3 — Release workflow + git tags | 🔲 TODO | — |
 | F4 — pinnedRef + CATALOG_REF | 🔲 TODO | — |
 | F6 — Validator parity | 🔲 TODO | — |

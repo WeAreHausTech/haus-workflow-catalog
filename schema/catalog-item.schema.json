@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/WeAreHausTech/haus-workflow-catalog/main/schema/catalog-item.schema.json",
+  "title": "CatalogItem",
+  "description": "A single item in the haus-workflow-catalog manifest. Source of truth for haus-ai-workflow CatalogItem type.",
+  "type": "object",
+  "required": ["id", "type", "source", "version", "path", "tags", "repoRoles", "tokenEstimate"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^haus\\.",
+      "description": "Unique identifier. Format: haus.<name>"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["skill", "agent", "template", "rule", "command"],
+      "description": "Item type. 'template' for universal project instruction files."
+    },
+    "source": {
+      "type": "string",
+      "enum": ["haus", "curated"],
+      "description": "'haus' for first-party items. 'curated' for reviewed external items."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semver. PATCH = wording fix. MINOR = new guideline. MAJOR = breaking scope change."
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to skill directory or agent/template file, relative to catalog root."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable display name."
+    },
+    "purpose": {
+      "type": "string",
+      "description": "One-line description of what this item provides."
+    },
+    "whenToUse": {
+      "type": "string",
+      "description": "Short description of when to activate this item."
+    },
+    "whenNotToUse": {
+      "type": "string",
+      "description": "Short description of when NOT to activate this item."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Searchable tags. Must not include unsupported stacks (python, go, rust, etc.)."
+    },
+    "repoRoles": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Repository roles this item targets (e.g. next-app, nestjs-api). Empty = cross-role."
+    },
+    "installMode": {
+      "type": "string",
+      "enum": ["copy-selected", "plugin-only"],
+      "description": "How the CLI installs this item."
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative file paths or https:// URLs. All must exist. No http://."
+    },
+    "safetyNotes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Safety guardrails the AI must follow when using this item."
+    },
+    "tokenBudget": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Recommended max tokens for context loaded by this item."
+    },
+    "tokenEstimate": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Estimated tokens consumed when this item is active."
+    },
+    "default": {
+      "type": "boolean",
+      "description": "When true, recommender applies baseline score so item is selected unless policy blocks it."
+    },
+    "requiresAny": {
+      "type": "array",
+      "description": "At least one clause must match scanned context, otherwise item is skipped. Omit for default items.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": ["stack"],
+            "additionalProperties": false,
+            "properties": {
+              "stack": { "type": "string", "description": "Detected stack name (e.g. nextjs, laravel)." }
+            }
+          },
+          {
+            "type": "object",
+            "required": ["dependency"],
+            "additionalProperties": false,
+            "properties": {
+              "dependency": { "type": "string", "description": "npm/composer package name." }
+            }
+          },
+          {
+            "type": "object",
+            "required": ["packageNamePattern"],
+            "additionalProperties": false,
+            "properties": {
+              "packageNamePattern": { "type": "string", "description": "Glob pattern for package name (e.g. @testing-library/*)." }
+            }
+          },
+          {
+            "type": "object",
+            "required": ["role"],
+            "additionalProperties": false,
+            "properties": {
+              "role": { "type": "string", "description": "Repo role (e.g. next-app, nestjs-api)." }
+            }
+          }
+        ]
+      }
+    },
+    "ecosystem": {
+      "type": "string",
+      "description": "Ecosystem family for cross-item conflict detection (e.g. nextjs, laravel, vendure, dotnet, nx, turbo). Required for all non-default items."
+    },
+    "reviewStatus": {
+      "type": "string",
+      "enum": ["approved", "candidate", "needs-review", "rejected", "deprecated"],
+      "description": "Review gate. Only 'approved' items may be recommended and installed."
+    },
+    "riskLevel": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "blocked"],
+      "description": "Risk level. 'blocked' items must not install."
+    },
+    "useMode": {
+      "type": "string",
+      "enum": ["copy", "adapted", "wrapped", "rewritten", "reference-only"],
+      "description": "How this item was incorporated relative to upstream source."
+    },
+    "licenseConfidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"],
+      "description": "Confidence level of the license determination."
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier (e.g. MIT, Apache-2.0)."
+    },
+    "originSourceId": {
+      "type": "string",
+      "description": "References sources.yaml id for this item's origin. Present when source = 'curated'."
+    },
+    "originUrl": {
+      "type": "string",
+      "pattern": "^https://",
+      "description": "Direct URL to upstream source item. Must be https://."
+    },
+    "pinnedRef": {
+      "type": "string",
+      "description": "Git SHA or version tag pinning the upstream source this item was derived from."
+    },
+    "intents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Natural language intent phrases for fuzzy matching during context loading."
+    },
+    "sourceInfluences": {
+      "type": "array",
+      "description": "Attribution for ideas drawn from external sources.",
+      "items": {
+        "type": "object",
+        "required": ["source", "idea"],
+        "additionalProperties": false,
+        "properties": {
+          "source": { "type": "string" },
+          "idea": { "type": "string" }
+        }
+      }
+    }
+  }
+}

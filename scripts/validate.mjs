@@ -3,6 +3,14 @@
  * Standalone catalog validator — no external dependencies, runs with Node.js ≥18.
  * After @haus-tech/haus-workflow is published (P9), CI will switch to:
  *   npm install -g @haus-tech/haus-workflow && haus validate-catalog ./manifest.json
+ *
+ * Schema (source of truth for CatalogItem shape):
+ *   schema/catalog-item.schema.json
+ *   schema/manifest.schema.json
+ *
+ * SYNC REQUIRED: validation rules (forbidden tags, phrases, required sections)
+ * must stay in sync with haus-ai-workflow/src/catalog/validation-rules.ts.
+ * See EXECUTION-PLAN.md F6 for the sync strategy.
  */
 
 import fs from "node:fs";

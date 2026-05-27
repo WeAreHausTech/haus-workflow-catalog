@@ -11,6 +11,10 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ## [Unreleased]
 
+### Added
+- `schema/catalog-item.schema.json` — canonical JSON Schema for all CatalogItem fields
+- `schema/manifest.schema.json` — JSON Schema for top-level manifest.json structure
+
 ### Fixed
 - `haus.typescript6-patterns`: add missing `ecosystem: "typescript"`
 - `haus.playwright-patterns`: add missing `ecosystem: "playwright"`
