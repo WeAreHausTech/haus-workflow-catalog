@@ -710,7 +710,7 @@ Before closing a finding's session, verify:
 
 | Finding | Status | Completed |
 |---------|--------|-----------|
-| F1 — CHANGELOG.md | 🔲 TODO | — |
+| F1 — CHANGELOG.md | ✅ DONE | 2026-05-27 |
 | F9 — ecosystem audit | 🔲 TODO | — |
 | F5 — JSON Schema | 🔲 TODO | — |
 | F3 — Release workflow + git tags | 🔲 TODO | — |
