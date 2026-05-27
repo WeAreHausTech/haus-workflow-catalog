@@ -17,10 +17,11 @@ description: Router for release readiness: config parity, migrations, rollback, 
 
 ## Router
 
-1. Identify release unit (service, package, or version bump).
-2. Load `references/signals.md` for what to scan in repo (config, migrations, health).
-3. Load `references/evidence.md` for how to record **verified vs not verified**.
-4. Load `references/rollback.md` when deployment or migration risk exists.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Identify release unit (service, package, or version bump).
+3. Load `references/signals.md` for what to scan in repo (config, migrations, health).
+4. Load `references/evidence.md` for how to record **verified vs not verified**.
+5. Load `references/rollback.md` when deployment or migration risk exists.
 
 Stay factual: evidence and gaps, not generic praise.
 

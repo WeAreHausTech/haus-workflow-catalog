@@ -11,7 +11,9 @@
       "purpose": "Provide baseline deterministic engineering, validation, and security guardrails.",
       "whenToUse": "Use as default baseline in supported Haus workflows.",
       "whenNotToUse": "Do not use for unsupported stacks or non-development workflows.",
-      "references": [],
+      "references": [
+        "references/conventions.md"
+      ],
       "safetyNotes": [
         "Never read secrets or customer exports."
       ],
@@ -38,6 +40,7 @@
       "whenToUse": "Use for App Router pages, layouts, route handlers, and middleware behavior updates.",
       "whenNotToUse": "Do not use for backend-only or non-Next framework tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://nextjs.org/llms.txt"
@@ -75,6 +78,7 @@
       "whenToUse": "Use for React component behavior, hooks, and UI state flow updates.",
       "whenNotToUse": "Do not use for backend-only changes or framework routing config tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://react.dev/"
@@ -113,6 +117,7 @@
       "whenToUse": "Use for shared types, DTOs, interface boundaries, and type-safe refactors.",
       "whenNotToUse": "Do not use for runtime-only changes without type-contract impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://www.typescriptlang.org/docs/handbook/"
@@ -153,6 +158,7 @@
       "whenToUse": "Use for vite config, alias/plugin, and build mode behavior updates.",
       "whenNotToUse": "Do not use for framework feature logic without build pipeline impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://vite.dev/guide",
@@ -192,6 +198,7 @@
       "whenToUse": "Use for Vendure plugin resolvers, services, entities, and plugin migrations.",
       "whenNotToUse": "Do not use for storefront-only UI changes or non-Vendure APIs.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://docs.vendure.io/llms.txt"
@@ -234,6 +241,7 @@
       "whenToUse": "Use for Laravel controllers/services/models/jobs/policies and route changes.",
       "whenNotToUse": "Do not use for Nova-only admin resource customization tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://laravel.com/docs"
@@ -271,6 +279,7 @@
       "whenToUse": "Use for WordPress hook/filter/template/plugin/theme behavior updates.",
       "whenNotToUse": "Do not use for Bedrock-only config bootstrap or non-WP backend tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://developer.wordpress.org/"
@@ -308,6 +317,7 @@
       "whenToUse": "Use for .NET service and endpoint behavior changes with domain impact.",
       "whenNotToUse": "Do not use for frontend-only or non-.NET runtime tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md"
       ],
@@ -340,6 +350,7 @@
       "whenToUse": "Use for Playwright specs, fixtures, and browser test stability work.",
       "whenNotToUse": "Do not use for unit-only test tasks without browser automation.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://playwright.dev/docs/intro"
@@ -462,6 +473,7 @@
       "whenToUse": "Use for Vendure app config, worker, bootstrap, and system wiring updates.",
       "whenNotToUse": "Do not use for isolated shared plugin package tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://docs.vendure.io/llms.txt"
@@ -498,6 +510,7 @@
       "whenToUse": "Use for NestJS GraphQL resolver, module, DTO/input, and guard changes.",
       "whenNotToUse": "Do not use for REST-only controller tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://docs.nestjs.com/"
@@ -537,6 +550,7 @@
       "whenToUse": "Use for Nx workspace graph, target, and generator configuration updates.",
       "whenNotToUse": "Do not use for app-only feature edits without workspace impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://nx.dev/docs"
@@ -575,6 +589,7 @@
       "whenToUse": "Use for turbo pipeline graph and package task orchestration updates.",
       "whenNotToUse": "Do not use for package-local feature edits without pipeline impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://turbo.build/repo/docs"
@@ -610,6 +625,7 @@
       "whenToUse": "Use for TanStack query cache behavior and TanStack router flow updates.",
       "whenNotToUse": "Do not use for styling-only component changes.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://tanstack.com/query/latest/docs",
@@ -654,6 +670,7 @@
       "whenToUse": "Use for Radix primitive usage and shadcn wrapper updates.",
       "whenNotToUse": "Do not use for backend/domain logic changes.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://ui.shadcn.com/docs",
@@ -701,6 +718,7 @@
       "whenToUse": "Use for Tailwind token/utility and SCSS module behavior updates.",
       "whenNotToUse": "Do not use for non-style backend/service changes.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://tailwindcss.com/docs"
@@ -742,6 +760,7 @@
       "whenToUse": "Use for Vue component, composable, route, and state-boundary updates.",
       "whenNotToUse": "Do not use for React/Next-only component work.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://vuejs.org/guide"
@@ -776,6 +795,7 @@
       "whenToUse": "Use for Laravel Nova resources, actions, filters, and admin UI behavior.",
       "whenNotToUse": "Do not use for customer-facing API/domain-only changes.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://laravel.com/docs"
@@ -808,6 +828,7 @@
       "whenToUse": "Use for Bedrock config, env loading, and boot path behavior updates.",
       "whenNotToUse": "Do not use for hook/template-only WordPress runtime changes.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://developer.wordpress.org/"
@@ -843,6 +864,7 @@
       "whenToUse": "Use for ACF field groups and Elementor/JetEngine-driven dynamic template behavior.",
       "whenNotToUse": "Do not use for generic WordPress hooks with no builder/meta impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://developer.wordpress.org/"
@@ -881,6 +903,7 @@
       "whenToUse": "Use for .NET service boundary, orchestration, and handler behavior updates.",
       "whenNotToUse": "Do not use for route formatting-only tasks with no service impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md"
       ],
@@ -914,6 +937,7 @@
       "whenToUse": "Use for OIDC/Azure AD/BankID login, callback, token, and claim mapping updates.",
       "whenNotToUse": "Do not use for profile CRUD without auth protocol change.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md"
       ],
@@ -949,6 +973,7 @@
       "whenToUse": "Use for migrations, query behavior, indexing, and Elasticsearch mapping updates.",
       "whenNotToUse": "Do not use for UI-only changes without persistence/search impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md"
       ],
@@ -988,6 +1013,7 @@
       "whenToUse": "Use for lockfile, workspace, and package manager configuration changes.",
       "whenNotToUse": "Do not use for feature-only code edits with no dependency/workspace impact.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md"
       ],
@@ -1019,6 +1045,7 @@
       "whenToUse": "Use for component interaction tests with @testing-library tooling.",
       "whenNotToUse": "Do not use for full browser journey tests better served by Playwright.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://vitest.dev/guide"
@@ -1056,6 +1083,7 @@
       "whenToUse": "Use for PHPUnit tests tied to backend behavior updates.",
       "whenNotToUse": "Do not use for frontend/browser-only test tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://laravel.com/docs"
@@ -1091,6 +1119,7 @@
       "whenToUse": "Use for component stories, args/controls, and Storybook config changes.",
       "whenNotToUse": "Do not use for backend/service-only development tasks.",
       "references": [
+        "references/conventions.md",
         "references/scope.md",
         "references/workflow.md",
         "https://storybook.js.org/docs"
@@ -1133,6 +1162,7 @@
       "whenToUse": "Use when the user requests security review, threat check, or hardening on a named scope.",
       "whenNotToUse": "Do not use for unscoped repo sweeps, exploit development, or non-security tasks.",
       "references": [
+        "references/conventions.md",
         "references/output-shape.md",
         "references/scope-signals.md",
         "references/verification.md"
@@ -1158,6 +1188,7 @@
       "whenToUse": "Use when the user asks for ship checklist, release risk review, or go-live readiness on a defined change set.",
       "whenNotToUse": "Do not use for pure feature design with no release surface or undefined release boundary.",
       "references": [
+        "references/conventions.md",
         "references/signals.md",
         "references/evidence.md",
         "references/rollback.md"

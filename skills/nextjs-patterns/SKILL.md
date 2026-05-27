@@ -29,9 +29,10 @@ description: Next.js router. Use for App Router pages, server components, route 
 
 ## Router
 
-1. Load `references/scope.md` for route/file targeting.
-2. Load `references/workflow.md` only when tracing render/data flow.
-3. Keep boundary clear between server and client components.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for route/file targeting.
+3. Load `references/workflow.md` only when tracing render/data flow.
+4. Keep boundary clear between server and client components.
 
 ## References
 

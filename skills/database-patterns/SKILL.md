@@ -29,9 +29,10 @@ description: Database router for PostgreSQL, MariaDB, MSSQL, and Elasticsearch d
 
 ## Router
 
-1. Load `references/scope.md` for storage-specific target files.
-2. Load `references/workflow.md` only for read/write/search flow analysis.
-3. Validate migration safety and query impact before handoff.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for storage-specific target files.
+3. Load `references/workflow.md` only for read/write/search flow analysis.
+4. Validate migration safety and query impact before handoff.
 
 ## References
 

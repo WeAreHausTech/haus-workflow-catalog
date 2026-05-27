@@ -29,9 +29,10 @@ description: Testing Library router. Use for component behavior tests, queries b
 
 ## Router
 
-1. Load `references/scope.md` for test target map.
-2. Load `references/workflow.md` only for flaky/failing test triage.
-3. Assert behavior by role/text/action, not internals.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for test target map.
+3. Load `references/workflow.md` only for flaky/failing test triage.
+4. Assert behavior by role/text/action, not internals.
 
 ## References
 

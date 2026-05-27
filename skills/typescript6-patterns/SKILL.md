@@ -29,9 +29,10 @@ description: TypeScript router. Use for type contracts, API boundaries, generics
 
 ## Router
 
-1. Load `references/scope.md` for contract-focused file map.
-2. Load `references/workflow.md` only for type-migration flow.
-3. Prefer narrow, explicit types and safe incremental migration.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for contract-focused file map.
+3. Load `references/workflow.md` only for type-migration flow.
+4. Prefer narrow, explicit types and safe incremental migration.
 
 ## References
 

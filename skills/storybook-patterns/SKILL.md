@@ -29,9 +29,10 @@ description: Storybook router. Use for component stories, controls, docs stories
 
 ## Router
 
-1. Load `references/scope.md` for story-config boundaries.
-2. Load `references/workflow.md` only for story/debug/coverage flow.
-3. Keep stories aligned with component public API and states.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for story-config boundaries.
+3. Load `references/workflow.md` only for story/debug/coverage flow.
+4. Keep stories aligned with component public API and states.
 
 ## References
 

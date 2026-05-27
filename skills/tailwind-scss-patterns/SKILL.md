@@ -29,9 +29,10 @@ description: Styling router for Tailwind CSS and SCSS modules. Use for style arc
 
 ## Router
 
-1. Load `references/scope.md` for style-layer touchpoints.
-2. Load `references/workflow.md` only for style resolution/debug flow.
-3. Keep token and variant usage consistent with project style system.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for style-layer touchpoints.
+3. Load `references/workflow.md` only for style resolution/debug flow.
+4. Keep token and variant usage consistent with project style system.
 
 ## References
 

@@ -29,9 +29,10 @@ description: Laravel Nova router. Use for admin resources, actions, fields, filt
 
 ## Router
 
-1. Load `references/scope.md` for Nova file targets.
-2. Load `references/workflow.md` only for resource lifecycle flow.
-3. Verify admin authorization and data visibility before handoff.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for Nova file targets.
+3. Load `references/workflow.md` only for resource lifecycle flow.
+4. Verify admin authorization and data visibility before handoff.
 
 ## References
 

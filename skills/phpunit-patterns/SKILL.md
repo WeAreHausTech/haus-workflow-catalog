@@ -29,9 +29,10 @@ description: PHPUnit router. Use for Laravel/PHP backend behavior tests, feature
 
 ## Router
 
-1. Load `references/scope.md` for PHPUnit file targeting.
-2. Load `references/workflow.md` only for failing-test diagnosis flow.
-3. Keep tests behavior-focused and deterministic.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for PHPUnit file targeting.
+3. Load `references/workflow.md` only for failing-test diagnosis flow.
+4. Keep tests behavior-focused and deterministic.
 
 ## References
 

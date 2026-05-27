@@ -29,9 +29,10 @@ description: Vue router. Use for component/composable behavior, route-level stat
 
 ## Router
 
-1. Load `references/scope.md` for component/composable touchpoints.
-2. Load `references/workflow.md` only for state-event-render tracing.
-3. Keep composables reusable and feature state boundaries explicit.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for component/composable touchpoints.
+3. Load `references/workflow.md` only for state-event-render tracing.
+4. Keep composables reusable and feature state boundaries explicit.
 
 ## References
 

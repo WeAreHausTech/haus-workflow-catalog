@@ -29,9 +29,10 @@ description: Radix/shadcn router. Use for accessible primitives, composition wra
 
 ## Router
 
-1. Load `references/scope.md` for primitive-wrapper map.
-2. Load `references/workflow.md` only for interaction/accessibility flow.
-3. Verify focus, keyboard, and aria behavior after edits.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for primitive-wrapper map.
+3. Load `references/workflow.md` only for interaction/accessibility flow.
+4. Verify focus, keyboard, and aria behavior after edits.
 
 ## References
 

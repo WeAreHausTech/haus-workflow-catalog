@@ -29,9 +29,10 @@ description: TanStack Query/Router router. Use for query keys, loaders, route st
 
 ## Router
 
-1. Load `references/scope.md` for query/router touchpoints.
-2. Load `references/workflow.md` only for cache-navigation debugging.
-3. Keep query key and route param contracts deterministic.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for query/router touchpoints.
+3. Load `references/workflow.md` only for cache-navigation debugging.
+4. Keep query key and route param contracts deterministic.
 
 ## References
 

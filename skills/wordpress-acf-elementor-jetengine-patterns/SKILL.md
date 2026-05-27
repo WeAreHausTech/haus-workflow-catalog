@@ -29,9 +29,10 @@ description: WordPress builder-data router. Use for ACF, Elementor Pro, and JetE
 
 ## Router
 
-1. Load `references/scope.md` for builder-specific file map.
-2. Load `references/workflow.md` only when tracing data-to-template flow.
-3. Preserve backward compatibility for existing field/meta keys.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for builder-specific file map.
+3. Load `references/workflow.md` only when tracing data-to-template flow.
+4. Preserve backward compatibility for existing field/meta keys.
 
 ## References
 

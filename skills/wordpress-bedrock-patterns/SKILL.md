@@ -29,9 +29,10 @@ description: Bedrock router. Use for Roots/Bedrock env/config/bootstrap and Word
 
 ## Router
 
-1. Load `references/scope.md` for Bedrock path boundaries.
-2. Load `references/workflow.md` only for bootstrap/config flow debugging.
-3. Keep WordPress runtime logic in WP skills, not Bedrock config files.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for Bedrock path boundaries.
+3. Load `references/workflow.md` only for bootstrap/config flow debugging.
+4. Keep WordPress runtime logic in WP skills, not Bedrock config files.
 
 ## References
 

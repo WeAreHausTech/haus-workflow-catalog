@@ -29,9 +29,10 @@ description: Laravel router. Use for app/domain changes across controllers, serv
 
 ## Router
 
-1. Load `references/scope.md` for file layout.
-2. Load `references/workflow.md` only for request-to-persistence flow work.
-3. Keep domain logic in services/actions, not route files.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for file layout.
+3. Load `references/workflow.md` only for request-to-persistence flow work.
+4. Keep domain logic in services/actions, not route files.
 
 ## References
 

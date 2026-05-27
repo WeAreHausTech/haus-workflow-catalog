@@ -17,10 +17,11 @@ description: Vendure app router. Use for app-level config, workers, jobs, and AP
 
 ## Router
 
-1. Inspect app entry/config files before touching plugin code.
-2. Load `references/scope.md` for app module boundaries.
-3. Load `references/workflow.md` only for startup/worker/debug flows.
-4. Validate both server and worker impact for changed behavior.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Inspect app entry/config files before touching plugin code.
+3. Load `references/scope.md` for app module boundaries.
+4. Load `references/workflow.md` only for startup/worker/debug flows.
+5. Validate both server and worker impact for changed behavior.
 
 ## References
 

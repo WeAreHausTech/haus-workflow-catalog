@@ -29,9 +29,10 @@ description: React 19 router. Use for component behavior, hooks, state boundarie
 
 ## Router
 
-1. Load `references/scope.md` for component/hook target map.
-2. Load `references/workflow.md` only for render-state-event flow.
-3. Keep component contracts explicit and localize side effects.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for component/hook target map.
+3. Load `references/workflow.md` only for render-state-event flow.
+4. Keep component contracts explicit and localize side effects.
 
 ## References
 

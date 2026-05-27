@@ -29,9 +29,10 @@ description: Turbo monorepo router. Use for pipeline graph, package tasks, and c
 
 ## Router
 
-1. Load `references/scope.md` for pipeline/package targets.
-2. Load `references/workflow.md` only for cache/pipeline debug flow.
-3. Keep task graph reproducible in CI and local runs.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for pipeline/package targets.
+3. Load `references/workflow.md` only for cache/pipeline debug flow.
+4. Keep task graph reproducible in CI and local runs.
 
 ## References
 

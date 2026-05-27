@@ -29,9 +29,10 @@ description: .NET service router focused on service boundaries, contracts, and o
 
 ## Router
 
-1. Load `references/scope.md` for service boundary map.
-2. Load `references/workflow.md` only for execution/error path checks.
-3. Keep domain orchestration explicit and testable.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for service boundary map.
+3. Load `references/workflow.md` only for execution/error path checks.
+4. Keep domain orchestration explicit and testable.
 
 ## References
 

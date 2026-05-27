@@ -29,9 +29,10 @@ description: .NET router. Use for service/application layer changes, API endpoin
 
 ## Router
 
-1. Load `references/scope.md` for common .NET file locations.
-2. Load `references/workflow.md` only for request-to-storage flow debugging.
-3. Keep transport, domain, and persistence layers separated.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for common .NET file locations.
+3. Load `references/workflow.md` only for request-to-storage flow debugging.
+4. Keep transport, domain, and persistence layers separated.
 
 ## References
 

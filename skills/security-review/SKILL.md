@@ -17,10 +17,11 @@ description: Router for bounded security review using Haus guardrails and eviden
 
 ## Router
 
-1. Confirm scope (files or directories). Refuse secret stores unless user provides redacted excerpts only.
-2. Load `references/output-shape.md` for finding format.
-3. Load `references/scope-signals.md` when classifying risks (auth, injection, data exposure).
-4. Load `references/verification.md` before closing: state what was checked vs not checked.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Confirm scope (files or directories). Refuse secret stores unless user provides redacted excerpts only.
+3. Load `references/output-shape.md` for finding format.
+4. Load `references/scope-signals.md` when classifying risks (auth, injection, data exposure).
+5. Load `references/verification.md` before closing: state what was checked vs not checked.
 
 Invoke the **security-reviewer** agent when the host supports agents; otherwise follow the same output contract manually.
 

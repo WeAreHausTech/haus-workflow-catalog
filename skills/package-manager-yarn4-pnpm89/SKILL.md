@@ -29,9 +29,10 @@ description: Package manager router for Yarn 4 and pnpm 8.9 workspaces, constrai
 
 ## Router
 
-1. Load `references/scope.md` for manager-specific targets.
-2. Load `references/workflow.md` only for install/lock/debug flow.
-3. Keep lockfile and workspace resolution deterministic.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for manager-specific targets.
+3. Load `references/workflow.md` only for install/lock/debug flow.
+4. Keep lockfile and workspace resolution deterministic.
 
 ## References
 

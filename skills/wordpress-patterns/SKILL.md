@@ -29,9 +29,10 @@ description: WordPress core router. Use for theme/plugin behavior, hooks, REST e
 
 ## Router
 
-1. Load `references/scope.md` for runtime file map.
-2. Load `references/workflow.md` only when tracing request-hook-render flow.
-3. Keep changes hook-scoped and validate admin + frontend impact.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for runtime file map.
+3. Load `references/workflow.md` only when tracing request-hook-render flow.
+4. Keep changes hook-scoped and validate admin + frontend impact.
 
 ## References
 

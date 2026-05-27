@@ -29,9 +29,10 @@ description: Vite 8 router. Use for build/dev-server config, plugin wiring, and 
 
 ## Router
 
-1. Load `references/scope.md` for config/build touchpoints.
-2. Load `references/workflow.md` only for build pipeline debugging.
-3. Keep config minimal and deterministic across environments.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for config/build touchpoints.
+3. Load `references/workflow.md` only for build pipeline debugging.
+4. Keep config minimal and deterministic across environments.
 
 ## References
 

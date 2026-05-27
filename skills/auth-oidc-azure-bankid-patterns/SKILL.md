@@ -29,9 +29,10 @@ description: Auth integration router for OIDC, Azure AD, and BankID style identi
 
 ## Router
 
-1. Load `references/scope.md` for provider integration touchpoints.
-2. Load `references/workflow.md` only for auth flow and failure path tracing.
-3. Validate token/session lifecycle and permission impact.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for provider integration touchpoints.
+3. Load `references/workflow.md` only for auth flow and failure path tracing.
+4. Validate token/session lifecycle and permission impact.
 
 ## References
 

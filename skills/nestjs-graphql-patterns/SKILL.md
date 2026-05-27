@@ -29,9 +29,10 @@ description: NestJS GraphQL router. Use for modules, resolvers, DTOs, guards, an
 
 ## Router
 
-1. Load `references/scope.md` for resolver-module file map.
-2. Load `references/workflow.md` only for mutation/query debug flow.
-3. Keep resolver contracts and service contracts aligned.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for resolver-module file map.
+3. Load `references/workflow.md` only for mutation/query debug flow.
+4. Keep resolver contracts and service contracts aligned.
 
 ## References
 

@@ -29,9 +29,10 @@ description: Vendure 3 plugin router. Use for plugin modules, resolvers, service
 
 ## Router
 
-1. Load `references/scope.md` for plugin file map.
-2. Load `references/workflow.md` only when implementing or debugging flow.
-3. Keep change scoped to one plugin boundary and verify.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for plugin file map.
+3. Load `references/workflow.md` only when implementing or debugging flow.
+4. Keep change scoped to one plugin boundary and verify.
 
 ## References
 

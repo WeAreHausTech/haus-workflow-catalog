@@ -14,6 +14,10 @@ description: Haus global engineering rules. Use only when selected by haus conte
 
 - task explicitly targets unsupported stack/workflow
 
+## Router
+
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+
 ## Rules
 
 - Use the detected project conventions.

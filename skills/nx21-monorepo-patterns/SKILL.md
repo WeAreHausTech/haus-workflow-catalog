@@ -29,9 +29,10 @@ description: Nx 21 monorepo router. Use for project graph, targets, generators, 
 
 ## Router
 
-1. Load `references/scope.md` for workspace graph touchpoints.
-2. Load `references/workflow.md` only when debugging affected/target flow.
-3. Keep project boundaries explicit and deterministic.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for workspace graph touchpoints.
+3. Load `references/workflow.md` only when debugging affected/target flow.
+4. Keep project boundaries explicit and deterministic.
 
 ## References
 

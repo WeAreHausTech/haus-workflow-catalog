@@ -29,9 +29,10 @@ description: Playwright router. Use for E2E browser test flows, selectors, fixtu
 
 ## Router
 
-1. Load `references/scope.md` for test-fixture boundaries.
-2. Load `references/workflow.md` only for failure triage loop.
-3. Prefer deterministic assertions over timing guesses.
+1. Load `references/conventions.md` for naming, do/don't, and forbidden patterns.
+2. Load `references/scope.md` for test-fixture boundaries.
+3. Load `references/workflow.md` only for failure triage loop.
+4. Prefer deterministic assertions over timing guesses.
 
 ## References
 
