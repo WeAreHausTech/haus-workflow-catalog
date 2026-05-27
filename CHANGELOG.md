@@ -11,21 +11,6 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ## [Unreleased]
 
-### Added
-- `schema/catalog-item.schema.json` — canonical JSON Schema for all CatalogItem fields
-- `schema/manifest.schema.json` — JSON Schema for top-level manifest.json structure
-
-### Fixed
-- `haus.typescript6-patterns`: add missing `ecosystem: "typescript"`
-- `haus.playwright-patterns`: add missing `ecosystem: "playwright"`
-- `haus.tailwind-scss-patterns`: correct `ecosystem` from `"react"` to `"tailwind"`
-- `haus.auth-oidc-azure-bankid-patterns`: add missing `ecosystem: "auth"`
-- `haus.database-patterns`: add missing `ecosystem: "database"`
-- `haus.package-manager-yarn4-pnpm89`: add missing `ecosystem: "packagemanager"`
-- `haus.testing-library-patterns`: add missing `ecosystem: "testing"`
-- `haus.security-review`: add missing `ecosystem: "security"`, set `default: true` so recommender selects it for all projects
-- `haus.production-readiness-review`: add missing `ecosystem: "production"`, set `default: true` so recommender selects it for all projects
-
 ---
 
 ## [1.0.0] - 2026-05-27
@@ -36,9 +21,24 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - Standalone CI validator (`scripts/validate.mjs`) — no external dependencies
 - GitHub Actions CI on push to `main` and PRs
 - Per-skill `references/` directory structure (`conventions.md`, `scope.md`, `workflow.md`)
+- `schema/catalog-item.schema.json` — canonical JSON Schema for all CatalogItem fields
+- `schema/manifest.schema.json` — JSON Schema for top-level manifest.json structure
+- `CHANGELOG.md` — release history following Keep a Changelog format
+- `EXECUTION-PLAN.md` — cross-repo improvement plan for catalog × CLI alignment
+
+### Fixed
+- `haus.typescript6-patterns`: add missing `ecosystem: "typescript"`
+- `haus.playwright-patterns`: add missing `ecosystem: "playwright"`
+- `haus.tailwind-scss-patterns`: correct `ecosystem` from `"react"` to `"tailwind"`
+- `haus.auth-oidc-azure-bankid-patterns`: add missing `ecosystem: "auth"`
+- `haus.database-patterns`: add missing `ecosystem: "database"`
+- `haus.package-manager-yarn4-pnpm89`: add missing `ecosystem: "packagemanager"`
+- `haus.testing-library-patterns`: add missing `ecosystem: "testing"`
+- `haus.security-review`: add missing `ecosystem: "security"`, set `default: true`
+- `haus.production-readiness-review`: add missing `ecosystem: "production"`, set `default: true`
 
 ### Skills (all `1.0.0`)
-- `haus.global-engineering-rules` — baseline engineering guardrails
+- `haus.global-engineering-rules` — baseline engineering guardrails (default)
 - `haus.nextjs-patterns` — Next.js App Router patterns
 - `haus.react19-patterns` — React 19 component patterns
 - `haus.typescript6-patterns` — TypeScript 6 type safety patterns
@@ -66,11 +66,11 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.package-manager-yarn4-pnpm89` — Yarn 4 + pnpm 8/9 patterns
 - `haus.database-patterns` — Database query and migration patterns
 - `haus.auth-oidc-azure-bankid-patterns` — OIDC, Azure AD, BankID auth patterns
-- `haus.security-review` — Security review checklist skill
-- `haus.production-readiness-review` — Production readiness review skill
+- `haus.security-review` — Security review checklist skill (default)
+- `haus.production-readiness-review` — Production readiness review skill (default)
 
 ### Agents (all `1.0.0`)
-- `haus.code-reviewer-agent` — Diff review for correctness and regressions
+- `haus.code-reviewer-agent` — Diff review for correctness and regressions (default)
 - `haus.security-reviewer-agent` — Security-focused code review
 - `haus.test-reviewer-agent` — Test coverage and assertion review
 - `haus.docs-researcher-agent` — Minimal documentation lookup
