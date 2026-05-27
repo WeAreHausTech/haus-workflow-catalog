@@ -717,6 +717,6 @@ Before closing a finding's session, verify:
 | F4 — pinnedRef + CATALOG_REF | ✅ DONE | 2026-05-27 |
 | F6 — Validator parity | ✅ DONE | 2026-05-27 |
 | F8 — Lock schema SSOT | ✅ DONE | 2026-05-27 |
-| F4b — Templates in manifest | 🔲 TODO | — |
-| F7 — Fixture sync | 🔲 TODO | — |
+| F4b — Templates in manifest | ✅ DONE | 2026-05-27 |
+| F7 — Fixture sync | ✅ DONE | 2026-05-27 |
 | F10 — Per-item changelog | 🔲 TODO | — |

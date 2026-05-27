@@ -14,6 +14,10 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 ### Added
 - `schema/haus-lock.schema.json` — canonical lock file schema (moved from haus-ai-workflow)
 - `scripts/validation-rules.mjs` — shared validation rule constants (FORBIDDEN_TAGS, BANNED_AGENT_PHRASES, REQUIRED_*_SECTIONS, pattern constants)
+- `haus.haus-way-of-work` as `type: "template"` catalog item (was previously an unregistered file)
+
+### Changed
+- `scripts/validate.mjs`: handles `type: "template"` items — checks file existence, resolves refs from file's parent directory
 
 ### Changed
 - `scripts/validate.mjs`: refactored to import all rule constants from `validation-rules.mjs` instead of inline declarations

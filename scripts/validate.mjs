@@ -77,7 +77,7 @@ function checkItems(items) {
       seenIds.set(item.id, i);
     }
 
-    if (item.type === "skill" || item.type === "agent") {
+    if (item.type === "skill" || item.type === "agent" || item.type === "template") {
       if (!item.path) {
         fail(`${item.id}: missing path`);
       } else {
@@ -89,7 +89,11 @@ function checkItems(items) {
         }
         // Verify path exists on disk
         const abs = path.join(ROOT, item.path);
-        if (item.type === "skill") {
+        if (item.type === "template") {
+          if (!fs.existsSync(abs)) {
+            fail(`${item.id}: missing template file ${item.path}`);
+          }
+        } else if (item.type === "skill") {
           const skillMd = path.join(abs, "SKILL.md");
           if (!fs.existsSync(skillMd)) {
             fail(`${item.id}: missing ${path.relative(ROOT, skillMd)}`);
@@ -125,9 +129,11 @@ function checkItems(items) {
           fail(`${item.id}: reference uses insecure http:// URL: ${ref}`);
         }
         if (/^https?:\/\//i.test(ref)) continue;
-        const base = item.type === "agent"
-          ? path.dirname(path.join(ROOT, item.path))
-          : path.join(ROOT, item.path);
+        // For skills: item.path is a directory — resolve refs from that directory.
+        // For agents/templates: item.path is a file — resolve refs from its parent directory.
+        const base = item.type === "skill"
+          ? path.join(ROOT, item.path)
+          : path.dirname(path.join(ROOT, item.path));
         const refAbs = path.resolve(base, ref);
         if (!fs.existsSync(refAbs)) {
           fail(`${item.id}: reference does not exist: ${ref}`);
