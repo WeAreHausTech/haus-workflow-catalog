@@ -1,6 +1,6 @@
 ---
 name: database-patterns
-description: Database router for PostgreSQL, MariaDB, MSSQL, Elasticsearch, and Redis data/model/query/cache changes.
+description: Database router for PostgreSQL, MariaDB, MySQL, MSSQL, Elasticsearch, and Redis data/model/query/cache changes.
 ---
 
 # Database Patterns

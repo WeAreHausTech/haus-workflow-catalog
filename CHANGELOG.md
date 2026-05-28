@@ -23,10 +23,14 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.sanity-patterns` — Sanity v3/v5 schema + GROQ + next-sanity router
 - `haus.strapi-patterns` — Strapi v5 content type + controller + service router
 - `haus.prisma-patterns` — Prisma schema + migration + query router
+- `haus.nextauth-patterns` — NextAuth.js / Auth.js provider, session, callback, middleware router
+
+### Changed (additional)
+- `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
 
 ### Changed
 - `haus.typescript6-patterns` → `haus.typescript5-patterns` `1.0.0 → 1.1.0`: renamed skill (id, path, dir, frontmatter, title) to match actual TypeScript 5.x versions used across haus repos
-- `haus.database-patterns` `1.0.0 → 1.1.0`: add `redis` stack to `requiresAny` + tags; SKILL.md now covers Redis cache/TTL/namespace inspection
+- `haus.database-patterns` `1.0.0 → 1.2.0`: add `redis` (1.1.0) then `mysql` (1.2.0) stacks to `requiresAny` + tags; SKILL.md now covers Redis cache/TTL/namespace inspection and MySQL
 - `haus.wordpress-acf-elementor-jetengine-patterns` `1.0.0 → 1.1.0`: add `elementor`, `acf-pro`, `jetengine` stack tokens to `requiresAny` so composer-driven Bedrock sites match without role detection
 - `haus.radix-shadcn-patterns` `1.0.0 → 1.1.0`: add `shadcn` stack token to `requiresAny`
 
