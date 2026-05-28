@@ -99,6 +99,6 @@ When `haus install` runs it writes `.haus-catalog.lock` in the project root:
 3 items out of date:
   haus.nextjs-patterns       1.0.0 → 1.1.0
   haus.react19-patterns      1.0.0 → 1.1.0
-  haus.typescript6-patterns  1.0.0 → 1.0.1
+  haus.typescript5-patterns  1.0.0 → 1.0.1
 Run `haus update --apply` to upgrade.
 ```

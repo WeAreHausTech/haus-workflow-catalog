@@ -1,9 +1,9 @@
 ---
-name: typescript6-patterns
+name: typescript5-patterns
 description: TypeScript router. Use for type contracts, API boundaries, generics, and strictness-safe refactors.
 ---
 
-# TypeScript6 Patterns
+# TypeScript 5 Patterns
 
 ## Use when
 

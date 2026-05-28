@@ -17,6 +17,15 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `schema/haus-lock.schema.json` — canonical lock file schema (moved from haus-ai-workflow)
 - `scripts/validation-rules.mjs` — shared validation rule constants (FORBIDDEN_TAGS, BANNED_AGENT_PHRASES, REQUIRED_*_SECTIONS, pattern constants)
 - `haus.haus-way-of-work` as `type: "template"` catalog item (was previously an unregistered file)
+- `haus.vitest-patterns` — Vitest unit/integration test router
+- `haus.jest-patterns` — Jest unit/integration test router (Nx-aware)
+- `haus.react-router-v7-patterns` — React Router v7 framework-mode SSR router
+
+### Changed
+- `haus.typescript6-patterns` → `haus.typescript5-patterns` `1.0.0 → 1.1.0`: renamed skill (id, path, dir, frontmatter, title) to match actual TypeScript 5.x versions used across haus repos
+- `haus.database-patterns` `1.0.0 → 1.1.0`: add `redis` stack to `requiresAny` + tags; SKILL.md now covers Redis cache/TTL/namespace inspection
+- `haus.wordpress-acf-elementor-jetengine-patterns` `1.0.0 → 1.1.0`: add `elementor`, `acf-pro`, `jetengine` stack tokens to `requiresAny` so composer-driven Bedrock sites match without role detection
+- `haus.radix-shadcn-patterns` `1.0.0 → 1.1.0`: add `shadcn` stack token to `requiresAny`
 
 ### Changed
 - `scripts/validate.mjs`: handles `type: "template"` items — checks file existence, resolves refs from file's parent directory
