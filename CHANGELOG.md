@@ -24,6 +24,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.strapi-patterns` — Strapi v5 content type + controller + service router
 - `haus.prisma-patterns` — Prisma schema + migration + query router
 - `haus.nextauth-patterns` — NextAuth.js / Auth.js provider, session, callback, middleware router
+- `haus.expo-react-native-patterns` — Expo Router + React Native + EAS build/submit router
 
 ### Changed (additional)
 - `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
