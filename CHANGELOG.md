@@ -25,6 +25,11 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.prisma-patterns` — Prisma schema + migration + query router
 - `haus.nextauth-patterns` — NextAuth.js / Auth.js provider, session, callback, middleware router
 - `haus.expo-react-native-patterns` — Expo Router + React Native + EAS build/submit router
+- `haus.i18next-patterns` — i18next translation key, namespace, SSR routing router
+- `haus.bullmq-patterns` — BullMQ queue/worker/scheduler/graceful-shutdown router
+- `haus.sentry-patterns` — Sentry SDK init, scope/breadcrumb, PII scrubbing router
+- `haus.prettier-setup` — Setup task for `@haus-tech/prettier-config` (triggered by `missing-prettier` token)
+- `haus.eslint-setup` — Setup task for `@haus-tech/tech-config` ESLint flat config (triggered by `missing-eslint` token)
 
 ### Changed (additional)
 - `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
