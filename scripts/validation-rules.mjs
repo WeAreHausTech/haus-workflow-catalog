@@ -4,7 +4,6 @@
  * SYNC REQUIRED: these constants must stay in sync with
  * haus-ai-workflow/src/catalog/validation-rules.ts.
  * When updating rules here, update the CLI file too (and vice versa).
- * See haus-workflow-catalog EXECUTION-PLAN.md F6.
  */
 
 /** Tags that identify unsupported stacks. Items using these tags fail validation. */

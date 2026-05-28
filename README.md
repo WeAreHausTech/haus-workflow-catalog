@@ -108,25 +108,13 @@ Key fields:
 | `ecosystem` | Family for cross-item conflict detection |
 | `intents` | Natural language phrases for fuzzy matching |
 
-## Versioning
+## Making changes
 
-Every catalog item carries a `version` field following semver (`X.Y.Z`). Bump rules:
+### Bumping a skill or agent
 
-| Change | Bump |
-|--------|------|
-| New guideline, extended scope | `MINOR` |
-| Bug fix, wording correction | `PATCH` |
-| Removed section, breaking scope change | `MAJOR` |
+When you change `SKILL.md`, any `references/` file, or an agent `.md`:
 
-The top-level `manifest.json#version` tracks the catalog schema itself, not item content.
-
-## Contributing
-
-### Bumping a skill or agent version
-
-When you change a skill's content (`SKILL.md` or any `references/` file), or an agent's `.md` file:
-
-1. **Bump the item's `version`** in `manifest.json`:
+1. Bump the item's `version` in `manifest.json`:
 
    | Change | Bump |
    |--------|------|
@@ -134,18 +122,24 @@ When you change a skill's content (`SKILL.md` or any `references/` file), or an 
    | Wording fix, typo, reordering | `PATCH` (x.x.1) |
    | Removed section, breaking scope change, renamed skill | `MAJOR` (1.x.x) |
 
-2. **Add entry to `CHANGELOG.md`** under `## [Unreleased]`:
+2. Add entry to `CHANGELOG.md` under `## [Unreleased]`:
+
    ```markdown
    ### Changed
    - **nextjs-patterns** `1.0.0 → 1.1.0`: Added RSC caching patterns to workflow.md
    ```
 
-3. PRs without a CHANGELOG entry for bumped items will be flagged by the validator.
+   PRs without a CHANGELOG entry for bumped items will be flagged by the validator.
+
+### Versioning the manifest itself
+
+`manifest.json#version` tracks the catalog schema, not item content. Bump it only when the schema or structure changes.
 
 ### Releasing
 
-1. Move `## [Unreleased]` entries to a new `## [X.Y.Z] - YYYY-MM-DD` section
+1. Move `## [Unreleased]` entries to a new `## [X.Y.Z] - YYYY-MM-DD` section in `CHANGELOG.md`
 2. Add a fresh empty `## [Unreleased]` section at the top
 3. Push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`
-4. GitHub Actions validates, creates GitHub Release, attaches `manifest.json` artifact
+4. GitHub Actions validates the catalog, creates a GitHub Release, and attaches `manifest.json` as an artifact
+
 

@@ -19,8 +19,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install @haus-tech/haus-workflow
+        run: npm install -g @haus-tech/haus-workflow
+
       - name: Validate catalog
-        run: node scripts/validate.mjs
+        run: haus validate-catalog ./manifest.json
 
       - name: Extract changelog entry
         id: changelog
