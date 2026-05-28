@@ -20,6 +20,9 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.vitest-patterns` — Vitest unit/integration test router
 - `haus.jest-patterns` — Jest unit/integration test router (Nx-aware)
 - `haus.react-router-v7-patterns` — React Router v7 framework-mode SSR router
+- `haus.sanity-patterns` — Sanity v3/v5 schema + GROQ + next-sanity router
+- `haus.strapi-patterns` — Strapi v5 content type + controller + service router
+- `haus.prisma-patterns` — Prisma schema + migration + query router
 
 ### Changed
 - `haus.typescript6-patterns` → `haus.typescript5-patterns` `1.0.0 → 1.1.0`: renamed skill (id, path, dir, frontmatter, title) to match actual TypeScript 5.x versions used across haus repos
