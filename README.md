@@ -15,17 +15,17 @@ templates/             — managed file templates (haus-way-of-work.md etc.)
 
 ## Validation
 
-Catalog is validated on every PR via a self-contained script (no external dependencies):
-
-```bash
-node scripts/validate.mjs
-```
-
-Once `@haus-tech/haus-workflow` is published (P9), CI will switch to:
+Catalog is validated on every PR via the published [`@haus-tech/haus-workflow`](https://www.npmjs.com/package/@haus-tech/haus-workflow) CLI:
 
 ```bash
 npm install -g @haus-tech/haus-workflow
 haus validate-catalog ./manifest.json
+```
+
+A self-contained fallback script remains available for offline checks:
+
+```bash
+node scripts/validate.mjs
 ```
 
 ## Schema
