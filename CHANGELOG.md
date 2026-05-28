@@ -11,6 +11,17 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-05-28
+
+### Fixed
+- All 52 manifest items now carry `reviewStatus: "approved"` and `riskLevel` (`low` for most; `medium` for stripe, qliro, auth-oidc, nextauth). Fields were defined in schema but unpopulated.
+- `release.yml` validation step switched from offline `node scripts/validate.mjs` to `haus validate-catalog ./manifest.json`, matching `validate.yml`.
+- Removed stale `EXECUTION-PLAN.md F6` reference from `scripts/validation-rules.mjs`.
+
+### Added
+- `LICENSE` (MIT).
+- README: Catalog overview with item count and compatibility note; How it works section (install/update flow, validation rule sync); Making changes section (bump rules, CHANGELOG requirement, release process).
+
 ## [2.0.0] - 2026-05-28
 
 ### Breaking Changes
