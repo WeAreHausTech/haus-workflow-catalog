@@ -30,6 +30,9 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.sentry-patterns` — Sentry SDK init, scope/breadcrumb, PII scrubbing router
 - `haus.prettier-setup` — Setup task for `@haus-tech/prettier-config` (triggered by `missing-prettier` token)
 - `haus.eslint-setup` — Setup task for `@haus-tech/tech-config` ESLint flat config (triggered by `missing-eslint` token)
+- `haus.stripe-patterns` — Stripe Elements, Checkout, webhooks, PCI-safe integration router
+- `haus.qliro-patterns` — Qliro Checkout via `@haus-tech/qliro-plugin` router
+- `haus.supabase-patterns` — Supabase client, RLS, Edge Functions, Storage router
 
 ### Changed (additional)
 - `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
