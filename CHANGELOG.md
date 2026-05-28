@@ -11,46 +11,39 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ## [Unreleased]
 
-### Added
-- `FUTURE-IMPROVEMENTS.md` — deferred task registry with rationale and implementation guides
-- `.gitignore` — expanded from single `.DS_Store` entry to full macOS/Node/editor ruleset
-- `schema/haus-lock.schema.json` — canonical lock file schema (moved from haus-ai-workflow)
-- `scripts/validation-rules.mjs` — shared validation rule constants (FORBIDDEN_TAGS, BANNED_AGENT_PHRASES, REQUIRED_*_SECTIONS, pattern constants)
-- `haus.haus-way-of-work` as `type: "template"` catalog item (was previously an unregistered file)
-- `haus.vitest-patterns` — Vitest unit/integration test router
-- `haus.jest-patterns` — Jest unit/integration test router (Nx-aware)
-- `haus.react-router-v7-patterns` — React Router v7 framework-mode SSR router
-- `haus.sanity-patterns` — Sanity v3/v5 schema + GROQ + next-sanity router
-- `haus.strapi-patterns` — Strapi v5 content type + controller + service router
-- `haus.prisma-patterns` — Prisma schema + migration + query router
-- `haus.nextauth-patterns` — NextAuth.js / Auth.js provider, session, callback, middleware router
-- `haus.expo-react-native-patterns` — Expo Router + React Native + EAS build/submit router
-- `haus.i18next-patterns` — i18next translation key, namespace, SSR routing router
-- `haus.bullmq-patterns` — BullMQ queue/worker/scheduler/graceful-shutdown router
-- `haus.sentry-patterns` — Sentry SDK init, scope/breadcrumb, PII scrubbing router
-- `haus.prettier-setup` — Setup task for `@haus-tech/prettier-config` (triggered by `missing-prettier` token)
-- `haus.eslint-setup` — Setup task for `@haus-tech/tech-config` ESLint flat config (triggered by `missing-eslint` token)
-- `haus.stripe-patterns` — Stripe Elements, Checkout, webhooks, PCI-safe integration router
-- `haus.qliro-patterns` — Qliro Checkout via `@haus-tech/qliro-plugin` router
-- `haus.supabase-patterns` — Supabase client, RLS, Edge Functions, Storage router
+## [2.0.0] - 2026-05-28
 
-### Changed (additional)
-- `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
+### Breaking Changes
+- `haus.typescript6-patterns` renamed to `haus.typescript5-patterns` (`1.0.0 → 1.1.0`). Path, dir, frontmatter, and title updated to reflect actual TypeScript 5.x usage. Consumers with `haus.typescript6-patterns` in `haus.lock.json` must re-run `haus update --apply` to pick up the new id. Requires `@haus-tech/haus-workflow >= 0.4.0`.
+
+### Added
+- 14 new skills closing the detection-improvement plan (T2–T28):
+  - `haus.vitest-patterns` — Vitest unit/integration test router
+  - `haus.jest-patterns` — Jest unit/integration test router (Nx-aware)
+  - `haus.react-router-v7-patterns` — React Router v7 framework-mode SSR router
+  - `haus.sanity-patterns` — Sanity v3/v5 schema + GROQ + next-sanity router
+  - `haus.strapi-patterns` — Strapi v5 content type + controller + service router
+  - `haus.prisma-patterns` — Prisma schema + migration + query router
+  - `haus.nextauth-patterns` — NextAuth.js / Auth.js provider/session/callback/middleware router
+  - `haus.expo-react-native-patterns` — Expo Router + React Native + EAS build/submit router
+  - `haus.i18next-patterns` — i18next namespace/key/SSR routing router
+  - `haus.bullmq-patterns` — BullMQ queue/worker/scheduler/graceful-shutdown router
+  - `haus.sentry-patterns` — Sentry SDK init, scope/breadcrumb, PII scrubbing router
+  - `haus.prettier-setup` — Setup task for `@haus-tech/prettier-config` (triggered by `missing-prettier` token)
+  - `haus.eslint-setup` — Setup task for `@haus-tech/tech-config` ESLint flat config (triggered by `missing-eslint` token)
+  - `haus.stripe-patterns` — Stripe Elements, Checkout, webhooks, PCI-safe integration router
+  - `haus.qliro-patterns` — Qliro Checkout via `@haus-tech/qliro-plugin` router
+  - `haus.supabase-patterns` — Supabase client, RLS, Edge Functions, Storage router
 
 ### Changed
-- `haus.typescript6-patterns` → `haus.typescript5-patterns` `1.0.0 → 1.1.0`: renamed skill (id, path, dir, frontmatter, title) to match actual TypeScript 5.x versions used across haus repos
+- `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
 - `haus.database-patterns` `1.0.0 → 1.2.0`: add `redis` (1.1.0) then `mysql` (1.2.0) stacks to `requiresAny` + tags; SKILL.md now covers Redis cache/TTL/namespace inspection and MySQL
 - `haus.wordpress-acf-elementor-jetengine-patterns` `1.0.0 → 1.1.0`: add `elementor`, `acf-pro`, `jetengine` stack tokens to `requiresAny` so composer-driven Bedrock sites match without role detection
 - `haus.radix-shadcn-patterns` `1.0.0 → 1.1.0`: add `shadcn` stack token to `requiresAny`
+- CI validation switched from `node scripts/validate.mjs` to the published `@haus-tech/haus-workflow` CLI (`haus validate-catalog ./manifest.json`); script remains available for offline checks.
 
-### Changed
-- `scripts/validate.mjs`: handles `type: "template"` items — checks file existence, resolves refs from file's parent directory
-- `scripts/validate.mjs`: added `checkChangelogCoverage()` — warns when item version > 1.0.0 has no CHANGELOG.md entry
-- `README.md`: added `## Contributing` section with per-item bump guide and release process; updated Schema section to reference JSON Schema files
-- `haus.storybook-patterns`: correct `ecosystem` from `"react"` to `"storybook"`
-
-### Changed
-- `scripts/validate.mjs`: refactored to import all rule constants from `validation-rules.mjs` instead of inline declarations
+### Compatibility
+- This release pairs with `@haus-tech/haus-workflow >= 0.9.0` (allowlist contains all new tags: vitest, jest, redis, sanity, strapi, prisma, mysql, saml2, next-auth, expo, react-native, mobile, i18next, bullmq, sentry, missing-prettier, missing-eslint, stripe, qliro, supabase, etc.).
 
 ---
 
