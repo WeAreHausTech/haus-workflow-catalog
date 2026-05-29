@@ -16,7 +16,7 @@ Compatible with `@haus-tech/haus-workflow >= 0.9.0`.
 manifest.json          — catalog item registry
 skills/                — skill packages (SKILL.md + references/)
 agents/                — agent definition files
-templates/             — managed file templates (haus-way-of-work.md etc.)
+templates/             — managed file templates (agentic-workflow-standard.md etc.)
 scripts/               — validation scripts (validate.mjs, validation-rules.mjs)
 CHANGELOG.md           — release history
 ```

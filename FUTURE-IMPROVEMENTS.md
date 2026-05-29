@@ -24,4 +24,3 @@ if (eco === 'testing' || eco === 'playwright' || eco === 'storybook') {
   return intents
 }
 ```
-
