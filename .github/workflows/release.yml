@@ -22,6 +22,11 @@ jobs:
       - name: Install @haus-tech/haus-workflow
         run: npm install -g @haus-tech/haus-workflow
 
+      - name: Verify manifest version matches tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node scripts/check-manifest-version.mjs "$VERSION"
+
       - name: Validate catalog
         run: haus validate-catalog ./manifest.json
 

@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v5
         with:
@@ -21,3 +23,9 @@ jobs:
 
       - name: Validate catalog manifest
         run: haus validate-catalog ./manifest.json
+
+      - name: Check item versions bumped for changed files
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/check-item-versions.mjs $BASE_SHA

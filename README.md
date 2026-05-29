@@ -1,4 +1,4 @@
-# haus-workflow-catalog
+# Haus Workflow Catalog
 
 > Internal Haus tool. Open-source but unsupported for external use. No external issues, PRs, or roadmap commitments accepted.
 
@@ -82,31 +82,32 @@ node scripts/validate.mjs
 ## Schema
 
 Each item in `manifest.json` is a `CatalogItem` — canonical JSON Schema:
+
 - [`schema/catalog-item.schema.json`](schema/catalog-item.schema.json)
 - [`schema/manifest.schema.json`](schema/manifest.schema.json)
 - [`schema/haus-lock.schema.json`](schema/haus-lock.schema.json)
 
 Key fields:
 
-| Field | Description |
-|-------|-------------|
-| `id` | Unique identifier (`haus.<name>`) |
-| `type` | `skill` \| `agent` \| `template` |
-| `source` | `haus` (first-party) \| `curated` (reviewed external) |
-| `version` | Semver — PATCH: wording fix, MINOR: new guideline, MAJOR: breaking |
-| `path` | Relative path to skill dir or agent/template file |
-| `title` | Human-readable display name |
-| `purpose` | One-line description of what the item provides |
-| `whenToUse` / `whenNotToUse` | Activation guidance for the AI |
-| `tags` | Searchable stack tags |
-| `requiresAny` | Match clauses — item only installs if at least one matches |
-| `repoRoles` | Repo roles this item targets |
-| `installMode` | How the CLI installs this item |
-| `reviewStatus` | `approved` required for install/recommendation |
-| `riskLevel` | `blocked` items must not install |
-| `safetyNotes` | Guardrails the AI must follow when using this item |
-| `ecosystem` | Family for cross-item conflict detection |
-| `intents` | Natural language phrases for fuzzy matching |
+| Field                        | Description                                                        |
+| ---------------------------- | ------------------------------------------------------------------ |
+| `id`                         | Unique identifier (`haus.<name>`)                                  |
+| `type`                       | `skill` \| `agent` \| `template`                                   |
+| `source`                     | `haus` (first-party) \| `curated` (reviewed external)              |
+| `version`                    | Semver — PATCH: wording fix, MINOR: new guideline, MAJOR: breaking |
+| `path`                       | Relative path to skill dir or agent/template file                  |
+| `title`                      | Human-readable display name                                        |
+| `purpose`                    | One-line description of what the item provides                     |
+| `whenToUse` / `whenNotToUse` | Activation guidance for the AI                                     |
+| `tags`                       | Searchable stack tags                                              |
+| `requiresAny`                | Match clauses — item only installs if at least one matches         |
+| `repoRoles`                  | Repo roles this item targets                                       |
+| `installMode`                | How the CLI installs this item                                     |
+| `reviewStatus`               | `approved` required for install/recommendation                     |
+| `riskLevel`                  | `blocked` items must not install                                   |
+| `safetyNotes`                | Guardrails the AI must follow when using this item                 |
+| `ecosystem`                  | Family for cross-item conflict detection                           |
+| `intents`                    | Natural language phrases for fuzzy matching                        |
 
 ## Making changes
 
@@ -116,16 +117,17 @@ When you change `SKILL.md`, any `references/` file, or an agent `.md`:
 
 1. Bump the item's `version` in `manifest.json`:
 
-   | Change | Bump |
-   |--------|------|
-   | New guideline, extended scope, new reference file | `MINOR` (x.1.x) |
-   | Wording fix, typo, reordering | `PATCH` (x.x.1) |
+   | Change                                                | Bump            |
+   | ----------------------------------------------------- | --------------- |
+   | New guideline, extended scope, new reference file     | `MINOR` (x.1.x) |
+   | Wording fix, typo, reordering                         | `PATCH` (x.x.1) |
    | Removed section, breaking scope change, renamed skill | `MAJOR` (1.x.x) |
 
 2. Add entry to `CHANGELOG.md` under `## [Unreleased]`:
 
    ```markdown
    ### Changed
+
    - **nextjs-patterns** `1.0.0 → 1.1.0`: Added RSC caching patterns to workflow.md
    ```
 
@@ -141,5 +143,3 @@ When you change `SKILL.md`, any `references/` file, or an agent `.md`:
 2. Add a fresh empty `## [Unreleased]` section at the top
 3. Push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`
 4. GitHub Actions validates the catalog, creates a GitHub Release, and attaches `manifest.json` as an artifact
-
-
