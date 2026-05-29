@@ -1,3 +1,6 @@
+@.claude/WORKFLOW.md
+@.claude/workflow-config.md
+
 # haus-workflow-catalog
 
 Content catalog for `@haus-tech/haus-workflow`. Consumed at runtime by the CLI — not bundled into the npm package.
