@@ -11,18 +11,10 @@
       "purpose": "Provide baseline deterministic engineering, validation, and security guardrails.",
       "whenToUse": "Use as default baseline in supported Haus workflows.",
       "whenNotToUse": "Do not use for unsupported stacks or non-development workflows.",
-      "references": [
-        "references/conventions.md"
-      ],
-      "safetyNotes": [
-        "Never read secrets or customer exports."
-      ],
+      "references": ["references/conventions.md"],
+      "safetyNotes": ["Never read secrets or customer exports."],
       "tokenBudget": 1800,
-      "tags": [
-        "haus",
-        "quality",
-        "security"
-      ],
+      "tags": ["haus", "quality", "security"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1800,
@@ -48,15 +40,8 @@
         "https://nextjs.org/llms.txt"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "frontend",
-        "nextjs",
-        "react",
-        "typescript"
-      ],
-      "repoRoles": [
-        "next-app"
-      ],
+      "tags": ["frontend", "nextjs", "react", "typescript"],
+      "repoRoles": ["next-app"],
       "requiresAny": [
         {
           "stack": "nextjs"
@@ -88,16 +73,8 @@
         "https://react.dev/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "frontend",
-        "react",
-        "typescript"
-      ],
-      "repoRoles": [
-        "react-app",
-        "next-app",
-        "design-system"
-      ],
+      "tags": ["frontend", "react", "typescript"],
+      "repoRoles": ["react-app", "next-app", "design-system"],
       "requiresAny": [
         {
           "stack": "react19"
@@ -129,11 +106,7 @@
         "https://www.typescriptlang.org/docs/handbook/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "typescript",
-        "frontend",
-        "backend"
-      ],
+      "tags": ["typescript", "frontend", "backend"],
       "repoRoles": [
         "next-app",
         "react-app",
@@ -177,16 +150,8 @@
         "https://vitest.dev/guide"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "vite8",
-        "frontend",
-        "typescript"
-      ],
-      "repoRoles": [
-        "vite-app",
-        "react-app",
-        "vue-app"
-      ],
+      "tags": ["vite8", "frontend", "typescript"],
+      "repoRoles": ["vite-app", "react-app", "vue-app"],
       "requiresAny": [
         {
           "stack": "vite8"
@@ -218,15 +183,8 @@
         "https://reactrouter.com/start/framework/installation"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "frontend",
-        "react",
-        "typescript"
-      ],
-      "repoRoles": [
-        "react-router-app",
-        "react-app"
-      ],
+      "tags": ["frontend", "react", "typescript"],
+      "repoRoles": ["react-router-app", "react-app"],
       "requiresAny": [
         {
           "stack": "react-router-v7"
@@ -261,15 +219,8 @@
         "https://docs.expo.dev/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "expo",
-        "react-native",
-        "mobile",
-        "react"
-      ],
-      "repoRoles": [
-        "expo-app"
-      ],
+      "tags": ["expo", "react-native", "mobile", "react"],
+      "repoRoles": ["expo-app"],
       "requiresAny": [
         {
           "stack": "expo"
@@ -310,17 +261,8 @@
         "https://www.i18next.com/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "i18next",
-        "i18n",
-        "frontend"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app",
-        "vue-app",
-        "vite-app"
-      ],
+      "tags": ["i18next", "i18n", "frontend"],
+      "repoRoles": ["next-app", "react-app", "vue-app", "vite-app"],
       "requiresAny": [
         {
           "stack": "i18next"
@@ -355,15 +297,8 @@
         "https://docs.bullmq.io/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "bullmq",
-        "queue",
-        "backend"
-      ],
-      "repoRoles": [
-        "vendure-app",
-        "nestjs-api"
-      ],
+      "tags": ["bullmq", "queue", "backend"],
+      "repoRoles": ["vendure-app", "nestjs-api"],
       "requiresAny": [
         {
           "stack": "bullmq"
@@ -395,16 +330,8 @@
         "https://docs.sentry.io/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "sentry",
-        "observability",
-        "tooling"
-      ],
-      "repoRoles": [
-        "next-app",
-        "nestjs-api",
-        "vendure-app"
-      ],
+      "tags": ["sentry", "observability", "tooling"],
+      "repoRoles": ["next-app", "nestjs-api", "vendure-app"],
       "requiresAny": [
         {
           "stack": "sentry"
@@ -441,11 +368,7 @@
         "references/workflow.md"
       ],
       "tokenBudget": 800,
-      "tags": [
-        "prettier",
-        "tooling",
-        "quality"
-      ],
+      "tags": ["prettier", "tooling", "quality"],
       "repoRoles": [],
       "requiresAny": [
         {
@@ -474,11 +397,7 @@
         "references/workflow.md"
       ],
       "tokenBudget": 800,
-      "tags": [
-        "eslint",
-        "tooling",
-        "quality"
-      ],
+      "tags": ["eslint", "tooling", "quality"],
       "repoRoles": [],
       "requiresAny": [
         {
@@ -508,16 +427,8 @@
         "https://docs.stripe.com/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "stripe",
-        "payments",
-        "tooling"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app",
-        "vendure-plugin"
-      ],
+      "tags": ["stripe", "payments", "tooling"],
+      "repoRoles": ["next-app", "react-app", "vendure-plugin"],
       "requiresAny": [
         {
           "stack": "stripe"
@@ -551,16 +462,8 @@
         "references/workflow.md"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "qliro",
-        "payments",
-        "tooling"
-      ],
-      "repoRoles": [
-        "vendure-app",
-        "vendure-plugin",
-        "next-app"
-      ],
+      "tags": ["qliro", "payments", "tooling"],
+      "repoRoles": ["vendure-app", "vendure-plugin", "next-app"],
       "requiresAny": [
         {
           "stack": "qliro"
@@ -592,15 +495,8 @@
         "https://supabase.com/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "supabase",
-        "database",
-        "backend"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app"
-      ],
+      "tags": ["supabase", "database", "backend"],
+      "repoRoles": ["next-app", "react-app"],
       "requiresAny": [
         {
           "stack": "supabase"
@@ -635,15 +531,8 @@
         "https://www.sanity.io/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "sanity",
-        "backend",
-        "cms"
-      ],
-      "repoRoles": [
-        "sanity-studio",
-        "next-app"
-      ],
+      "tags": ["sanity", "backend", "cms"],
+      "repoRoles": ["sanity-studio", "next-app"],
       "requiresAny": [
         {
           "stack": "sanity"
@@ -681,14 +570,8 @@
         "https://docs.strapi.io/dev-docs/intro"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "strapi",
-        "backend",
-        "cms"
-      ],
-      "repoRoles": [
-        "strapi-app"
-      ],
+      "tags": ["strapi", "backend", "cms"],
+      "repoRoles": ["strapi-app"],
       "requiresAny": [
         {
           "stack": "strapi"
@@ -723,15 +606,8 @@
         "https://www.prisma.io/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "prisma",
-        "backend",
-        "database"
-      ],
-      "repoRoles": [
-        "next-app",
-        "nestjs-api"
-      ],
+      "tags": ["prisma", "backend", "database"],
+      "repoRoles": ["next-app", "nestjs-api"],
       "requiresAny": [
         {
           "stack": "prisma"
@@ -766,17 +642,8 @@
         "https://docs.vendure.io/llms.txt"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "backend",
-        "vendure",
-        "nestjs",
-        "graphql",
-        "typescript"
-      ],
-      "repoRoles": [
-        "vendure-plugin",
-        "vendure-app"
-      ],
+      "tags": ["backend", "vendure", "nestjs", "graphql", "typescript"],
+      "repoRoles": ["vendure-plugin", "vendure-app"],
       "requiresAny": [
         {
           "stack": "vendure3"
@@ -811,15 +678,8 @@
         "https://laravel.com/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "backend",
-        "laravel",
-        "php"
-      ],
-      "repoRoles": [
-        "laravel-app",
-        "laravel-nova-app"
-      ],
+      "tags": ["backend", "laravel", "php"],
+      "repoRoles": ["laravel-app", "laravel-nova-app"],
       "requiresAny": [
         {
           "stack": "laravel"
@@ -851,15 +711,8 @@
         "https://developer.wordpress.org/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "backend",
-        "wordpress",
-        "php"
-      ],
-      "repoRoles": [
-        "wordpress-site",
-        "wordpress-bedrock-site"
-      ],
+      "tags": ["backend", "wordpress", "php"],
+      "repoRoles": ["wordpress-site", "wordpress-bedrock-site"],
       "requiresAny": [
         {
           "stack": "wordpress"
@@ -890,14 +743,8 @@
         "references/workflow.md"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "backend",
-        "dotnet",
-        "csharp"
-      ],
-      "repoRoles": [
-        "dotnet-service"
-      ],
+      "tags": ["backend", "dotnet", "csharp"],
+      "repoRoles": ["dotnet-service"],
       "requiresAny": [
         {
           "stack": "dotnet"
@@ -926,16 +773,8 @@
         "https://playwright.dev/docs/intro"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "testing",
-        "playwright"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app",
-        "vue-app",
-        "test-suite"
-      ],
+      "tags": ["testing", "playwright"],
+      "repoRoles": ["next-app", "react-app", "vue-app", "test-suite"],
       "requiresAny": [
         {
           "stack": "playwright"
@@ -957,11 +796,7 @@
       "type": "agent",
       "path": "agents/code-reviewer.md",
       "title": "Haus code reviewer agent",
-      "tags": [
-        "review",
-        "quality",
-        "security"
-      ],
+      "tags": ["review", "quality", "security"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1400,
@@ -977,11 +812,7 @@
       "type": "agent",
       "path": "agents/test-reviewer.md",
       "title": "Haus test reviewer agent",
-      "tags": [
-        "review",
-        "testing",
-        "quality"
-      ],
+      "tags": ["review", "testing", "quality"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1400,
@@ -996,10 +827,7 @@
       "type": "agent",
       "path": "agents/security-reviewer.md",
       "title": "Haus security reviewer agent",
-      "tags": [
-        "review",
-        "security"
-      ],
+      "tags": ["review", "security"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1400,
@@ -1014,11 +842,7 @@
       "type": "agent",
       "path": "agents/docs-researcher.md",
       "title": "Haus docs researcher agent",
-      "tags": [
-        "review",
-        "quality",
-        "workflow"
-      ],
+      "tags": ["review", "quality", "workflow"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1200,
@@ -1033,11 +857,7 @@
       "type": "agent",
       "path": "agents/planner.md",
       "title": "Haus planner agent",
-      "tags": [
-        "workflow",
-        "quality",
-        "review"
-      ],
+      "tags": ["workflow", "quality", "review"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1200,
@@ -1062,14 +882,8 @@
         "https://docs.vendure.io/llms.txt"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "vendure3",
-        "nestjs",
-        "graphql"
-      ],
-      "repoRoles": [
-        "vendure-app"
-      ],
+      "tags": ["vendure3", "nestjs", "graphql"],
+      "repoRoles": ["vendure-app"],
       "requiresAny": [
         {
           "stack": "vendure3"
@@ -1101,14 +915,8 @@
         "https://docs.nestjs.com/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "nestjs",
-        "graphql",
-        "typescript5"
-      ],
-      "repoRoles": [
-        "nestjs-api"
-      ],
+      "tags": ["nestjs", "graphql", "typescript5"],
+      "repoRoles": ["nestjs-api"],
       "requiresAny": [
         {
           "stack": "nestjs"
@@ -1143,13 +951,8 @@
         "https://nx.dev/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "nx21",
-        "yarn4"
-      ],
-      "repoRoles": [
-        "nx-monorepo"
-      ],
+      "tags": ["nx21", "yarn4"],
+      "repoRoles": ["nx-monorepo"],
       "requiresAny": [
         {
           "role": "nx-monorepo"
@@ -1184,13 +987,8 @@
         "https://turbo.build/repo/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "turbo",
-        "yarn4"
-      ],
-      "repoRoles": [
-        "turbo-monorepo"
-      ],
+      "tags": ["turbo", "yarn4"],
+      "repoRoles": ["turbo-monorepo"],
       "requiresAny": [
         {
           "role": "turbo-monorepo"
@@ -1223,15 +1021,8 @@
         "https://tanstack.com/router/latest/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "tanstack-query",
-        "tanstack-router",
-        "react19"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app"
-      ],
+      "tags": ["tanstack-query", "tanstack-router", "react19"],
+      "repoRoles": ["next-app", "react-app"],
       "requiresAny": [
         {
           "dependency": "@tanstack/react-query"
@@ -1270,15 +1061,8 @@
         "https://www.radix-ui.com/primitives/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "radix",
-        "shadcn",
-        "react19"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app"
-      ],
+      "tags": ["radix", "shadcn", "react19"],
+      "repoRoles": ["next-app", "react-app"],
       "requiresAny": [
         {
           "stack": "shadcn"
@@ -1322,16 +1106,8 @@
         "https://tailwindcss.com/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "tailwind",
-        "scss",
-        "react19"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app",
-        "vite-app"
-      ],
+      "tags": ["tailwind", "scss", "react19"],
+      "repoRoles": ["next-app", "react-app", "vite-app"],
       "requiresAny": [
         {
           "dependency": "tailwindcss"
@@ -1366,12 +1142,8 @@
         "https://vuejs.org/guide"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "vue"
-      ],
-      "repoRoles": [
-        "vue-app"
-      ],
+      "tags": ["vue"],
+      "repoRoles": ["vue-app"],
       "requiresAny": [
         {
           "stack": "vue"
@@ -1403,13 +1175,8 @@
         "https://laravel.com/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "laravel-nova",
-        "laravel"
-      ],
-      "repoRoles": [
-        "laravel-nova-app"
-      ],
+      "tags": ["laravel-nova", "laravel"],
+      "repoRoles": ["laravel-nova-app"],
       "requiresAny": [
         {
           "dependency": "laravel/nova"
@@ -1438,13 +1205,8 @@
         "https://developer.wordpress.org/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "wordpress",
-        "bedrock"
-      ],
-      "repoRoles": [
-        "wordpress-bedrock-site"
-      ],
+      "tags": ["wordpress", "bedrock"],
+      "repoRoles": ["wordpress-bedrock-site"],
       "requiresAny": [
         {
           "role": "wordpress-bedrock-site"
@@ -1476,13 +1238,8 @@
         "https://developer.wordpress.org/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "wordpress"
-      ],
-      "repoRoles": [
-        "wordpress-bedrock-site",
-        "wordpress-vanilla-site"
-      ],
+      "tags": ["wordpress"],
+      "repoRoles": ["wordpress-bedrock-site", "wordpress-vanilla-site"],
       "requiresAny": [
         {
           "role": "wordpress-bedrock-site"
@@ -1525,12 +1282,8 @@
         "references/workflow.md"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "dotnet"
-      ],
-      "repoRoles": [
-        "dotnet-service"
-      ],
+      "tags": ["dotnet"],
+      "repoRoles": ["dotnet-service"],
       "requiresAny": [
         {
           "stack": "dotnet"
@@ -1561,12 +1314,7 @@
         "references/workflow.md"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "oidc",
-        "azure-ad",
-        "bankid",
-        "saml2"
-      ],
+      "tags": ["oidc", "azure-ad", "bankid", "saml2"],
       "repoRoles": [],
       "requiresAny": [
         {
@@ -1605,14 +1353,8 @@
         "https://authjs.dev/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "next-auth",
-        "auth",
-        "nextjs"
-      ],
-      "repoRoles": [
-        "next-app"
-      ],
+      "tags": ["next-auth", "auth", "nextjs"],
+      "repoRoles": ["next-app"],
       "requiresAny": [
         {
           "stack": "next-auth"
@@ -1697,10 +1439,7 @@
         "references/workflow.md"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "yarn4",
-        "pnpm89"
-      ],
+      "tags": ["yarn4", "pnpm89"],
       "repoRoles": [],
       "requiresAny": [
         {
@@ -1733,9 +1472,7 @@
         "https://vitest.dev/guide"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "testing-library"
-      ],
+      "tags": ["testing-library"],
       "repoRoles": [],
       "requiresAny": [
         {
@@ -1774,11 +1511,7 @@
         "https://vitest.dev/guide/"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "testing",
-        "vitest",
-        "typescript"
-      ],
+      "tags": ["testing", "vitest", "typescript"],
       "repoRoles": [
         "next-app",
         "react-app",
@@ -1818,16 +1551,8 @@
         "https://jestjs.io/docs/getting-started"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "testing",
-        "jest",
-        "typescript"
-      ],
-      "repoRoles": [
-        "next-app",
-        "react-app",
-        "nx-monorepo"
-      ],
+      "tags": ["testing", "jest", "typescript"],
+      "repoRoles": ["next-app", "react-app", "nx-monorepo"],
       "requiresAny": [
         {
           "stack": "jest"
@@ -1862,13 +1587,8 @@
         "https://laravel.com/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "phpunit"
-      ],
-      "repoRoles": [
-        "laravel-app",
-        "laravel-nova-app"
-      ],
+      "tags": ["phpunit"],
+      "repoRoles": ["laravel-app", "laravel-nova-app"],
       "requiresAny": [
         {
           "stack": "phpunit"
@@ -1900,14 +1620,8 @@
         "https://storybook.js.org/docs"
       ],
       "tokenBudget": 1200,
-      "tags": [
-        "storybook"
-      ],
-      "repoRoles": [
-        "react-app",
-        "next-app",
-        "vite-app"
-      ],
+      "tags": ["storybook"],
+      "repoRoles": ["react-app", "next-app", "vite-app"],
       "requiresAny": [
         {
           "stack": "storybook"
@@ -1945,10 +1659,7 @@
         "references/verification.md"
       ],
       "tokenBudget": 800,
-      "tags": [
-        "security",
-        "review"
-      ],
+      "tags": ["security", "review"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1200,
@@ -1975,11 +1686,7 @@
         "references/rollback.md"
       ],
       "tokenBudget": 800,
-      "tags": [
-        "quality",
-        "security",
-        "review"
-      ],
+      "tags": ["quality", "security", "review"],
       "repoRoles": [],
       "requiresAny": [],
       "tokenEstimate": 1200,
@@ -1999,11 +1706,7 @@
       "purpose": "Universal project instructions: context loading, output discipline, commit hygiene, safety rails, PR workflow.",
       "whenToUse": "Install in every project using haus-workflow. Always active as baseline project instructions.",
       "whenNotToUse": "Never skip this template.",
-      "tags": [
-        "workflow",
-        "baseline",
-        "project-instructions"
-      ],
+      "tags": ["workflow", "baseline", "project-instructions"],
       "repoRoles": [],
       "installMode": "copy-selected",
       "tokenEstimate": 500,

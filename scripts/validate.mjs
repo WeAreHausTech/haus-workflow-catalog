@@ -1,6 +1,13 @@
 #!/usr/bin/env node
 /**
  * Standalone catalog validator — no external dependencies, runs with Node.js ≥18.
+ * Catches structural, content, and filesystem consistency errors in manifest.json
+ * and the skill/agent/template files it references.
+ *
+ * Exists as a standalone Node.js script (no haus CLI required) so that CI can
+ * run validation during repo bootstrap and in environments where the CLI is not
+ * yet installed. The haus CLI's `validate-catalog` command runs the same checks
+ * via the shared validation-rules.mjs constants.
  *
  * Schema (source of truth for CatalogItem shape):
  *   schema/catalog-item.schema.json
@@ -30,6 +37,8 @@ import {
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const MANIFEST = path.join(ROOT, "manifest.json");
 
+// Slightly broader than the schema pattern: allows pre-release (-rc.1) and build
+// metadata (+001) so release candidates can be validated before the tag is cut.
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/;
 
 let failures = 0;
@@ -54,6 +63,8 @@ function checkManifest() {
 
 function checkItems(items) {
   const seenIds = new Map();
+  // Paths must be globally unique: the CLI uses path as the install target,
+  // so two items sharing a path would overwrite each other on install.
   const seenPaths = new Map();
 
   for (let i = 0; i < items.length; i++) {
@@ -118,6 +129,8 @@ function checkItems(items) {
         }
       }
 
+      // "haus" source is implicitly trusted. "curated" items additionally require
+      // explicit approval — source alone doesn't clear an external item for install.
       if (item.source !== "haus" && !(item.source === "curated" && item.reviewStatus === "approved")) {
         fail(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`);
       }
@@ -147,6 +160,8 @@ function checkItems(items) {
 }
 
 function checkShippedMarkdown() {
+  // Templates are markdown prose (project instruction files for CLAUDE.md),
+  // not runnable commands — risky-install and placeholder checks don't apply.
   const dirs = ["skills", "agents"];
   for (const dir of dirs) {
     const abs = path.join(ROOT, dir);
@@ -198,7 +213,9 @@ function checkChangelogCoverage(items) {
   }
 }
 
-// Run
+// checkItems and checkChangelogCoverage depend on a valid manifest.
+// checkShippedMarkdown is independent — runs even when manifest is broken
+// so all failures surface in a single pass.
 const manifest = checkManifest();
 if (manifest) {
   if (!manifest.version || !SEMVER_RE.test(manifest.version)) {

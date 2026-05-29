@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 /**
- * For each manifest item whose source files changed since <base-ref>,
- * verify the item's version was bumped in manifest.json.
+ * Prevents catalog items from shipping with stale version numbers after their
+ * source files change. Runs on every PR to catch missed bumps early — far better
+ * than discovering a stale version after a release tag is already cut.
+ *
+ * Called by: .github/workflows/validate.yml (pull_request events only).
  *
  * Usage: node scripts/check-item-versions.mjs <base-ref>
  * Example: node scripts/check-item-versions.mjs origin/main
- *
- * Exits 1 if any item's files changed but its version was not bumped.
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -21,7 +22,9 @@ if (!baseRef) {
   process.exit(1);
 }
 
-// Get changed files between base and HEAD
+// Three-dot diff: all commits reachable from HEAD but not from baseRef.
+// Handles multi-commit PRs correctly — two-dot (..) would miss commits
+// not directly between base and HEAD in a non-linear history.
 const changedFiles = execSync(`git diff --name-only ${baseRef}...HEAD`, { cwd: ROOT })
   .toString().trim().split("\n").filter(Boolean);
 
@@ -55,7 +58,7 @@ for (const item of currentManifest.items ?? []) {
   if (!item.path) continue;
 
   const baseVersion = baseVersions.get(item.path);
-  if (baseVersion === undefined) continue; // new item — no prior version to compare
+  if (baseVersion === undefined) continue; // new item — semver format enforced by validate.mjs instead
 
   // Check if any file under this item's path changed
   const prefix = item.path.replace(/\\/g, "/");

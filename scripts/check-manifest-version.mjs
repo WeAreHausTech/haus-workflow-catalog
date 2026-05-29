@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 /**
- * Verify manifest.json top-level version matches the expected version string.
+ * Enforces that manifest.json "version" matches the release tag before a GitHub
+ * release is created. Without this gate the published manifest.json artifact —
+ * which haus CLI consumers download — could advertise the wrong version.
+ *
+ * Called by: .github/workflows/release.yml, before the catalog is validated or
+ * the GitHub Release is created.
+ *
  * Usage: node scripts/check-manifest-version.mjs <expected-version>
  * Example: node scripts/check-manifest-version.mjs 2.0.2
  */
