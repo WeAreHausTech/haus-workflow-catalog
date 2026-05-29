@@ -5,9 +5,10 @@ name: Dispatch fixture sync
 # test fixture stays in sync with the published manifest.
 #
 # Required secret: HAUS_WORKFLOW_DISPATCH_TOKEN
-#   A fine-grained PAT (or classic PAT) scoped to WeAreHausTech/haus-workflow
-#   with the `actions: write` permission (fine-grained) or `workflow` scope
-#   (classic). Add it under this repo's Settings → Secrets → Actions.
+#   A fine-grained PAT scoped to WeAreHausTech/haus-workflow with
+#   the `contents: write` permission (fine-grained) or `repo` scope (classic).
+#   Add it under this repo's Settings → Secrets → Actions,
+#   or as an org-level secret shared to both repos.
 
 on:
   push:
@@ -21,8 +22,16 @@ jobs:
     steps:
       - name: Trigger sync-catalog-fixture in haus-workflow
         run: |
-          gh workflow run sync-catalog-fixture.yml \
-            --repo WeAreHausTech/haus-workflow \
-            --ref main
-        env:
-          GH_TOKEN: ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN }}
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/WeAreHausTech/haus-workflow/dispatches \
+            -d '{
+              "event_type": "sync-catalog-fixture",
+              "client_payload": {
+                "sha": "${{ github.sha }}",
+                "ref": "${{ github.ref_name }}"
+              }
+            }'
