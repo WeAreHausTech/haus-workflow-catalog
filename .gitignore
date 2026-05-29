@@ -5,8 +5,14 @@
 .Spotlight-V100
 .Trashes
 
-# Node (for scripts/ development)
+# Node / Yarn 4 PnP
 node_modules/
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
 npm-debug.log
 yarn-error.log
 

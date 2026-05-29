@@ -87,7 +87,6 @@ In `src/commands/validate-catalog.ts`:
    ```
 
 2. Add `auditShippedFiles(manifestDir, items)` — for each skill/agent/template item:
-
    - Skill: check `{path}/SKILL.md` exists and contains `REQUIRED_SKILL_SECTIONS`
    - Agent: check file exists, has `---` frontmatter, contains `REQUIRED_AGENT_SECTIONS`, no `BANNED_AGENT_PHRASES`
    - Template: check file exists
@@ -132,8 +131,7 @@ if (eco === 'testing' || eco === 'playwright' || eco === 'storybook') {
 In `src/catalog/remote-catalog.ts`, add:
 
 ```ts
-const CATALOG_TAGS_URL =
-  'https://api.github.com/repos/WeAreHausTech/haus-workflow-catalog/tags'
+const CATALOG_TAGS_URL = 'https://api.github.com/repos/WeAreHausTech/haus-workflow-catalog/tags'
 
 export async function fetchLatestCatalogTag(): Promise<string | null> {
   try {

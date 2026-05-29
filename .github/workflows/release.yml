@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install dependencies
+        run: yarn install
+
       - name: Install @haus-tech/haus-workflow
         run: npm install -g @haus-tech/haus-workflow
 

@@ -7,6 +7,7 @@
 3. For dependency additions: use the correct workspace flag to target the right package
 
 ### Yarn 4
+
 ```bash
 yarn add <pkg>                       # add to root
 yarn workspace <ws-name> add <pkg>   # add to specific workspace
@@ -17,6 +18,7 @@ yarn dedupe                          # deduplicate lockfile entries
 ```
 
 ### pnpm 8/9
+
 ```bash
 pnpm add <pkg>                              # add to root
 pnpm add <pkg> --filter <ws-name>           # add to specific workspace

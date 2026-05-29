@@ -25,19 +25,19 @@ NEVER: ship code with `// eslint-disable-next-line` comments lacking a reason
 ## eslint.config.js shape (ESM project)
 
 ```js
-import hausConfig from "@haus-tech/tech-config";
+import hausConfig from '@haus-tech/tech-config'
 
 export default [
   {
-    ignores: ["dist/**", "build/**", "node_modules/**", ".next/**", "coverage/**"]
+    ignores: ['dist/**', 'build/**', 'node_modules/**', '.next/**', 'coverage/**'],
   },
   ...hausConfig,
   // optional per-repo overrides:
   {
-    files: ["scripts/**/*.ts"],
-    rules: { "no-console": "off" }
-  }
-];
+    files: ['scripts/**/*.ts'],
+    rules: { 'no-console': 'off' },
+  },
+]
 ```
 
 ## eslint.config.mjs shape (CommonJS project that imports ESM)

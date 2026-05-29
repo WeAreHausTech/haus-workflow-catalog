@@ -362,11 +362,7 @@
       "purpose": "Install `@haus-tech/prettier-config` and wire `.prettierrc` to the shared config.",
       "whenToUse": "Use when Prettier is missing from a haus repo or when migrating an ad-hoc Prettier config to the shared package.",
       "whenNotToUse": "Do not use when Prettier is already configured against `@haus-tech/prettier-config`.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 800,
       "tags": ["prettier", "tooling", "quality"],
       "repoRoles": [],
@@ -391,11 +387,7 @@
       "purpose": "Install `@haus-tech/tech-config` and wire ESLint flat config to the shared rules.",
       "whenToUse": "Use when ESLint is missing from a haus repo or migrating from a legacy `.eslintrc` to flat config.",
       "whenNotToUse": "Do not use when ESLint is already configured against `@haus-tech/tech-config`.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 800,
       "tags": ["eslint", "tooling", "quality"],
       "repoRoles": [],
@@ -456,11 +448,7 @@
       "purpose": "Guide Qliro Checkout integration via @haus-tech/qliro-plugin in Vendure storefronts.",
       "whenToUse": "Use for Qliro Checkout flow, order callbacks, refund handling, and merchant API config.",
       "whenNotToUse": "Do not use for non-Nordic payment providers or Stripe-only flows.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 1200,
       "tags": ["qliro", "payments", "tooling"],
       "repoRoles": ["vendure-app", "vendure-plugin", "next-app"],
@@ -737,11 +725,7 @@
       "purpose": "Guide .NET API/service/domain/persistence layer changes.",
       "whenToUse": "Use for .NET service and endpoint behavior changes with domain impact.",
       "whenNotToUse": "Do not use for frontend-only or non-.NET runtime tasks.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 1200,
       "tags": ["backend", "dotnet", "csharp"],
       "repoRoles": ["dotnet-service"],
@@ -1276,11 +1260,7 @@
       "purpose": "Guide .NET service-layer contract and orchestration changes.",
       "whenToUse": "Use for .NET service boundary, orchestration, and handler behavior updates.",
       "whenNotToUse": "Do not use for route formatting-only tasks with no service impact.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 1200,
       "tags": ["dotnet"],
       "repoRoles": ["dotnet-service"],
@@ -1308,11 +1288,7 @@
       "purpose": "Guide identity-provider auth flow and claim/session lifecycle changes across OIDC, Azure AD, BankID, and SAML2.",
       "whenToUse": "Use for OIDC/Azure AD/BankID/SAML2 login, callback, token, claim mapping, and SP/IDP metadata updates.",
       "whenNotToUse": "Do not use for profile CRUD without auth protocol change.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 1200,
       "tags": ["oidc", "azure-ad", "bankid", "saml2"],
       "repoRoles": [],
@@ -1382,20 +1358,9 @@
       "purpose": "Guide schema/query/index/search changes across supported data engines.",
       "whenToUse": "Use for migrations, query behavior, indexing, and Elasticsearch mapping updates.",
       "whenNotToUse": "Do not use for UI-only changes without persistence/search impact.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 1200,
-      "tags": [
-        "postgresql",
-        "mariadb",
-        "mysql",
-        "mssql",
-        "elasticsearch",
-        "redis"
-      ],
+      "tags": ["postgresql", "mariadb", "mysql", "mssql", "elasticsearch", "redis"],
       "repoRoles": [],
       "requiresAny": [
         {
@@ -1433,11 +1398,7 @@
       "purpose": "Guide deterministic dependency/workspace changes for Yarn4 and pnpm89.",
       "whenToUse": "Use for lockfile, workspace, and package manager configuration changes.",
       "whenNotToUse": "Do not use for feature-only code edits with no dependency/workspace impact.",
-      "references": [
-        "references/conventions.md",
-        "references/scope.md",
-        "references/workflow.md"
-      ],
+      "references": ["references/conventions.md", "references/scope.md", "references/workflow.md"],
       "tokenBudget": 1200,
       "tags": ["yarn4", "pnpm89"],
       "repoRoles": [],

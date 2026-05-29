@@ -18,11 +18,20 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
       - name: Install @haus-tech/haus-workflow
         run: npm install -g @haus-tech/haus-workflow
 
       - name: Validate catalog manifest
         run: haus validate-catalog ./manifest.json
+
+      - name: Validate catalog (local script)
+        run: node scripts/validate.mjs
 
       - name: Check item versions bumped for changed files
         if: github.event_name == 'pull_request'

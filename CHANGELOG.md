@@ -14,20 +14,24 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 ## [2.0.1] - 2026-05-28
 
 ### Fixed
+
 - All 52 manifest items now carry `reviewStatus: "approved"` and `riskLevel` (`low` for most; `medium` for stripe, qliro, auth-oidc, nextauth). Fields were defined in schema but unpopulated.
 - `release.yml` validation step switched from offline `node scripts/validate.mjs` to `haus validate-catalog ./manifest.json`, matching `validate.yml`.
 - Removed stale `EXECUTION-PLAN.md F6` reference from `scripts/validation-rules.mjs`.
 
 ### Added
+
 - `LICENSE` (MIT).
 - README: Catalog overview with item count and compatibility note; How it works section (install/update flow, validation rule sync); Making changes section (bump rules, CHANGELOG requirement, release process).
 
 ## [2.0.0] - 2026-05-28
 
 ### Breaking Changes
+
 - `haus.typescript6-patterns` renamed to `haus.typescript5-patterns` (`1.0.0 → 1.1.0`). Path, dir, frontmatter, and title updated to reflect actual TypeScript 5.x usage. Consumers with `haus.typescript6-patterns` in `haus.lock.json` must re-run `haus update --apply` to pick up the new id. Requires `@haus-tech/haus-workflow >= 0.4.0`.
 
 ### Added
+
 - 14 new skills closing the detection-improvement plan (T2–T28):
   - `haus.vitest-patterns` — Vitest unit/integration test router
   - `haus.jest-patterns` — Jest unit/integration test router (Nx-aware)
@@ -47,6 +51,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
   - `haus.supabase-patterns` — Supabase client, RLS, Edge Functions, Storage router
 
 ### Changed
+
 - `haus.auth-oidc-azure-bankid-patterns` `1.0.0 → 1.1.0`: extended to cover SAML2 (Laravel `24slides/laravel-saml2`); title now reads "enterprise auth (OIDC / Azure AD / BankID / SAML2)"; SKILL.md adds SAML SP/IDP signing/audience cautions
 - `haus.database-patterns` `1.0.0 → 1.2.0`: add `redis` (1.1.0) then `mysql` (1.2.0) stacks to `requiresAny` + tags; SKILL.md now covers Redis cache/TTL/namespace inspection and MySQL
 - `haus.wordpress-acf-elementor-jetengine-patterns` `1.0.0 → 1.1.0`: add `elementor`, `acf-pro`, `jetengine` stack tokens to `requiresAny` so composer-driven Bedrock sites match without role detection
@@ -54,6 +59,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - CI validation switched from `node scripts/validate.mjs` to the published `@haus-tech/haus-workflow` CLI (`haus validate-catalog ./manifest.json`); script remains available for offline checks.
 
 ### Compatibility
+
 - This release pairs with `@haus-tech/haus-workflow >= 0.9.0` (allowlist contains all new tags: vitest, jest, redis, sanity, strapi, prisma, mysql, saml2, next-auth, expo, react-native, mobile, i18next, bullmq, sentry, missing-prettier, missing-eslint, stripe, qliro, supabase, etc.).
 
 ---
@@ -61,6 +67,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 ## [1.0.0] - 2026-05-27
 
 ### Added
+
 - Initial catalog: 30 skills, 5 agents, 1 template (`haus-way-of-work`)
 - Manifest schema `v0.1.0` with per-item semver versioning
 - Standalone CI validator (`scripts/validate.mjs`) — no external dependencies
@@ -72,6 +79,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `EXECUTION-PLAN.md` — cross-repo improvement plan for catalog × CLI alignment
 
 ### Fixed
+
 - `haus.typescript6-patterns`: add missing `ecosystem: "typescript"`
 - `haus.playwright-patterns`: add missing `ecosystem: "playwright"`
 - `haus.tailwind-scss-patterns`: correct `ecosystem` from `"react"` to `"tailwind"`
@@ -83,6 +91,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.production-readiness-review`: add missing `ecosystem: "production"`, set `default: true`
 
 ### Skills (all `1.0.0`)
+
 - `haus.global-engineering-rules` — baseline engineering guardrails (default)
 - `haus.nextjs-patterns` — Next.js App Router patterns
 - `haus.react19-patterns` — React 19 component patterns
@@ -115,6 +124,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - `haus.production-readiness-review` — Production readiness review skill (default)
 
 ### Agents (all `1.0.0`)
+
 - `haus.code-reviewer-agent` — Diff review for correctness and regressions (default)
 - `haus.security-reviewer-agent` — Security-focused code review
 - `haus.test-reviewer-agent` — Test coverage and assertion review
