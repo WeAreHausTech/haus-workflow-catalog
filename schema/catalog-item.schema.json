@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/WeAreHausTech/haus-workflow-catalog/main/schema/catalog-item.schema.json",
   "title": "CatalogItem",
-  "description": "A single item in the haus-workflow-catalog manifest. Source of truth for haus-ai-workflow CatalogItem type.",
+  "description": "A single item in the haus-workflow-catalog manifest. Source of truth for haus-workflow CatalogItem type.",
   "type": "object",
   "required": ["id", "type", "source", "version", "path", "tags", "repoRoles", "tokenEstimate"],
   "additionalProperties": false,

@@ -2,7 +2,7 @@
  * Catalog validation rules — single source of truth.
  *
  * SYNC REQUIRED: these constants must stay in sync with
- * haus-ai-workflow/src/catalog/validation-rules.ts.
+ * haus-workflow/src/catalog/validation-rules.ts.
  * When updating rules here, update the CLI file too (and vice versa).
  */
 

@@ -9,7 +9,7 @@
  *   schema/manifest.schema.json
  *
  * SYNC REQUIRED: validation rules (forbidden tags, phrases, required sections)
- * must stay in sync with haus-ai-workflow/src/catalog/validation-rules.ts.
+ * must stay in sync with haus-workflow/src/catalog/validation-rules.ts.
  * See EXECUTION-PLAN.md F6 for the sync strategy.
  */
 

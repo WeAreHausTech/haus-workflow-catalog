@@ -7,21 +7,21 @@ Each item includes why it was deferred and the earliest sensible trigger for doi
 
 ## FI-1 — Automated Weekly Fixture Sync in CLI
 
-**Repo:** `haus-ai-workflow`  
+**Repo:** `haus-workflow`  
 **Deferred:** F7 was completed by manual sync. Automation was skipped.  
 **Why deferred:** Weekly sync workflow adds CI noise before the catalog stabilises. Manual sync during F7 was sufficient for test coverage.
 
 **When to implement:** Once the catalog ships its second tagged release (`v1.1.0`+) and active skill updates are happening on a regular cadence.
 
 **What to do:**  
-Create `.github/workflows/sync-catalog-fixture.yml` in `haus-ai-workflow`:
+Create `.github/workflows/sync-catalog-fixture.yml` in `haus-workflow`:
 
 ```yaml
 name: Sync catalog fixture
 
 on:
   schedule:
-    - cron: '0 6 * * 1'   # weekly Monday 06:00 UTC
+    - cron: '0 6 * * 1' # weekly Monday 06:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -62,7 +62,7 @@ jobs:
 
 ## FI-2 — Full Validation Rules in CLI's `validate-catalog` Command
 
-**Repo:** `haus-ai-workflow`  
+**Repo:** `haus-workflow`  
 **Deferred:** F6 wired `FORBIDDEN_TAGS` into the CLI command but left the deeper checks (file existence, required sections, banned agent phrases, risky install patterns) unimplemented in `src/commands/validate-catalog.ts`.  
 **Why deferred:** `validate-catalog` is intended for CI use against a local catalog directory. The catalog's own `scripts/validate.mjs` is the primary gate. The CLI command is a convenience alias; duplicating all checks adds maintenance burden before the two repos are stabilised.
 
@@ -72,6 +72,7 @@ jobs:
 In `src/commands/validate-catalog.ts`:
 
 1. Import all constants from `src/catalog/validation-rules.ts`:
+
    ```ts
    import {
      BANNED_AGENT_PHRASES,
@@ -82,10 +83,11 @@ In `src/commands/validate-catalog.ts`:
      ANY_NPX_PATTERN,
      HTTP_URL_PATTERN,
      PLACEHOLDER_PATTERN,
-   } from "../catalog/validation-rules.js";
+   } from '../catalog/validation-rules.js'
    ```
 
 2. Add `auditShippedFiles(manifestDir, items)` — for each skill/agent/template item:
+
    - Skill: check `{path}/SKILL.md` exists and contains `REQUIRED_SKILL_SECTIONS`
    - Agent: check file exists, has `---` frontmatter, contains `REQUIRED_AGENT_SECTIONS`, no `BANNED_AGENT_PHRASES`
    - Template: check file exists
@@ -96,11 +98,11 @@ In `src/commands/validate-catalog.ts`:
 
 ---
 
-## FI-3 — `testing` Ecosystem in `computeRuleIntents` 
+## FI-3 — `testing` Ecosystem in `computeRuleIntents`
 
-**Repo:** `haus-ai-workflow`  
+**Repo:** `haus-workflow`  
 **Deferred:** Low impact — no behaviour change needed.  
-**Why deferred:** Skills with testing-related tags (`storybook`, `testing-library`, `playwright`, `phpunit`, `testing`) are caught by the `isTestingRule` tag check *before* the ecosystem→intent map is evaluated. This means `ecosystem: "testing"` on `testing-library-patterns` (and `ecosystem: "storybook"` on `storybook-patterns`) is effectively cosmetic — it is never reached in `computeRuleIntents`.
+**Why deferred:** Skills with testing-related tags (`storybook`, `testing-library`, `playwright`, `phpunit`, `testing`) are caught by the `isTestingRule` tag check _before_ the ecosystem→intent map is evaluated. This means `ecosystem: "testing"` on `testing-library-patterns` (and `ecosystem: "storybook"` on `storybook-patterns`) is effectively cosmetic — it is never reached in `computeRuleIntents`.
 
 **When to implement:** If/when a new testing skill is added that does NOT have a recognised testing tag (e.g. a custom test runner with an unfamiliar tag name). At that point, add `eco === "testing"` → `intents.add("testing")` to the ecosystem map and document that the ecosystem field alone is sufficient.
 
@@ -110,9 +112,9 @@ In `src/recommender/task-intent.ts`, inside `computeRuleIntents`, add after the 
 ```ts
 // Note: testing rules currently rely on tag-based detection above.
 // Ecosystem-based fallback for testing rules not covered by known tags:
-if (eco === "testing" || eco === "playwright" || eco === "storybook") {
-  intents.add("testing");
-  return intents;
+if (eco === 'testing' || eco === 'playwright' || eco === 'storybook') {
+  intents.add('testing')
+  return intents
 }
 ```
 
@@ -120,7 +122,7 @@ if (eco === "testing" || eco === "playwright" || eco === "storybook") {
 
 ## FI-4 — `haus update --check` Tag Comparison via GitHub API
 
-**Repo:** `haus-ai-workflow`  
+**Repo:** `haus-workflow`  
 **Deferred:** Partial — `catalogRef` is written to the lock file (F4) and included in `--check` output, but there is no comparison against latest available tags in the remote repo.  
 **Why deferred:** Requires a GitHub API call (`/repos/WeAreHausTech/haus-workflow-catalog/tags`). This adds latency, a new network dependency, and potential rate-limit issues. The core value — knowing the installed ref — is already provided by `catalogRef` in the lock.
 
@@ -131,20 +133,20 @@ In `src/catalog/remote-catalog.ts`, add:
 
 ```ts
 const CATALOG_TAGS_URL =
-  "https://api.github.com/repos/WeAreHausTech/haus-workflow-catalog/tags";
+  'https://api.github.com/repos/WeAreHausTech/haus-workflow-catalog/tags'
 
 export async function fetchLatestCatalogTag(): Promise<string | null> {
   try {
     const res = await fetch(CATALOG_TAGS_URL, {
       signal: AbortSignal.timeout(5_000),
-      headers: { Accept: "application/vnd.github+json" },
-    });
-    if (!res.ok) return null;
-    const tags = (await res.json()) as Array<{ name: string }>;
+      headers: { Accept: 'application/vnd.github+json' },
+    })
+    if (!res.ok) return null
+    const tags = (await res.json()) as Array<{ name: string }>
     // Tags are returned newest-first.
-    return tags[0]?.name ?? null;
+    return tags[0]?.name ?? null
   } catch {
-    return null;
+    return null
   }
 }
 ```
