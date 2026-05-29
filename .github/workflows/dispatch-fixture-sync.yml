@@ -1,0 +1,28 @@
+name: Dispatch fixture sync
+
+# Fires whenever manifest.json lands on main, triggering the
+# sync-catalog-fixture workflow in WeAreHausTech/haus-workflow so its
+# test fixture stays in sync with the published manifest.
+#
+# Required secret: HAUS_WORKFLOW_DISPATCH_TOKEN
+#   A fine-grained PAT (or classic PAT) scoped to WeAreHausTech/haus-workflow
+#   with the `actions: write` permission (fine-grained) or `workflow` scope
+#   (classic). Add it under this repo's Settings → Secrets → Actions.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - manifest.json
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger sync-catalog-fixture in haus-workflow
+        run: |
+          gh workflow run sync-catalog-fixture.yml \
+            --repo WeAreHausTech/haus-workflow \
+            --ref main
+        env:
+          GH_TOKEN: ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN }}
