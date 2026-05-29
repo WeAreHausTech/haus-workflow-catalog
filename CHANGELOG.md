@@ -11,6 +11,22 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-05-29
+
+### Added
+
+- `CLAUDE.md` — AI workflow guide covering repo structure, authoring rules, validation commands, and release process.
+
+### Changed
+
+- `haus.prettier-setup` `1.0.0 → 1.1.0`: updated conventions, scope, and workflow references.
+- `haus.eslint-setup` `1.0.0 → 1.1.0`: updated conventions reference.
+- `haus.package-manager-yarn4-pnpm89` `1.0.0 → 1.0.1`: minor formatting fixes in workflow reference.
+
+### Removed
+
+- `FUTURE-IMPROVEMENTS.md`: closed FI-1 (automated fixture sync), FI-2 (full validate-catalog rules), and FI-4 (update --check tag comparison) — all implemented.
+
 ## [2.0.1] - 2026-05-28
 
 ### Fixed

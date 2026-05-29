@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1",
+  "version": "2.0.2",
   "items": [
     {
       "id": "haus.global-engineering-rules",
@@ -1390,7 +1390,7 @@
     },
     {
       "id": "haus.package-manager-yarn4-pnpm89",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "haus",
       "type": "skill",
       "path": "skills/package-manager-yarn4-pnpm89",
