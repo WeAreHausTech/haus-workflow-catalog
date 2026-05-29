@@ -15,7 +15,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ### Added
 
-- `haus.agentic-workflow-standard` `1.0.0`: new template providing the full agentic development workflow standard. Generates `.haus-workflow/WORKFLOW.md` (managed, auto-updated) during project setup. Replaces `haus-way-of-work`.
+- `haus.agentic-workflow-standard` `1.0.0`: new template providing the full agentic development workflow standard. Generates `.claude/WORKFLOW.md` (managed, auto-updated) during project setup. Replaces `haus-way-of-work`.
 
 ### Removed
 
