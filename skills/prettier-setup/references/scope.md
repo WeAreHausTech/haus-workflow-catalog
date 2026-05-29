@@ -2,7 +2,7 @@
 
 ## In-scope files and dirs
 
-- `package.json` — add `prettier` + `@haus-tech/prettier-config` to `devDependencies`; add `format` scripts
+- `package.json` — add `prettier` + `@haus-tech/tech-config` to `devDependencies`; add `format` scripts
 - `.prettierrc` — single-line file referencing the shared package
 - `.prettierignore` — standard ignore patterns
 - Legacy configs to remove: `.prettierrc.json`, `.prettierrc.js`, `prettier.config.js`, `prettier.config.cjs`
@@ -18,4 +18,4 @@
 - New repo bootstrap
 - Existing repo missing Prettier (detected by `missing-prettier` stack token)
 - Migration from a non-shared inline Prettier config
-- Bumping `@haus-tech/prettier-config` major version
+- Migrating from deprecated `@haus-tech/prettier-config` to `@haus-tech/tech-config/prettier`

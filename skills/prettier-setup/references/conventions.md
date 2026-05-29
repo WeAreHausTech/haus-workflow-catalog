@@ -8,7 +8,7 @@
 ## Do / don't
 
 DO: Reference the shared config as a string in `.prettierrc` — DON'T: copy/paste rules inline
-DO: Pin `@haus-tech/prettier-config` as a devDependency — DON'T: install as a runtime dep
+DO: Pin `@haus-tech/tech-config` as a devDependency — DON'T: install as a runtime dep
 DO: Commit `.prettierignore` alongside `.prettierrc` — DON'T: rely on `.gitignore` for Prettier exclusions
 DO: Add `format` and `format:check` scripts — DON'T: rely on editor-only formatting
 DO: Replace any legacy `.prettierrc.json` / `prettier.config.js` with the single `.prettierrc` — DON'T: leave two competing configs
@@ -22,10 +22,10 @@ NEVER: commit `node_modules/` formatting differences — exclude via `.prettieri
 ## .prettierrc shape
 
 ```json
-"@haus-tech/prettier-config"
+"@haus-tech/tech-config/prettier"
 ```
 
-Yes — that's the entire file. Prettier 3.x supports a string config referencing a package. The shared package exports the canonical haus options.
+Yes — that's the entire file. Prettier 3.x supports a string config referencing a package subpath. The `/prettier` export from `@haus-tech/tech-config` exports the canonical haus options.
 
 ## .prettierignore shape
 

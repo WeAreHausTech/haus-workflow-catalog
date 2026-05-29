@@ -1,6 +1,6 @@
 ---
 name: prettier-setup
-description: Setup task. Install @haus-tech/prettier-config and wire a minimal .prettierrc that references the shared config.
+description: Setup task. Install @haus-tech/tech-config and wire a minimal .prettierrc that references the shared prettier config.
 ---
 
 # Prettier Setup
@@ -8,11 +8,12 @@ description: Setup task. Install @haus-tech/prettier-config and wire a minimal .
 ## Use when
 
 - `prettier` is missing from `package.json` in a haus repo
-- repo uses an inline / ad-hoc `.prettierrc` and needs to migrate to the shared `@haus-tech/prettier-config`
+- repo uses an inline / ad-hoc `.prettierrc` and needs to migrate to the shared `@haus-tech/tech-config/prettier`
+- repo still references the deprecated `@haus-tech/prettier-config`
 
 ## Do not use when
 
-- Prettier already configured against `@haus-tech/prettier-config`
+- Prettier already configured against `@haus-tech/tech-config/prettier`
 - repo deliberately uses a non-shared Prettier config (rare; document why)
 
 ## Inspect first

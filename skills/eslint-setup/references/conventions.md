@@ -7,7 +7,7 @@
 
 ## Do / don't
 
-DO: Use the shared preset via `import hausConfig from "@haus-tech/tech-config"` — DON'T: copy rules inline
+DO: Use the shared preset via `import hausConfig from "@haus-tech/tech-config/eslint"` — DON'T: copy rules inline
 DO: Place ignore globs at top of the config array — DON'T: rely on `.eslintignore` (flat config ignores it)
 DO: Add overrides for test files and scripts — DON'T: turn off rules globally to silence one file
 DO: Pin `@haus-tech/tech-config` and `eslint` as devDependencies — DON'T: install as runtime deps
@@ -25,7 +25,7 @@ NEVER: ship code with `// eslint-disable-next-line` comments lacking a reason
 ## eslint.config.js shape (ESM project)
 
 ```js
-import hausConfig from '@haus-tech/tech-config'
+import hausConfig from '@haus-tech/tech-config/eslint'
 
 export default [
   {
