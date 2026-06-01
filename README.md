@@ -42,8 +42,7 @@ agents/        ──── fetch ──▶  .claude/agents/ etc.
   "catalog": "https://github.com/WeAreHausTech/haus-workflow-catalog",
   "lockedAt": "2026-05-28T00:00:00Z",
   "items": [
-    { "id": "haus.nextjs-patterns", "version": "1.0.0" },
-    { "id": "haus.global-engineering-rules", "version": "1.0.0" }
+    { "id": "haus.nextjs-patterns", "version": "1.0.0" }
   ]
 }
 ```
