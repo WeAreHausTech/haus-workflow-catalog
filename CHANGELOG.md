@@ -9,6 +9,18 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.2.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.0.2...v2.2.0) (2026-06-01)
+
+### Added
+
+* add agentic workflow standard template, replace haus-way-of-work ([da1c372](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/da1c3723c6c8c345524fad55dacef90939336d54))
+* **ci:** dispatch fixture sync to haus-workflow on manifest.json changes ([bc666aa](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/bc666aab4661eda70db44a08f2bba88cb3d64d0f))
+
+### Fixed
+
+* negate secret-scan grep, correct CHANGELOG path ([99940d0](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/99940d06acf2bb1aaec52f7e76308f263f914696))
+* revert CHANGELOG path to .haus-workflow/WORKFLOW.md ([d1ad319](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/d1ad3195a6de5fefee5faf3576b297248bb90404))
+
 ## [Unreleased]
 
 ## [2.1.0] - 2026-05-29
