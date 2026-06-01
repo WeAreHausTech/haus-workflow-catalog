@@ -135,11 +135,25 @@ When you change `SKILL.md`, any `references/` file, or an agent `.md`:
 
 ### Versioning the manifest itself
 
-`manifest.json#version` tracks the catalog schema, not item content. Bump it only when the schema or structure changes.
+`manifest.json#version` is the catalog release version (must match `vX.Y.Z` tags). `yarn release` bumps it on every release via `.release-it.json` hooks.
 
 ### Releasing
 
-1. Move `## [Unreleased]` entries to a new `## [X.Y.Z] - YYYY-MM-DD` section in `CHANGELOG.md`
-2. Add a fresh empty `## [Unreleased]` section at the top
-3. Push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`
-4. GitHub Actions validates the catalog, creates a GitHub Release, and attaches `manifest.json` as an artifact
+Uses [release-it](https://github.com/release-it/release-it) + [@release-it/conventional-changelog](https://github.com/release-it/conventional-changelog) (same stack as `@haus-tech/haus-workflow`).
+
+1. Land changes on `main` with [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, …). Release notes are generated from commits since the last tag.
+2. Run from `main` with a clean working tree:
+
+   ```bash
+   yarn release              # interactive (patch/minor/major)
+   yarn release:dry          # preview
+   yarn release 2.1.1        # explicit version
+   ./scripts/release.sh 2.1.1   # non-interactive (CI/scripts)
+   ```
+
+3. `release-it` will: run `yarn validate`, bump `package.json`, sync `manifest.json#version`, update `CHANGELOG.md`, commit, tag `vX.Y.Z`, and push.
+4. GitHub Actions on the tag validates the catalog, creates the GitHub Release, and attaches `manifest.json`.
+
+`manifest.json#version` must match the tag. Hooks run `scripts/check-manifest-version.mjs` after the bump.
+
+`github.release` is disabled in `.release-it.json` — the tag workflow owns the GitHub Release (avoids duplicates).

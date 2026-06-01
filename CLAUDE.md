@@ -46,10 +46,9 @@ CI runs both on every push and PR. Item version check runs on PRs only.
 
 ## Release process
 
-1. Update `CHANGELOG.md` with the new version entry.
-2. Bump `manifest.json` top-level `"version"` to match the intended tag.
-3. Push to `main`, then tag: `git tag v2.0.2 && git push origin v2.0.2`.
-4. Release CI validates, then creates a GitHub Release with `manifest.json` attached.
+1. Merge to `main` with conventional commits (`feat:`, `fix:`, …).
+2. `yarn release` (or `yarn release:dry`, or `yarn release 2.1.1`). Uses release-it + conventional-changelog; syncs `manifest.json#version` via hooks.
+3. Tag push triggers release CI → GitHub Release + `manifest.json` artifact.
 
 ## How consumers get updates
 

@@ -1,6 +1,6 @@
 {
   "name": "haus-workflow-catalog",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -10,14 +10,18 @@
     "lint": "eslint scripts/",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "release": "GITHUB_TOKEN=$(gh auth token) release-it",
+    "release:dry": "GITHUB_TOKEN=$(gh auth token) release-it --dry-run"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
+    "@release-it/conventional-changelog": "11.0.0",
     "ajv": "^8.17.1",
     "eslint": "^9.28.0",
     "globals": "^16.2.0",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "release-it": "20.0.1"
   },
   "packageManager": "yarn@4.15.0"
 }
