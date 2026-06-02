@@ -1,0 +1,22 @@
+# Lefthook git hooks for haus-workflow-catalog.
+#
+# Fast local feedback before the CI round-trip, and dogfooding the Lefthook
+# standard the catalog ships. CI (validate.yml) remains the correctness floor.
+#
+# Installed via the `prepare` script (`lefthook install`).
+
+pre-commit:
+  parallel: true
+  commands:
+    validate:
+      run: yarn validate
+      fail_text: 'Catalog validation failed. Run `yarn validate` to see the errors (manifest schema, version bumps, banned tags/phrases), fix them, then commit.'
+    format:
+      glob: '*.{json,md,mjs,yml,yaml}'
+      run: yarn prettier --write {staged_files}
+      stage_fixed: true
+      fail_text: 'Prettier could not format a staged file. Fix the syntax error it reports, re-stage, then commit.'
+    lint:
+      glob: 'scripts/*.mjs'
+      run: yarn eslint {staged_files}
+      fail_text: 'Lint failed. Run `yarn lint` to see details, fix, re-stage, then commit.'

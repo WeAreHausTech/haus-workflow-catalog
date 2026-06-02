@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "validate": "node scripts/validate.mjs",
     "release": "GITHUB_TOKEN=$(gh auth token) release-it",
-    "release:dry": "GITHUB_TOKEN=$(gh auth token) release-it --dry-run"
+    "release:dry": "GITHUB_TOKEN=$(gh auth token) release-it --dry-run",
+    "prepare": "lefthook install"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -20,8 +21,14 @@
     "ajv": "^8.17.1",
     "eslint": "^9.28.0",
     "globals": "^16.2.0",
+    "lefthook": "1.13.6",
     "prettier": "^3.5.3",
     "release-it": "20.0.1"
   },
-  "packageManager": "yarn@4.15.0"
+  "packageManager": "yarn@4.15.0",
+  "dependenciesMeta": {
+    "lefthook": {
+      "built": true
+    }
+  }
 }
