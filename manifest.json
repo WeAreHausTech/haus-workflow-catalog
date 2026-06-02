@@ -1667,6 +1667,7 @@
       "tags": ["workflow", "project-instructions"],
       "repoRoles": [],
       "installMode": "copy-selected",
+      "default": false,
       "tokenEstimate": 700,
       "tokenBudget": 900,
       "reviewStatus": "approved",
