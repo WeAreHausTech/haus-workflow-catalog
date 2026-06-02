@@ -46,7 +46,11 @@ export const HTTP_URL_PATTERN = toRegExp(RULES.httpUrlPattern)
 /** Markers that must not appear in shipped content. */
 export const PLACEHOLDER_PATTERN = toRegExp(RULES.placeholderPattern)
 
-/** Allowlisted stack/role tags. A tag outside this set (and the specials below) fails validation. */
+/**
+ * Allowlisted tokens — stack/role names plus catalog category tokens
+ * (e.g. "haus", "security", "quality", "review"). A tag outside this set and the
+ * specials below (ALWAYS_ALLOWED_TAGS, PATTERN_TAG_SUFFIXES) fails validation.
+ */
 export const ALLOWED_STACKS = RULES.allowedStacks
 
 /** Category/meta tags always permitted regardless of the stack allowlist. */
