@@ -4,17 +4,24 @@
 # (which gate the agent in real time) with a commit-time net. Copy to the repo
 # root as `lefthook.yml` (or merge into an existing one), then run `lefthook install`.
 #
-# Requires gitleaks on PATH: https://github.com/gitleaks/gitleaks#installing
+# gitleaks is optional but recommended (https://github.com/gitleaks/gitleaks#installing):
+# when present it does the heavy lifting; the grep baseline below always runs.
 pre-commit:
   parallel: true
   commands:
     gitleaks:
-      run: gitleaks protect --staged --redact --no-banner
+      # Runs only when gitleaks is installed — a missing binary never fails the commit.
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks protect --staged --redact --no-banner
+        fi
       fail_text: 'gitleaks found a likely secret in staged changes. Remove it, re-stage, and commit. Install gitleaks: https://github.com/gitleaks/gitleaks#installing'
     secret-grep:
-      # Fallback for environments without gitleaks: flag inline credential assignments.
+      # Always-on baseline. Scans ADDED lines only (ignores removed lines, so
+      # deleting a leaked secret is never blocked) for inline credential assignments.
       run: |
-        if git diff --cached | grep -iE "(password|secret|token|api_key)[[:space:]]*[:=]"; then
+        added="$(git diff --cached --no-color -U0 | grep -E '^\+' | grep -vE '^\+\+\+')"
+        if printf '%s\n' "$added" | grep -iqE "(password|secret|token|api_key)[[:space:]]*[:=]"; then
           exit 1
         fi
       fail_text: 'A staged line looks like an inline credential (password/secret/token/api_key). Move it to an environment variable or secret manager, then re-stage.'
