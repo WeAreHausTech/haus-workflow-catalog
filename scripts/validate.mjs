@@ -235,8 +235,16 @@ function checkShippedMarkdown() {
 function checkWorkflowDocSync() {
   const template = path.join(ROOT, 'templates', 'agentic-workflow-standard.md')
   const local = path.join(ROOT, '.claude', 'WORKFLOW.md')
-  if (!fs.existsSync(template) || !fs.existsSync(local)) return
-  if (fs.readFileSync(template, 'utf8') !== fs.readFileSync(local, 'utf8')) {
+  // A missing file is itself a failure — silently returning would mask real drift.
+  for (const f of [template, local]) {
+    if (!fs.existsSync(f)) {
+      fail(`workflow doc sync check: ${path.relative(ROOT, f)} is missing`)
+      return
+    }
+  }
+  // Byte comparison (Buffer.equals), not decoded-string: catches differences in
+  // line endings or trailing bytes that a UTF-8 string compare could normalise away.
+  if (!fs.readFileSync(template).equals(fs.readFileSync(local))) {
     fail(
       '.claude/WORKFLOW.md is out of sync with templates/agentic-workflow-standard.md. ' +
         'Copy the template over it: cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md',

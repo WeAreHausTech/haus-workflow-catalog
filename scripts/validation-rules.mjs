@@ -71,6 +71,9 @@ export function isTagAllowed(tag) {
 export function auditDisallowedTags(items) {
   const failures = []
   for (const item of items) {
+    // Items missing an id are reported by structure validation; skipping them here
+    // keeps tag-failure output actionable (no "undefined: tag not in allowlist").
+    if (!item.id) continue
     for (const tag of Array.isArray(item.tags) ? item.tags : []) {
       if (!isTagAllowed(tag)) failures.push(`${item.id}: tag not in allowlist: "${tag}"`)
     }
