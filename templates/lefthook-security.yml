@@ -1,0 +1,20 @@
+# Lefthook security pre-commit — commit-time secret scanning for haus projects.
+#
+# Complements haus's runtime PreToolUse guards + settings.json permissions.deny
+# (which gate the agent in real time) with a commit-time net. Copy to the repo
+# root as `lefthook.yml` (or merge into an existing one), then run `lefthook install`.
+#
+# Requires gitleaks on PATH: https://github.com/gitleaks/gitleaks#installing
+pre-commit:
+  parallel: true
+  commands:
+    gitleaks:
+      run: gitleaks protect --staged --redact --no-banner
+      fail_text: 'gitleaks found a likely secret in staged changes. Remove it, re-stage, and commit. Install gitleaks: https://github.com/gitleaks/gitleaks#installing'
+    secret-grep:
+      # Fallback for environments without gitleaks: flag inline credential assignments.
+      run: |
+        if git diff --cached | grep -iE "(password|secret|token|api_key)[[:space:]]*[:=]"; then
+          exit 1
+        fi
+      fail_text: 'A staged line looks like an inline credential (password/secret/token/api_key). Move it to an environment variable or secret manager, then re-stage.'
