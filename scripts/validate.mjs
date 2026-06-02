@@ -34,6 +34,7 @@ import {
   ANY_NPX_PATTERN,
   HTTP_URL_PATTERN,
   PLACEHOLDER_PATTERN,
+  auditDisallowedTags,
 } from './validation-rules.mjs'
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
@@ -192,6 +193,11 @@ function checkItems(items) {
       if (tagBlob.includes(word)) fail(`${item.id}: unsupported stack/tag "${word}"`)
     }
   }
+
+  // Allowlist: every tag must be a known stack, an always-allowed meta tag, or a
+  // pattern-suffix convention. Mirrors `haus validate-catalog` so a tag that passes
+  // here can never be rejected by the CLI's stricter CI check (the WS1 drift).
+  for (const msg of auditDisallowedTags(items)) fail(msg)
 }
 
 function checkShippedMarkdown() {
@@ -218,6 +224,23 @@ function checkShippedMarkdown() {
         }
       }
     })
+  }
+}
+
+/**
+ * The shipped workflow standard (`templates/agentic-workflow-standard.md`) and this
+ * repo's own copy (`.claude/WORKFLOW.md`) must be byte-identical — the latter is the
+ * former applied to this repo. A mismatch means an edit landed in one but not the other.
+ */
+function checkWorkflowDocSync() {
+  const template = path.join(ROOT, 'templates', 'agentic-workflow-standard.md')
+  const local = path.join(ROOT, '.claude', 'WORKFLOW.md')
+  if (!fs.existsSync(template) || !fs.existsSync(local)) return
+  if (fs.readFileSync(template, 'utf8') !== fs.readFileSync(local, 'utf8')) {
+    fail(
+      '.claude/WORKFLOW.md is out of sync with templates/agentic-workflow-standard.md. ' +
+        'Copy the template over it: cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md',
+    )
   }
 }
 
@@ -266,6 +289,7 @@ if (manifest) {
   }
 }
 checkShippedMarkdown()
+checkWorkflowDocSync()
 
 if (failures > 0) {
   console.error(`\n${failures} validation failure(s).`)

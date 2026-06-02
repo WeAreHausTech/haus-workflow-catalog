@@ -22,7 +22,7 @@ schema/                — JSON schemas for manifest and catalog items
 
 **Before release:** `manifest.json` top-level `version` must match the git tag (e.g. tag `v2.0.2` → version `"2.0.2"`). `scripts/check-manifest-version.mjs` enforces this.
 
-**Validation rules are duplicated.** `scripts/validation-rules.mjs` and `haus-workflow/src/catalog/validation-rules.ts` must stay in sync manually. When changing forbidden tags, banned phrases, or required sections — update both.
+**Validation rules have one source.** `validation-rules.json` (repo root) is canonical — forbidden tags, banned phrases, required sections, install patterns, and the stack allowlist. `scripts/validation-rules.mjs` is a thin loader; the haus-workflow CLI consumes the same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A push to `main` dispatches the fixture sync to haus-workflow.
 
 ## Adding a new item
 
