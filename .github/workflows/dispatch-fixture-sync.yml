@@ -1,5 +1,7 @@
 name: Dispatch fixture sync
 
+permissions: {}
+
 # Fires whenever manifest.json or validation-rules.json lands on main, triggering
 # the sync-catalog-fixture workflow in WeAreHausTech/haus-workflow so its test
 # fixtures stay in sync with the published catalog.
