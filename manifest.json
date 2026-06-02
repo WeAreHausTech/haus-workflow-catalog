@@ -1664,7 +1664,7 @@
       "purpose": "Commit-time secret scanning (gitleaks + grep fallback) wired via Lefthook, complementing haus's runtime guards and settings.json deny rules.",
       "whenToUse": "Projects that want a commit-time secret-detection net alongside haus's real-time PreToolUse guards.",
       "whenNotToUse": "Repos that already run a secret-scanning pre-commit hook, or that cannot install gitleaks.",
-      "tags": ["security", "pre-commit", "lefthook", "config"],
+      "tags": ["security", "workflow"],
       "repoRoles": [],
       "installMode": "copy-selected",
       "tokenEstimate": 220,
