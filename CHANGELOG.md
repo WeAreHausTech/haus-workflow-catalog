@@ -9,6 +9,16 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.4.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.3.0...v2.4.0) (2026-06-03)
+
+### Added
+
+- add writing-documentation skill as default + slim workflow-config ([25187e3](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/25187e304a253be1e93e6b333e699a782c796818))
+
+### Fixed
+
+- bump template version + address review on [#9](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/9) ([8fc12ec](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/8fc12ecfb11a35acafc0e54f09379157699257cf))
+
 ## [2.3.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.2.0...v2.3.0) (2026-06-03)
 
 ### Added
