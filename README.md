@@ -21,7 +21,7 @@ skills/                — skill packages (SKILL.md + references/)
 agents/                — agent definition files
 templates/             — managed file templates (agentic-workflow-standard.md etc.)
 scripts/               — validation scripts (validate.mjs + validation-rules.mjs loader)
-lefthook.yml           — local pre-commit hook (validate + format)
+lefthook.yml           — local pre-commit hook (validate + format + lint)
 CHANGELOG.md           — release history
 ```
 
@@ -67,8 +67,9 @@ Run `haus update --apply` to upgrade.
 tags, banned phrases, required sections, install patterns, and the stack allowlist.
 `scripts/validation-rules.mjs` is a thin loader of that JSON, and the CLI consumes the
 same file as a synced fixture (`library/catalog/validation-rules.json`) — a push to
-`main` dispatches the sync. Edit the JSON, never the loader (ADR-0001). No more manual
-two-language mirroring.
+`main` dispatches the sync. Edit the JSON, never the loader. No more manual two-language
+mirroring. (Rationale: ADR-0001 in the [`@haus-tech/haus-workflow`](https://github.com/WeAreHausTech/haus-workflow/blob/main/docs/adr/0001-validation-rules-single-source.md)
+repo, which owns the decision log.)
 
 ## Validation
 
@@ -87,10 +88,11 @@ node scripts/validate.mjs
 
 ### Local hooks (Lefthook)
 
-`lefthook.yml` adds a pre-commit hook (`yarn validate` + Prettier on staged files) for
-fast feedback before the CI round-trip — dogfooding the standard the catalog ships.
-Installed by `prepare` (`lefthook install`) on `yarn install`. CI remains the
-correctness floor; the hook is local convenience, not a replacement.
+`lefthook.yml` adds a pre-commit hook for fast feedback before the CI round-trip —
+dogfooding the standard the catalog ships. It runs three commands on commit:
+`yarn validate`, Prettier (`--write` on staged files), and ESLint (on staged
+`scripts/*.mjs`). Installed by `prepare` (`lefthook install`) on `yarn install`. CI
+remains the correctness floor; the hook is local convenience, not a replacement.
 
 ## Schema
 
