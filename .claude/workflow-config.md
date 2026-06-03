@@ -1,7 +1,11 @@
 # Project workflow configuration
 
-> Project-specific values for the workflow standard in WORKFLOW.md.
+> Project-specific values that the workflow standard (WORKFLOW.md) binds to.
 > Edit freely — this file is project-owned and will not be overwritten by haus.
+>
+> Everyday commands (validate, lint, format, version checks) and project
+> documentation live in `CLAUDE.md` + `docs/` — run the **writing-documentation**
+> skill to generate/refresh them.
 
 ## Source-of-truth documents
 
@@ -9,24 +13,17 @@
 - Design: `schema/catalog-item.schema.json` (item schema)
 - Plans: `docs/plans/<feature-slug>.md`
 
-## Commands
+## Test commands (TDD / verification gate)
 
-- Validate catalog: `yarn validate`
-- Validate (explicit): `node scripts/validate.mjs`
-- Item version check: `node scripts/check-item-versions.mjs`
-- Manifest version check: `node scripts/check-manifest-version.mjs`
-- Lint: `yarn lint`
-- Format check: `yarn format:check`
-- Security audit: `yarn npm audit`
-
-## Validation library
-
-n/a — plain JSON schema validation via AJV (no runtime application code)
+- Test (unit + integration): `yarn validate` (catalog validation is this repo's test gate)
+- Test (E2E): n/a — no runtime application code
 
 ## Highest-stakes logic
 
-Catalog validation rules and manifest version gating. Changes to `scripts/validation-rules.mjs` must be mirrored in `haus-workflow/src/catalog/validation-rules.ts` — divergence silently breaks CLI enforcement for all users.
+Catalog validation rules and manifest version gating. Changes to `validation-rules.json`
+must stay mirrored in `haus-workflow` (synced fixture, ADR-0001) — divergence silently
+breaks CLI enforcement for all users.
 
 ## Pre-commit tool
 
-None detected at setup time
+Lefthook (`lefthook.yml`)
