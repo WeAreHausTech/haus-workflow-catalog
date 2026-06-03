@@ -6,7 +6,7 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-53 items: 45 skills, 5 agents, 3 templates (agentic-workflow-standard,
+54 items: 46 skills, 5 agents, 3 templates (agentic-workflow-standard,
 memory-conventions, lefthook-security). See `manifest.json` for the full list.
 
 Compatible with `@haus-tech/haus-workflow >= 0.9.0`.

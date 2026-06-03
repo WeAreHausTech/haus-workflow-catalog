@@ -1,6 +1,6 @@
 # Project workflow configuration
 
-> Project-specific values the workflow standard (WORKFLOW.md) binds to.
+> Project-specific values that the workflow standard (WORKFLOW.md) binds to.
 > Edit freely — this file is project-owned and will not be overwritten by haus.
 >
 > Everyday commands (validate, lint, format, version checks) and project
@@ -26,4 +26,4 @@ breaks CLI enforcement for all users.
 
 ## Pre-commit tool
 
-None detected at setup time
+Lefthook (`lefthook.yml`)
