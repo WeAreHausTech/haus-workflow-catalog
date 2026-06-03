@@ -6,7 +6,8 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-52 items: 46 skills, 5 agents, 1 template. See `manifest.json` for the full list.
+53 items: 45 skills, 5 agents, 3 templates (agentic-workflow-standard,
+memory-conventions, lefthook-security). See `manifest.json` for the full list.
 
 Compatible with `@haus-tech/haus-workflow >= 0.9.0`.
 
@@ -14,10 +15,13 @@ Compatible with `@haus-tech/haus-workflow >= 0.9.0`.
 
 ```
 manifest.json          — catalog item registry
+validation-rules.json  — canonical validation rules (forbidden tags, banned phrases,
+                         required sections, install patterns, stack allowlist)
 skills/                — skill packages (SKILL.md + references/)
 agents/                — agent definition files
 templates/             — managed file templates (agentic-workflow-standard.md etc.)
-scripts/               — validation scripts (validate.mjs, validation-rules.mjs)
+scripts/               — validation scripts (validate.mjs + validation-rules.mjs loader)
+lefthook.yml           — local pre-commit hook (validate + format)
 CHANGELOG.md           — release history
 ```
 
@@ -41,9 +45,7 @@ agents/        ──── fetch ──▶  .claude/agents/ etc.
 {
   "catalog": "https://github.com/WeAreHausTech/haus-workflow-catalog",
   "lockedAt": "2026-05-28T00:00:00Z",
-  "items": [
-    { "id": "haus.nextjs-patterns", "version": "1.0.0" }
-  ]
+  "items": [{ "id": "haus.nextjs-patterns", "version": "1.0.0" }]
 }
 ```
 
@@ -61,7 +63,12 @@ Run `haus update --apply` to upgrade.
 
 ### Validation rule sync
 
-`scripts/validate.mjs` imports rules from `scripts/validation-rules.mjs`. The CLI's `src/catalog/validation-rules.ts` mirrors these rules — when you change forbidden tags, banned phrases, or required sections in one place, update the other manually.
+`validation-rules.json` (repo root) is the **single source of truth** for forbidden
+tags, banned phrases, required sections, install patterns, and the stack allowlist.
+`scripts/validation-rules.mjs` is a thin loader of that JSON, and the CLI consumes the
+same file as a synced fixture (`library/catalog/validation-rules.json`) — a push to
+`main` dispatches the sync. Edit the JSON, never the loader (ADR-0001). No more manual
+two-language mirroring.
 
 ## Validation
 
@@ -77,6 +84,13 @@ A self-contained fallback script remains available for offline checks:
 ```bash
 node scripts/validate.mjs
 ```
+
+### Local hooks (Lefthook)
+
+`lefthook.yml` adds a pre-commit hook (`yarn validate` + Prettier on staged files) for
+fast feedback before the CI round-trip — dogfooding the standard the catalog ships.
+Installed by `prepare` (`lefthook install`) on `yarn install`. CI remains the
+correctness floor; the hook is local convenience, not a replacement.
 
 ## Schema
 
