@@ -9,17 +9,35 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.3.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.2.0...v2.3.0) (2026-06-03)
+
+### Added
+
+- add haus.lefthook-security template; fix deny-rule syntax in workflow standard ([271c6a9](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/271c6a9fb70e0c93ec7fe73be2771dfb9d9c664b))
+- **templates:** add haus.memory-conventions doc ([18e31e7](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/18e31e7b9bc1c7a850cfa66d318c1f10fbdb48f6))
+
+### Fixed
+
+- make gitleaks optional and grep added-lines-only in lefthook-security ([e0b691d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/e0b691d7a3edbaba8b75671ca634b9106d1b2e4f))
+- **scripts:** skip id-less items in tag audit; byte-compare workflow docs ([eefd05d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/eefd05dd5c2a456ea1e0b52797e59a1b7242b1b4))
+- use allowlisted tags for haus.lefthook-security ([3b64988](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/3b64988be97c9d037863b36210fbb16d2d575dde))
+
+### Changed
+
+- remove global engineering rules skill and update manifest ([98b4a3a](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/98b4a3a59abb6b8d40a8a2896282b7dcdb3770d6))
+- **scripts:** single-source validation rules + unify tag allowlist ([4281b44](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/4281b443a880ed94db9db547c4194636b666c456))
+
 ## [2.2.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.0.2...v2.2.0) (2026-06-01)
 
 ### Added
 
-* add agentic workflow standard template, replace haus-way-of-work ([da1c372](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/da1c3723c6c8c345524fad55dacef90939336d54))
-* **ci:** dispatch fixture sync to haus-workflow on manifest.json changes ([bc666aa](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/bc666aab4661eda70db44a08f2bba88cb3d64d0f))
+- add agentic workflow standard template, replace haus-way-of-work ([da1c372](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/da1c3723c6c8c345524fad55dacef90939336d54))
+- **ci:** dispatch fixture sync to haus-workflow on manifest.json changes ([bc666aa](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/bc666aab4661eda70db44a08f2bba88cb3d64d0f))
 
 ### Fixed
 
-* negate secret-scan grep, correct CHANGELOG path ([99940d0](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/99940d06acf2bb1aaec52f7e76308f263f914696))
-* revert CHANGELOG path to .haus-workflow/WORKFLOW.md ([d1ad319](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/d1ad3195a6de5fefee5faf3576b297248bb90404))
+- negate secret-scan grep, correct CHANGELOG path ([99940d0](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/99940d06acf2bb1aaec52f7e76308f263f914696))
+- revert CHANGELOG path to .haus-workflow/WORKFLOW.md ([d1ad319](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/d1ad3195a6de5fefee5faf3576b297248bb90404))
 
 ## [Unreleased]
 
