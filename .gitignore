@@ -30,6 +30,7 @@ yarn-error.log
 dist/
 coverage/
 *.log
+tests/.tmp/
 
 # OS
 Thumbs.db
