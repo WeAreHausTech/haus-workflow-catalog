@@ -30,6 +30,9 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Test
+        run: yarn test
+
       - name: Install @haus-tech/haus-workflow
         run: npm install -g @haus-tech/haus-workflow
 
