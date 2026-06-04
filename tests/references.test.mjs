@@ -32,7 +32,10 @@ test('every agent/template file exists on disk', () => {
 test('every relative reference resolves on disk', () => {
   for (const item of manifest.items) {
     for (const ref of item.references ?? []) {
-      if (/^https?:\/\//i.test(ref)) continue
+      // Insecure http:// references are a validation failure — fail fast.
+      assert.ok(!/^http:\/\//i.test(ref), `${item.id}: insecure http:// reference: ${ref}`)
+      // https:// references are remote — skip on-disk resolution.
+      if (/^https:\/\//i.test(ref)) continue
       const base =
         item.type === 'skill'
           ? path.join(REPO_ROOT, item.path)

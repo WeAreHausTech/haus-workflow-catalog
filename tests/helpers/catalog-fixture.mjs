@@ -15,7 +15,6 @@
 
 import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -115,5 +114,3 @@ export const VALID_SKILL_MD = '# Test skill\n\n## Use when\nx\n\n## Do not use w
 export function validManifest(items) {
   return { version: '2.4.0', items }
 }
-
-export { os }

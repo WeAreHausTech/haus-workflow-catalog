@@ -22,7 +22,6 @@ const PLACEHOLDER = toRe(rules.placeholderPattern)
 const RISKY = rules.riskyInstallPatterns.map(toRe)
 const ANY_NPX = toRe(rules.anyNpxPattern)
 const ALLOWED_NPX = toRe(rules.allowedNpxPattern)
-const HTTP_URL = toRe(rules.httpUrlPattern)
 const FORBIDDEN_TAGS = rules.forbiddenTags
 
 const manifest = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'manifest.json'), 'utf8'))
@@ -47,7 +46,10 @@ function scan() {
         if (PLACEHOLDER.test(line)) hits.push(`${at}: placeholder/TODO`)
         if (RISKY.some((re) => re.test(line))) hits.push(`${at}: risky install`)
         if (ANY_NPX.test(line) && !ALLOWED_NPX.test(line)) hits.push(`${at}: disallowed npx`)
-        if (HTTP_URL.test(line.trim())) hits.push(`${at}: http:// url`)
+        // httpUrlPattern is anchored (^http://) for validating standalone ref strings;
+        // in shipped markdown we want to catch http:// anywhere in the line (inline links),
+        // but allow local dev URLs (localhost / 127.0.0.1) which appear in command examples.
+        if (/http:\/\/(?!localhost|127\.0\.0\.1)/i.test(line)) hits.push(`${at}: http:// url`)
       })
     })
   }
