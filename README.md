@@ -32,21 +32,27 @@ This catalog is the **source of truth** for skill, agent, and template content. 
 ```
 haus-workflow-catalog          @haus-tech/haus-workflow CLI         consuming project
 ─────────────────────          ────────────────────────────         ────────────────
-manifest.json  ──── fetch ──▶  haus install / haus update  ──▶  .haus-catalog.lock
+manifest.json  ──── fetch ──▶  haus install / haus update  ──▶  .haus-workflow/haus.lock.json
 skills/        ──── fetch ──▶  copies skill files into           skills installed
 agents/        ──── fetch ──▶  .claude/agents/ etc.
 ```
 
 ### Install flow
 
-`haus install` scans the project, matches items via `requiresAny` (stack tokens, repo roles, intents), fetches matched items from this repo at the locked ref, and writes `.haus-catalog.lock`:
+`haus install` scans the project, matches items via `requiresAny` (stack tokens, repo roles, intents), fetches matched items from this repo at the locked ref, and writes `.haus-workflow/haus.lock.json`:
 
 ```json
-{
-  "catalog": "https://github.com/WeAreHausTech/haus-workflow-catalog",
-  "lockedAt": "2026-05-28T00:00:00Z",
-  "items": [{ "id": "haus.nextjs-patterns", "version": "1.0.0" }]
-}
+[
+  {
+    "id": "haus.nextjs-patterns",
+    "type": "skill",
+    "source": "haus",
+    "version": "1.0.0",
+    "catalogRef": "v2.4.1",
+    "hash": "sha256-…",
+    "paths": [".claude/skills/nextjs-patterns"]
+  }
+]
 ```
 
 ### Update flow

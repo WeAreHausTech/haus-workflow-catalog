@@ -36,7 +36,7 @@ export function makeCatalog({ manifest, files = {} }) {
 
   // Copy the real validator and its loader so we exercise the production code.
   fs.mkdirSync(path.join(root, 'scripts'), { recursive: true })
-  for (const f of ['validate.mjs', 'validation-rules.mjs']) {
+  for (const f of ['validate.mjs', 'validation-rules.mjs', 'forbidden-content.mjs']) {
     fs.copyFileSync(path.join(REPO_ROOT, 'scripts', f), path.join(root, 'scripts', f))
   }
 

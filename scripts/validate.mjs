@@ -36,6 +36,7 @@ import {
   PLACEHOLDER_PATTERN,
   auditDisallowedTags,
 } from './validation-rules.mjs'
+import { auditForbiddenTagsInText, auditMarkdownLines } from './forbidden-content.mjs'
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const MANIFEST = path.join(ROOT, 'manifest.json')
@@ -129,11 +130,7 @@ function checkItems(items) {
         }
         // Verify path exists on disk
         const abs = path.join(ROOT, item.path)
-        if (item.type === 'template') {
-          if (!fs.existsSync(abs)) {
-            fail(`${item.id}: missing template file ${item.path}`)
-          }
-        } else if (item.type === 'skill') {
+        if (item.type === 'skill') {
           const skillMd = path.join(abs, 'SKILL.md')
           if (!fs.existsSync(skillMd)) {
             fail(`${item.id}: missing ${path.relative(ROOT, skillMd)}`)
@@ -141,6 +138,12 @@ function checkItems(items) {
             const text = fs.readFileSync(skillMd, 'utf8')
             for (const section of REQUIRED_SKILL_SECTIONS) {
               if (!text.includes(section)) fail(`${item.id}: SKILL.md missing ${section}`)
+            }
+            for (const msg of auditForbiddenTagsInText(
+              text,
+              `${item.id}: ${path.relative(ROOT, skillMd)}`,
+            )) {
+              fail(msg)
             }
           }
         } else if (item.type === 'agent') {
@@ -156,6 +159,30 @@ function checkItems(items) {
             for (const ban of BANNED_AGENT_PHRASES) {
               if (lower.includes(ban))
                 fail(`${item.id}: agent file contains disallowed phrase "${ban}"`)
+            }
+            for (const msg of auditForbiddenTagsInText(
+              text,
+              `${item.id}: ${path.relative(ROOT, abs)}`,
+            )) {
+              fail(msg)
+            }
+          }
+        } else if (item.type === 'template') {
+          if (!fs.existsSync(abs)) {
+            fail(`${item.id}: missing template file ${item.path}`)
+          } else {
+            const text = fs.readFileSync(abs, 'utf8')
+            const rel = path.relative(ROOT, abs)
+            for (const msg of auditMarkdownLines(text, rel, {
+              PLACEHOLDER_PATTERN,
+              RISKY_INSTALL_PATTERNS,
+              ANY_NPX_PATTERN,
+              ALLOWED_NPX_PATTERN,
+            })) {
+              fail(msg)
+            }
+            for (const msg of auditForbiddenTagsInText(text, `${item.id}: ${rel}`)) {
+              fail(msg)
             }
           }
         }
@@ -201,26 +228,24 @@ function checkItems(items) {
 }
 
 function checkShippedMarkdown() {
-  // Templates are markdown prose (project instruction files for CLAUDE.md),
-  // not runnable commands — risky-install and placeholder checks don't apply.
-  const dirs = ['skills', 'agents']
+  const dirs = ['skills', 'agents', 'templates']
   for (const dir of dirs) {
     const abs = path.join(ROOT, dir)
     if (!fs.existsSync(abs)) continue
     walkMd(abs, (file) => {
       const text = fs.readFileSync(file, 'utf8')
       const rel = path.relative(ROOT, file)
-      const lines = text.split(/\r?\n/)
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i] ?? ''
-        if (PLACEHOLDER_PATTERN.test(line)) {
-          fail(`${rel}:${i + 1}: TODO or placeholder in shipped content`)
-        }
-        if (RISKY_INSTALL_PATTERNS.some((re) => re.test(line))) {
-          fail(`${rel}:${i + 1}: risky install pattern`)
-        }
-        if (ANY_NPX_PATTERN.test(line) && !ALLOWED_NPX_PATTERN.test(line)) {
-          fail(`${rel}:${i + 1}: disallowed npx (only npx tsx allowed)`)
+      for (const msg of auditMarkdownLines(text, rel, {
+        PLACEHOLDER_PATTERN,
+        RISKY_INSTALL_PATTERNS,
+        ANY_NPX_PATTERN,
+        ALLOWED_NPX_PATTERN,
+      })) {
+        fail(msg)
+      }
+      if (!rel.includes('/references/')) {
+        for (const msg of auditForbiddenTagsInText(text, rel)) {
+          fail(msg)
         }
       }
     })
