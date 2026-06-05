@@ -9,6 +9,13 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.4.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.4.1...v2.4.2) (2026-06-05)
+
+### Fixed
+
+- Add forbidden content checks and update validation ([74c9c9c](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/74c9c9c9764e67f3e7dd961bda5d30599f0015c4))
+- enhance dispatch workflow for catalog fixture synchronization ([2fac70d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/2fac70da9ff85c26faa8d681a4d5595a73f48b85))
+
 ## [2.4.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.4.0...v2.4.1) (2026-06-04)
 
 ## [2.4.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.3.0...v2.4.0) (2026-06-03)
