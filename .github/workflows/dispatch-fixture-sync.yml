@@ -24,17 +24,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger sync-catalog-fixture in haus-workflow
+        env:
+          DISPATCH_TOKEN: ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
-          curl -L \
+          set -euo pipefail
+
+          if [ -z "${DISPATCH_TOKEN}" ]; then
+            echo "::error::HAUS_WORKFLOW_DISPATCH_TOKEN is not set. The fixture sync " \
+                 "in WeAreHausTech/haus-workflow will NOT run, so its committed " \
+                 "manifest.json / validation-rules.json copies will drift. Add the " \
+                 "secret under Settings → Secrets → Actions."
+            exit 1
+          fi
+
+          payload=$(printf '{"event_type":"sync-catalog-fixture","client_payload":{"sha":"%s","ref":"%s"}}' \
+            "${GITHUB_SHA}" "${GITHUB_REF_NAME}")
+
+          # Capture the HTTP status separately; a repository_dispatch success is 204.
+          # Without this, curl exits 0 even on 401/404 and the sync silently never fires.
+          status=$(curl -sS -L \
+            -o /tmp/dispatch-response.txt \
+            -w '%{http_code}' \
             -X POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN }}" \
+            -H "Authorization: Bearer ${DISPATCH_TOKEN}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/WeAreHausTech/haus-workflow/dispatches \
-            -d '{
-              "event_type": "sync-catalog-fixture",
-              "client_payload": {
-                "sha": "${{ github.sha }}",
-                "ref": "${{ github.ref_name }}"
-              }
-            }'
+            -d "${payload}")
+
+          echo "repository_dispatch responded with HTTP ${status}"
+          if [ "${status}" != "204" ]; then
+            echo "::error::Failed to dispatch sync-catalog-fixture (HTTP ${status}). " \
+                 "Response body:"
+            cat /tmp/dispatch-response.txt || true
+            exit 1
+          fi
+          echo "sync-catalog-fixture dispatched successfully."
