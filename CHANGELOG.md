@@ -9,6 +9,12 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.5.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.4.2...v2.5.0) (2026-06-09)
+
+### Added
+
+- import curated superpowers skills and commands ([#11](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/11)) ([dfa9473](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/dfa9473c2f84c2622cccdb67bd7056763e320c64))
+
 ## [2.4.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.4.1...v2.4.2) (2026-06-05)
 
 ### Fixed
