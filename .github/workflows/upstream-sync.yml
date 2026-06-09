@@ -23,14 +23,18 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      # persist-credentials: false — required so create-pull-request pushes with
+      # github.token, not the workflow_dispatch actor's cached credentials.
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Enable Corepack
         run: corepack enable
 
       - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies
         run: yarn install
@@ -53,9 +57,11 @@ jobs:
 
       - name: Open or update sync PR
         if: steps.diff.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           branch: chore/upstream-superpowers-sync
           delete-branch: false
           commit-message: 'chore(superpowers): sync upstream pcvelz/superpowers'
