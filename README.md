@@ -6,7 +6,7 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-**71 items** at manifest version **2.5.0**: 61 skills, 2 agents, 3 templates, 5 commands.
+**71 items**: 61 skills, 2 agents, 3 templates, 5 commands. (Current manifest version lives in `manifest.json`.)
 
 | Source    | Count | Notes                                                                                                     |
 | --------- | ----- | --------------------------------------------------------------------------------------------------------- |

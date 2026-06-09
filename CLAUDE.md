@@ -32,8 +32,19 @@ schema/                — JSON schemas for manifest and catalog items
 same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A push to
 `main` that touches `manifest.json` or `validation-rules.json` dispatches fixture sync.
 
-**Catalog size:** manifest **2.5.0**, **71 items** (61 skills, 2 agents, 3 templates,
-5 commands) — 50 `haus` + 21 `curated` superpowers.
+**Catalog size:** **71 items** (61 skills, 2 agents, 3 templates, 5 commands) —
+50 `haus` + 21 `curated` superpowers. (Manifest version lives in `manifest.json`; do
+not restate it in prose — it drifts every release.)
+
+**Tag allowlist (positive gate).** Every item tag must be a known stack in
+`validation-rules.json#allowedStacks`, an `alwaysAllowedTags` meta tag, or end with a
+`patternTagSuffixes` suffix — otherwise validation fails. Adding a new stack means adding
+its tag to `validation-rules.json#allowedStacks`, not just creating the skill.
+
+**Workflow-doc sync.** `templates/agentic-workflow-standard.md` and `.claude/WORKFLOW.md`
+must be byte-identical (`checkWorkflowDocSync` in `validate.mjs`) — the latter is the
+shipped template applied to this repo. Edit the template, then copy it over the local
+copy: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
 
 ## Adding a new item
 
@@ -44,8 +55,10 @@ same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A pus
    phrases: `autonomous`, `swarm`, `delegate`, `orchestrat`, `marketplace`.
 4. **Commands** need a `.md` file with frontmatter `description:`.
 5. Add the item entry to `manifest.json`. Set `version: "1.0.0"`.
-6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; all
-   URLs `https://`; no forbidden stack tags in item id/tags.
+6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; item
+   `references` must use `https://` (the `http://` ban is enforced on `references[]`, not
+   on prose/code bodies — local-dev `http://localhost` URLs in examples are fine); no
+   forbidden stack tags in item id/tags.
 7. TODO/placeholder checks apply to shipped **template/command** files, not skill prose.
 8. Do not hand-edit `skills/superpowers/` or `commands/superpowers/` — sync from upstream.
 

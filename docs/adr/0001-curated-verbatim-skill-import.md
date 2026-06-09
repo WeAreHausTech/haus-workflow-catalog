@@ -59,8 +59,9 @@ convention; **safety/governance** rules apply to all content (haus and curated):
   item only**, not in the repo-wide markdown walk (it false-positives on legitimate prose
   such as "scan for TODOs" and CSS `.placeholder`).
 - Safety: forbidden stack tags, risky install patterns (`npx -y`, `dlx`), `npx tsx`-only
-  allowlist, `http://` URL ban, and the `source: curated` + `reviewStatus: approved` gate —
-  all unchanged and applied repo-wide.
+  allowlist, and the `source: curated` + `reviewStatus: approved` gate — all unchanged and
+  applied repo-wide. The `http://` ban is narrower: it is enforced on item `references[]`
+  only, not on markdown bodies (which legitimately contain `http://localhost` examples).
 
 Because the placeholder scan no longer runs in the walk, the prior `/superpowers/` walk
 skip and the CLI `isVerbatimSuperpowersMarkdownPath()` helper were removed; no path-based
