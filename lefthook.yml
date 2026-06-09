@@ -17,7 +17,7 @@ pre-commit:
       stage_fixed: true
       fail_text: 'Prettier could not format a staged file. Fix the syntax error it reports, re-stage, then commit.'
     lint:
-      glob: 'scripts/*.mjs'
+      glob: '{scripts,tests}/**/*.mjs'
       run: yarn eslint {staged_files}
       fail_text: 'Lint failed. Run `yarn lint` to see details, fix, re-stage, then commit.'
 

@@ -25,7 +25,7 @@ jobs:
     steps:
       # persist-credentials: false — required so create-pull-request pushes with
       # github.token, not the workflow_dispatch actor's cached credentials.
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
 
@@ -37,7 +37,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Sync upstream superpowers
         run: node scripts/sync-upstream.mjs --apply

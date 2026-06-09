@@ -25,10 +25,13 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Lint
         run: yarn lint
+
+      - name: Format check
+        run: yarn format:check
 
       - name: Test
         run: yarn test
