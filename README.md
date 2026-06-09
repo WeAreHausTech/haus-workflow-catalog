@@ -15,7 +15,7 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 See `manifest.json` for the full list. Curated provenance: `sources.yaml` → `superpowers-pcvelz`.
 
-Compatible with `@haus-tech/haus-workflow >= 0.17.0` (command install, curated validation, stale-item cleanup on apply).
+Compatible with `@haus-tech/haus-workflow >= 0.18.0` (requiredSkillFrontmatter validation, command install, stale-item cleanup on apply).
 
 ## Structure
 

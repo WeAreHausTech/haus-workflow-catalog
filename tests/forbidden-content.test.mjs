@@ -1,8 +1,8 @@
 /**
- * Scans the actual shipped catalog content (skills/, agents/) for safety violations
- * driven by validation-rules.json: risky install commands, disallowed npx (only
- * `npx tsx` allowed), and http:// URLs. Mirrors the production repo-wide walk, which
- * does not flag TODO/placeholder prose. Also asserts no manifest item carries a
+ * Scans shipped catalog markdown (skills/, agents/, templates/, commands/) for safety
+ * violations driven by validation-rules.json: risky install commands, disallowed npx
+ * (only `npx tsx` allowed), and http:// URLs. Mirrors the production repo-wide walk,
+ * which does not flag TODO/placeholder prose. Also asserts no manifest item carries a
  * forbidden stack tag.
  *
  * This is a guard over the production rules + production content, not a reimplementation:
@@ -14,6 +14,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { test } from 'node:test'
 
+import { extractFrontmatterDescription } from '../scripts/forbidden-content.mjs'
 import { REPO_ROOT } from './helpers/catalog-fixture.mjs'
 
 const rules = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'validation-rules.json'), 'utf8'))
@@ -37,7 +38,7 @@ function walkMd(dir, fn) {
 
 function scan() {
   const hits = []
-  for (const dir of ['skills', 'agents', 'commands']) {
+  for (const dir of ['skills', 'agents', 'templates', 'commands']) {
     walkMd(path.join(REPO_ROOT, dir), (file) => {
       const rel = path.relative(REPO_ROOT, file).replace(/\\/g, '/')
       const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
@@ -57,9 +58,20 @@ function scan() {
   return hits
 }
 
-test('no forbidden patterns in shipped skill/agent markdown', () => {
+test('no forbidden patterns in shipped markdown (repo-wide safety walk)', () => {
   const hits = scan()
   assert.deepEqual(hits, [], `Forbidden content:\n${hits.join('\n')}`)
+})
+
+test('extractFrontmatterDescription reads folded YAML block scalars', () => {
+  const md = `---
+name: demo
+description: >-
+  Use when doing multi-line description work.
+other: x
+---
+`
+  assert.match(extractFrontmatterDescription(md), /multi-line description/)
 })
 
 test('no manifest item carries a forbidden stack tag', () => {
