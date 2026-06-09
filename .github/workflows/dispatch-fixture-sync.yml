@@ -1,5 +1,9 @@
 name: Dispatch fixture sync
 
+concurrency:
+  group: dispatch-fixture-sync
+  cancel-in-progress: true
+
 permissions: {}
 
 # Fires whenever manifest.json or validation-rules.json lands on main, triggering

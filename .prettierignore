@@ -1,3 +1,6 @@
 node_modules/
 package-lock.json
 schema/
+# Verbatim upstream copies — must stay byte-identical for drift detection
+skills/superpowers/
+commands/superpowers/

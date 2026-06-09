@@ -1,0 +1,67 @@
+name: Upstream superpowers sync
+
+# Weekly sync of curated superpowers items from pcvelz/superpowers.
+# scripts/sync-upstream.mjs clones upstream, diffs against sources.yaml
+# snapshotRef, and on --apply re-copies drifted files + updates manifest.
+
+on:
+  schedule:
+    # Mondays at 06:00 UTC.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: upstream-superpowers-sync
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Sync upstream superpowers
+        run: node scripts/sync-upstream.mjs --apply
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate catalog
+        if: steps.diff.outputs.changed == 'true'
+        run: yarn validate
+
+      - name: Open or update sync PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.HAUS_WORKFLOW_DISPATCH_TOKEN || secrets.GITHUB_TOKEN }}
+          branch: chore/upstream-superpowers-sync
+          delete-branch: false
+          commit-message: 'chore(superpowers): sync upstream pcvelz/superpowers'
+          title: 'chore(superpowers): sync upstream pcvelz/superpowers'
+          body: |
+            Automated sync of curated superpowers skills and commands from
+            [pcvelz/superpowers](https://github.com/pcvelz/superpowers).
+
+            See workflow run summary for the sync report from `scripts/sync-upstream.mjs`.

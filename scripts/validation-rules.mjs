@@ -28,6 +28,9 @@ export const BANNED_AGENT_PHRASES = RULES.bannedAgentPhrases
 /** Sections required in every skill's SKILL.md. */
 export const REQUIRED_SKILL_SECTIONS = RULES.requiredSkillSections
 
+/** Skill sources exempt from REQUIRED_SKILL_SECTIONS when manifest carries whenToUse/whenNotToUse. */
+export const SKILL_SECTION_EXEMPT_SOURCES = RULES.skillSectionExemptSources
+
 /** Sections required in every agent's .md file. */
 export const REQUIRED_AGENT_SECTIONS = RULES.requiredAgentSections
 
