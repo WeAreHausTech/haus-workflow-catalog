@@ -19,9 +19,23 @@ function extractUseWhenSection(text) {
   return next < 0 ? tail : tail.slice(0, next)
 }
 
-/** Returns failure messages when the Use-when section recommends a forbidden stack. */
+/** Extracts the YAML frontmatter `description:` value (the superpowers when-signal). */
+export function extractFrontmatterDescription(text) {
+  const m = String(text).match(/^---\r?\n([\s\S]*?)\r?\n---/)
+  if (!m) return ''
+  const dm = m[1].match(/^description:[ \t]*(.*)$/m)
+  if (!dm) return ''
+  return dm[1].replace(/^["']|["']$/g, '').trim()
+}
+
+/**
+ * Returns failure messages when the skill's when-signal recommends a forbidden stack.
+ * Scans both the frontmatter `description:` (superpowers convention) and any legacy
+ * `## Use when` section (haus-owned agents/skills) — other prose may name platforms in
+ * negation or file paths, so it is intentionally excluded.
+ */
 export function auditForbiddenTagsInText(text, label) {
-  const body = extractUseWhenSection(text)
+  const body = `${extractFrontmatterDescription(text)}\n${extractUseWhenSection(text)}`
   if (!body.trim()) return []
 
   const failures = []
@@ -32,17 +46,24 @@ export function auditForbiddenTagsInText(text, label) {
   return failures
 }
 
-/** Line-level checks shared by skills, agents, and templates. */
+/**
+ * Line-level checks shared by skills, agents, and templates.
+ * `checkPlaceholder` gates the TODO/placeholder scan: it is an authoring-quality guard,
+ * not a safety rule, and produces false positives on legitimate prose (e.g. "scan for
+ * TODOs", CSS `.placeholder`). The repo-wide markdown walk disables it; per-item shipped
+ * template/command audits keep it on.
+ */
 export function auditMarkdownLines(
   text,
   rel,
   { PLACEHOLDER_PATTERN, RISKY_INSTALL_PATTERNS, ANY_NPX_PATTERN, ALLOWED_NPX_PATTERN },
+  { checkPlaceholder = true } = {},
 ) {
   const failures = []
   const lines = text.split(/\r?\n/)
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i] ?? ''
-    if (PLACEHOLDER_PATTERN.test(line)) {
+    if (checkPlaceholder && PLACEHOLDER_PATTERN.test(line)) {
       failures.push(`${rel}:${i + 1}: TODO or placeholder in shipped content`)
     }
     if (RISKY_INSTALL_PATTERNS.some((re) => re.test(line))) {

@@ -108,7 +108,8 @@ export function validSkillItem(overrides = {}) {
   }
 }
 
-export const VALID_SKILL_MD = '# Test skill\n\n## Use when\nx\n\n## Do not use when\ny\n'
+export const VALID_SKILL_MD =
+  '---\nname: test-skill\ndescription: Use when testing the validator.\n---\n\n# Test skill\n'
 
 /** A minimal valid manifest wrapping one valid skill. */
 export function validManifest(items) {

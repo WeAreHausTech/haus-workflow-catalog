@@ -1,5 +1,21 @@
 # Catalog runbook
 
+## Validation rules change (cross-repo)
+
+When changing `validation-rules.json`, follow ADR-0001 landing order:
+
+1. Land CLI validator logic + synced fixture in `haus-workflow` → npm release.
+2. Land matching canonical JSON + `scripts/validate.mjs` changes here → merge.
+3. Fixture-sync workflow reconciles copies; `contract-drift` on CLI `main` must pass.
+
+Key rules today:
+
+- Skills: non-empty frontmatter `description:` (`requiredSkillFrontmatter`).
+- Agents: `## Use when`, `## Do not use when`, `## Verification` + banned phrases.
+- Repo-wide walk: safety only (install patterns, npx allowlist, forbidden stacks in
+  `description:` / `## Use when` prose). No TODO/placeholder scan in the walk.
+- Per-item template/command audit: still enforces TODO/placeholder.
+
 ## Upstream superpowers drift
 
 Curated superpowers items sync from [pcvelz/superpowers](https://github.com/pcvelz/superpowers).

@@ -27,9 +27,8 @@ import Ajv from 'ajv'
 import {
   FORBIDDEN_TAGS,
   BANNED_AGENT_PHRASES,
-  REQUIRED_SKILL_SECTIONS,
+  REQUIRED_SKILL_FRONTMATTER,
   REQUIRED_AGENT_SECTIONS,
-  SKILL_SECTION_EXEMPT_SOURCES,
   RISKY_INSTALL_PATTERNS,
   ALLOWED_NPX_PATTERN,
   ANY_NPX_PATTERN,
@@ -37,7 +36,11 @@ import {
   PLACEHOLDER_PATTERN,
   auditDisallowedTags,
 } from './validation-rules.mjs'
-import { auditForbiddenTagsInText, auditMarkdownLines } from './forbidden-content.mjs'
+import {
+  auditForbiddenTagsInText,
+  auditMarkdownLines,
+  extractFrontmatterDescription,
+} from './forbidden-content.mjs'
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const MANIFEST = path.join(ROOT, 'manifest.json')
@@ -142,13 +145,12 @@ function checkItems(items) {
             fail(`${item.id}: missing ${path.relative(ROOT, skillMd)}`)
           } else {
             const text = fs.readFileSync(skillMd, 'utf8')
-            const skillSectionExempt =
-              SKILL_SECTION_EXEMPT_SOURCES.includes(item.source) &&
-              item.whenToUse &&
-              item.whenNotToUse
-            if (!skillSectionExempt) {
-              for (const section of REQUIRED_SKILL_SECTIONS) {
-                if (!text.includes(section)) fail(`${item.id}: SKILL.md missing ${section}`)
+            // Skills declare their when-signal via YAML frontmatter `description:`
+            // (the superpowers convention), not prose section headers.
+            const description = extractFrontmatterDescription(text)
+            for (const key of REQUIRED_SKILL_FRONTMATTER) {
+              if (key === 'description' && !description) {
+                fail(`${item.id}: SKILL.md missing non-empty frontmatter 'description:'`)
               }
             }
             for (const msg of auditForbiddenTagsInText(
@@ -265,15 +267,21 @@ function checkShippedMarkdown() {
     walkMd(abs, (file) => {
       const text = fs.readFileSync(file, 'utf8')
       const rel = path.relative(ROOT, file).replace(/\\/g, '/')
-      // Verbatim curated upstream copies (superpowers) are audited at import; prose may
-      // mention "TODO" / "todo" in guidance text and trigger false positives.
-      if (rel.includes('/superpowers/')) return
-      for (const msg of auditMarkdownLines(text, rel, {
-        PLACEHOLDER_PATTERN,
-        RISKY_INSTALL_PATTERNS,
-        ANY_NPX_PATTERN,
-        ALLOWED_NPX_PATTERN,
-      })) {
+      // Repo-wide safety scan only. The TODO/placeholder check is an authoring-quality
+      // guard, not a safety rule, and false-positives on legitimate prose (guidance text
+      // discussing TODOs, CSS `.placeholder`), so it is disabled here — per-item shipped
+      // template/command audits still enforce it.
+      for (const msg of auditMarkdownLines(
+        text,
+        rel,
+        {
+          PLACEHOLDER_PATTERN,
+          RISKY_INSTALL_PATTERNS,
+          ANY_NPX_PATTERN,
+          ALLOWED_NPX_PATTERN,
+        },
+        { checkPlaceholder: false },
+      )) {
         fail(msg)
       }
       if (!rel.includes('/references/')) {

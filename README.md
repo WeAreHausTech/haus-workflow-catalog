@@ -6,40 +6,54 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-54 items: 46 skills, 5 agents, 3 templates (agentic-workflow-standard,
-memory-conventions, lefthook-security). See `manifest.json` for the full list.
+**71 items** at manifest version **2.5.0**: 61 skills, 2 agents, 3 templates, 5 commands.
 
-Compatible with `@haus-tech/haus-workflow >= 0.9.0`.
+| Source    | Count | Notes                                                                                                     |
+| --------- | ----- | --------------------------------------------------------------------------------------------------------- |
+| `haus`    | 50    | First-party stack skills, agents, templates                                                               |
+| `curated` | 21    | Verbatim superpowers import (16 skills + 5 commands under `skills/superpowers/`, `commands/superpowers/`) |
+
+See `manifest.json` for the full list. Curated provenance: `sources.yaml` → `superpowers-pcvelz`.
+
+Compatible with `@haus-tech/haus-workflow >= 0.17.0` (command install, curated validation, stale-item cleanup on apply).
 
 ## Structure
 
 ```
-manifest.json          — catalog item registry
-validation-rules.json  — canonical validation rules (forbidden tags, banned phrases,
-                         required sections, install patterns, stack allowlist)
-skills/                — skill packages (SKILL.md + references/)
-agents/                — agent definition files
+manifest.json          — catalog item registry (source of truth)
+validation-rules.json  — canonical validation rules (see Validation rules below)
+sources.yaml           — curated upstream snapshots (superpowers)
+skills/
+  haus-owned/          — first-party skills
+  superpowers/         — verbatim curated skills (pcvelz/superpowers)
+agents/                — agent definition files (.md)
+commands/
+  superpowers/         — verbatim curated slash commands
 templates/             — managed file templates (agentic-workflow-standard.md etc.)
-scripts/               — validation scripts (validate.mjs + validation-rules.mjs loader)
+scripts/               — validation (validate.mjs) + upstream sync (sync-upstream.mjs)
+schema/                — JSON schemas for manifest, catalog items, lock file
+docs/                  — ADRs and runbooks
 lefthook.yml           — local pre-commit hook (validate + format + lint)
 CHANGELOG.md           — release history
 ```
 
 ## How it works
 
-This catalog is the **source of truth** for skill, agent, and template content. The [`@haus-tech/haus-workflow`](https://github.com/WeAreHausTech/haus-workflow) CLI consumes it at runtime — it never bundles catalog items directly.
+This catalog is the **source of truth** for skill, agent, command, and template content. The [`@haus-tech/haus-workflow`](https://github.com/WeAreHausTech/haus-workflow) CLI fetches it at runtime — catalog items are not bundled into the npm package (only a fallback manifest + validation-rules fixture ship offline).
 
 ```
 haus-workflow-catalog          @haus-tech/haus-workflow CLI         consuming project
 ─────────────────────          ────────────────────────────         ────────────────
-manifest.json  ──── fetch ──▶  haus install / haus update  ──▶  .haus-workflow/haus.lock.json
-skills/        ──── fetch ──▶  copies skill files into           skills installed
-agents/        ──── fetch ──▶  .claude/agents/ etc.
+manifest.json  ──── fetch ──▶  haus update (cache) / apply  ──▶  .haus-workflow/haus.lock.json
+skills/        ──── fetch ──▶  copies into .claude/skills/         (+ agents, commands, templates)
 ```
 
-### Install flow
+### Project install flow
 
-`haus install` scans the project, matches items via `requiresAny` (stack tokens, repo roles, intents), fetches matched items from this repo at the locked ref, and writes `.haus-workflow/haus.lock.json`:
+Per-project setup is `haus init` or `haus scan` → `haus recommend` → `haus apply --write`.
+The recommender matches items via policy gates + `requiresAny` (stack tokens, repo roles,
+intents). Apply fetches matched items from this repo (cached by `haus update`) and writes
+`.haus-workflow/haus.lock.json`:
 
 ```json
 [
@@ -48,7 +62,7 @@ agents/        ──── fetch ──▶  .claude/agents/ etc.
     "type": "skill",
     "source": "haus",
     "version": "1.0.0",
-    "catalogRef": "v2.4.1",
+    "catalogRef": "main",
     "hash": "sha256-…",
     "paths": [".claude/skills/nextjs-patterns"]
   }
@@ -57,25 +71,30 @@ agents/        ──── fetch ──▶  .claude/agents/ etc.
 
 ### Update flow
 
-`haus update` fetches the latest `manifest.json`, compares each installed item's `version` against the lock, and reports outdated items:
+`haus update` fetches the latest catalog into cache, refreshes the global `~/.claude/`
+install, and re-applies project files from `recommendation.json`. The lockfile records
+per-item content hashes; apply removes items dropped from the catalog when the on-disk
+copy still matches the lock (user-edited copies are kept).
 
-```
-3 items out of date:
-  haus.nextjs-patterns       1.0.0 → 1.1.0
-  haus.react19-patterns      1.0.0 → 1.1.0
-  haus.typescript5-patterns  1.0.0 → 1.0.1
-Run `haus update --apply` to upgrade.
-```
+Global-only: `haus install` seeds `~/.claude/` with the bundled `haus-workflow` skill
+and slash commands — it does not install catalog stack skills into projects.
 
 ### Validation rule sync
 
-`validation-rules.json` (repo root) is the **single source of truth** for forbidden
-tags, banned phrases, required sections, install patterns, and the stack allowlist.
-`scripts/validation-rules.mjs` is a thin loader of that JSON, and the CLI consumes the
-same file as a synced fixture (`library/catalog/validation-rules.json`) — a push to
-`main` dispatches the sync. Edit the JSON, never the loader. No more manual two-language
-mirroring. (Rationale: ADR-0001 in the [`@haus-tech/haus-workflow`](https://github.com/WeAreHausTech/haus-workflow/blob/main/docs/adr/0001-validation-rules-single-source.md)
-repo, which owns the decision log.)
+`validation-rules.json` (repo root) is the **single source of truth** for all catalog
+validation data. `scripts/validation-rules.mjs` is a thin loader; the CLI consumes the
+same JSON as a synced fixture (`library/catalog/validation-rules.json`). A push to
+`main` that touches `manifest.json` or `validation-rules.json` dispatches fixture sync
+in the CLI repo. Edit the JSON, never the loader.
+
+**Authoring vs safety** (see [ADR-0001](docs/adr/0001-curated-verbatim-skill-import.md)):
+
+| Kind      | Rules                                                                                                                                                                                                                                                                    | Applies to                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| Authoring | Skills require non-empty YAML frontmatter `description:` (superpowers convention). Agents still require `## Use when`, `## Do not use when`, `## Verification`. TODO/placeholder scan runs on shipped **template/command** items only — not the repo-wide markdown walk. | All skills; agents; per-item templates/commands |
+| Safety    | Forbidden stack tags, risky install patterns (`npx -y`, `dlx`), `npx tsx`-only allowlist, `http://` URL ban, tag allowlist, `source: curated` requires `reviewStatus: approved`                                                                                          | All content repo-wide                           |
+
+Cross-repo decision log: [`haus-workflow` ADR-0001](https://github.com/WeAreHausTech/haus-workflow/blob/main/docs/adr/0001-validation-rules-single-source.md).
 
 ## Validation
 
@@ -113,7 +132,7 @@ Key fields:
 | Field                        | Description                                                        |
 | ---------------------------- | ------------------------------------------------------------------ |
 | `id`                         | Unique identifier (`haus.<name>`)                                  |
-| `type`                       | `skill` \| `agent` \| `template`                                   |
+| `type`                       | `skill` \| `agent` \| `template` \| `command`                      |
 | `source`                     | `haus` (first-party) \| `curated` (reviewed external)              |
 | `version`                    | Semver — PATCH: wording fix, MINOR: new guideline, MAJOR: breaking |
 | `path`                       | Relative path to skill dir or agent/template file                  |
@@ -132,9 +151,27 @@ Key fields:
 
 ## Making changes
 
+### Adding or editing a skill
+
+Every `SKILL.md` must have YAML frontmatter with a non-empty `description:` — this is
+the when-signal (superpowers convention). Haus-owned skills may also keep optional
+`## Use when` / `## Do not use when` prose sections; they are not required. Manifest
+`whenToUse` / `whenNotToUse` remain for the recommender.
+
+```yaml
+---
+name: my-skill
+description: Use when working on X. Do not use for Y.
+---
+```
+
+Curated superpowers items are copied verbatim from upstream; do not hand-edit files
+under `skills/superpowers/` or `commands/superpowers/` except security patches —
+use `node scripts/sync-upstream.mjs` (see `docs/runbook.md`).
+
 ### Bumping a skill or agent
 
-When you change `SKILL.md`, any `references/` file, or an agent `.md`:
+When you change `SKILL.md`, any `references/` file, an agent `.md`, or a command `.md`:
 
 1. Bump the item's `version` in `manifest.json`:
 
