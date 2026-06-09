@@ -57,3 +57,6 @@ See also `haus-workflow/docs/adr/0001-validation-rules-single-source.md` (cross-
   matches in upstream guidance prose (e.g. "todo list").
 - CodeQL excludes `skills/superpowers/` (`.github/codeql/codeql-config.yml`) — verbatim
   upstream includes local-dev scripts not authored by haus.
+- **Exception:** `brainstorming/scripts/helper.js` — haus patch 1.0.1 replaces `innerHTML`
+  with safe DOM APIs (CodeQL XSS). Upstream sync may reintroduce; re-patch or wait for
+  upstream fix.

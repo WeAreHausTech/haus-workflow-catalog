@@ -1,4 +1,5 @@
 # Verbatim upstream copies under skills/superpowers/ are not haus-authored;
 # exclude from CodeQL to avoid findings on third-party local-dev tooling.
 paths-ignore:
-  - skills/superpowers
+  - skills/superpowers/**
+  - commands/superpowers/**

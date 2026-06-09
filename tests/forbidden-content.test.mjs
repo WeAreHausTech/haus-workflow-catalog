@@ -44,7 +44,6 @@ function scan() {
       if (rel.includes('/superpowers/')) return
       const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
       lines.forEach((line, i) => {
-      lines.forEach((line, i) => {
         const at = `${rel}:${i + 1}`
         if (PLACEHOLDER.test(line)) hits.push(`${at}: placeholder/TODO`)
         if (RISKY.some((re) => re.test(line))) hits.push(`${at}: risky install`)

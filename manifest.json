@@ -1650,7 +1650,7 @@
     },
     {
       "id": "haus.superpowers-brainstorming",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/superpowers/brainstorming",
