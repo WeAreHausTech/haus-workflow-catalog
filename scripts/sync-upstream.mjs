@@ -13,6 +13,8 @@ import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { extractFrontmatterDescription } from './forbidden-content.mjs'
+
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const SOURCES_PATH = path.join(ROOT, 'sources.yaml')
 const MANIFEST_PATH = path.join(ROOT, 'manifest.json')
@@ -241,17 +243,10 @@ function removeRecursive(target) {
 // Manifest / description helpers
 // ---------------------------------------------------------------------------
 
+// Reuse the validator's CRLF-safe, block-scalar-aware extractor so upstream files
+// with Windows line endings don't yield an empty description (single source of truth).
 function parseDescription(filePath) {
-  const text = fs.readFileSync(filePath, 'utf8')
-  const m = text.match(/^---\n([\s\S]*?)\n---/)
-  if (!m) return ''
-  const descLine = m[1].split('\n').find((l) => l.startsWith('description:'))
-  if (!descLine) return ''
-  let val = descLine.slice('description:'.length).trim()
-  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-    val = val.slice(1, -1)
-  }
-  return val
+  return extractFrontmatterDescription(fs.readFileSync(filePath, 'utf8'))
 }
 
 function titleCase(name) {
