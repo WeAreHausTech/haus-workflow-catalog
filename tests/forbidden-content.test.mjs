@@ -74,6 +74,41 @@ other: x
   assert.match(extractFrontmatterDescription(md), /multi-line description/)
 })
 
+test('extractFrontmatterDescription reads literal block scalars and header variants', () => {
+  const literal = `---
+description: |
+  Line one
+  Line two
+---
+`
+  assert.match(extractFrontmatterDescription(literal), /Line one.*Line two/)
+
+  const comment = `---
+description: >- # folded with comment
+  Commented header body.
+---
+`
+  assert.match(extractFrontmatterDescription(comment), /Commented header body/)
+
+  const indent = `---
+description: >2
+  Indented block body.
+---
+`
+  assert.match(extractFrontmatterDescription(indent), /Indented block body/)
+})
+
+test('extractFrontmatterDescription returns empty for bare description key', () => {
+  const md = `---
+name: demo
+description:
+  should not be consumed
+other: x
+---
+`
+  assert.equal(extractFrontmatterDescription(md), '')
+})
+
 test('no manifest item carries a forbidden stack tag', () => {
   const bad = []
   for (const item of manifest.items) {
