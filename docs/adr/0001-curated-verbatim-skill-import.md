@@ -9,8 +9,7 @@ We want 16 skills and 5 commands from [pcvelz/superpowers](https://github.com/pc
 haus-owned.
 
 Upstream skills use `description:` frontmatter instead of `## Use when` / `## Do not use when`.
-Verbatim copies keep a clean diff path for future upstream syncs. Catalog validation
-normally requires those sections in every `SKILL.md`.
+Verbatim copies keep a clean diff path for future upstream syncs.
 
 ## Decision
 
@@ -19,10 +18,13 @@ normally requires those sections in every `SKILL.md`.
    `sources.yaml`. Items link via `originSourceId: superpowers-pcvelz`. No per-item
    `pinnedRef`.
 
-2. **Section-requirement exemption** for `source: "curated"` items when the manifest carries
-   both `whenToUse` and `whenNotToUse` (`validation-rules.json` →
-   `skillSectionExemptSources: ["curated"]`). The when-signal moves to manifest metadata,
-   not SKILL.md prose.
+2. **Skill when-signal is frontmatter `description:`** for every skill (haus-owned and
+   curated alike): `validation-rules.json` → `requiredSkillFrontmatter: ["description"]`.
+   This is the superpowers convention and is sufficient on its own, so there is no
+   curated-specific section exemption (the earlier `skillSectionExemptSources` workaround
+   was removed). Skills MAY still keep `## Use when` / `## Do not use when` as prose, but
+   the headers are not required. Manifest `whenToUse` / `whenNotToUse` remain for the
+   recommender.
 
 3. **Command validation and install** extended in both catalog `validate.mjs` and the CLI
    (`validate-catalog.ts`, `remote-catalog.ts`, `write-claude-files.ts`).
@@ -37,24 +39,39 @@ normally requires those sections in every `SKILL.md`.
 
 Both repos must land in order:
 
-1. **CLI PR** — hand-add `skillSectionExemptSources` to `library/catalog/validation-rules.json`,
-   mirror validator + command install support, fix `sync-catalog-fixture` concurrency.
+1. **CLI PR** — update validator logic + `library/catalog/validation-rules.json`
+   (`requiredSkillFrontmatter`), command install support, `sync-catalog-fixture` fix.
    Merge → **npm release**.
-2. **Catalog PR** — items, verbatim copies, matching `validation-rules.json` key, local validator.
+2. **Catalog PR** — items, verbatim copies, matching `validation-rules.json`, local validator.
    Merge → `haus validate-catalog` CI passes on released CLI.
 3. **Fixture sync** — catalog merge dispatches sync; CLI fixture already identical → no-op PR.
    `contract-drift` on CLI main green.
 
 See also `haus-workflow/docs/adr/0001-validation-rules-single-source.md` (cross-reference).
 
+## Validation rules: authoring vs safety
+
+Rules are split by intent. **Authoring/style** rules are relaxed to the superpowers
+convention; **safety/governance** rules apply to all content (haus and curated):
+
+- Authoring: skill when-signal is frontmatter `description:` (no required section headers);
+  the TODO/placeholder scan is an authoring guard enforced **per shipped template/command
+  item only**, not in the repo-wide markdown walk (it false-positives on legitimate prose
+  such as "scan for TODOs" and CSS `.placeholder`).
+- Safety: forbidden stack tags, risky install patterns (`npx -y`, `dlx`), `npx tsx`-only
+  allowlist, `http://` URL ban, and the `source: curated` + `reviewStatus: approved` gate —
+  all unchanged and applied repo-wide.
+
+Because the placeholder scan no longer runs in the walk, the prior `/superpowers/` walk
+skip and the CLI `isVerbatimSuperpowersMarkdownPath()` helper were removed; no path-based
+special-casing of curated content remains.
+
 ## Consequences
 
-- Curated skills ship without editing upstream SKILL.md structure.
-- Manifest metadata is required for exemption — dropping `whenNotToUse` fails validation.
+- Curated skills ship verbatim; their `description:` frontmatter satisfies validation.
+- Haus-owned skills already carry `description:` frontmatter, so no migration was needed.
 - Upstream updates are mechanical via sync script; re-licensing requires human review.
 - Net catalog change: +21 −4 items (+17).
-- Directory markdown walk skips `/superpowers/` paths to avoid false-positive `TODO`
-  matches in upstream guidance prose (e.g. "todo list").
 - CodeQL excludes `skills/superpowers/` (`.github/codeql/codeql-config.yml`) — verbatim
   upstream includes local-dev scripts not authored by haus.
 - **Exception:** `brainstorming/scripts/helper.js` — haus patch 1.0.1 replaces `innerHTML`

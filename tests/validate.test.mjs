@@ -107,13 +107,13 @@ test('skill missing SKILL.md -> fail', () => {
   assert.match(r.stderr, /missing .*SKILL\.md/)
 })
 
-test('skill SKILL.md missing required section -> fail', () => {
+test('skill SKILL.md missing description frontmatter -> fail', () => {
   const r = check({
     manifest: validManifest([validSkillItem()]),
-    files: { 'skills/test-skill/SKILL.md': '# only\n## Use when\nx\n' },
+    files: { 'skills/test-skill/SKILL.md': '# only\n\nProse without frontmatter.\n' },
   })
   assert.equal(r.status, 1)
-  assert.match(r.stderr, /SKILL\.md missing ## Do not use when/)
+  assert.match(r.stderr, /SKILL\.md missing non-empty frontmatter 'description:'/)
 })
 
 test('template missing file -> fail', () => {
@@ -230,15 +230,24 @@ test('non-allowlisted tag -> fail', () => {
   assert.match(r.stderr, /tag not in allowlist: "totally-unknown-tag"/)
 })
 
-test('placeholder (TODO) in shipped skill content -> fail', () => {
+test('placeholder (TODO) in shipped command content -> fail', () => {
+  const item = validSkillItem({ id: 'haus.cmd', type: 'command', path: 'commands/x.md' })
   const r = check({
-    manifest: validManifest([validSkillItem()]),
-    files: {
-      'skills/test-skill/SKILL.md': VALID_SKILL_MD + '\nTODO finish this\n',
-    },
+    manifest: validManifest([item]),
+    files: { 'commands/x.md': '---\ndescription: x\n---\nTODO finish this\n' },
   })
   assert.equal(r.status, 1)
   assert.match(r.stderr, /TODO or placeholder/)
+})
+
+test('TODO in skill prose is allowed (authoring guard is per-item, not repo-wide)', () => {
+  // Skills are not line-audited for placeholders; the repo-wide walk only enforces
+  // safety rules. Guidance prose (e.g. "scan for TODO markers") must not fail.
+  const r = check({
+    manifest: validManifest([validSkillItem()]),
+    files: { 'skills/test-skill/SKILL.md': VALID_SKILL_MD + '\nScan for TODO markers.\n' },
+  })
+  assert.equal(r.status, 0, r.stderr)
 })
 
 test('risky install pattern (npx -y) in shipped content -> fail', () => {
