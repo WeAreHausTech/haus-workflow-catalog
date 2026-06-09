@@ -9,6 +9,12 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.6.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.5.0...v2.6.0) (2026-06-09)
+
+### Added
+
+- adopt description frontmatter and drop curated workarounds ([#12](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/12)) ([b2d6ca5](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/b2d6ca533429392e97b17541381bbc172bcc28d8))
+
 ## [2.5.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.4.2...v2.5.0) (2026-06-09)
 
 ### Added
