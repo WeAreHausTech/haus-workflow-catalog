@@ -264,7 +264,7 @@ function checkShippedMarkdown() {
     if (!fs.existsSync(abs)) continue
     walkMd(abs, (file) => {
       const text = fs.readFileSync(file, 'utf8')
-      const rel = path.relative(ROOT, file)
+      const rel = path.relative(ROOT, file).replace(/\\/g, '/')
       // Verbatim curated upstream copies (superpowers) are audited at import; prose may
       // mention "TODO" / "todo" in guidance text and trigger false positives.
       if (rel.includes('/superpowers/')) return

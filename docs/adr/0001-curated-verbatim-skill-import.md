@@ -55,3 +55,5 @@ See also `haus-workflow/docs/adr/0001-validation-rules-single-source.md` (cross-
 - Net catalog change: +21 −4 items (+17).
 - Directory markdown walk skips `/superpowers/` paths to avoid false-positive `TODO`
   matches in upstream guidance prose (e.g. "todo list").
+- CodeQL excludes `skills/superpowers/` (`.github/codeql/codeql-config.yml`) — verbatim
+  upstream includes local-dev scripts not authored by haus.
