@@ -29,6 +29,7 @@ import {
   BANNED_AGENT_PHRASES,
   REQUIRED_SKILL_SECTIONS,
   REQUIRED_AGENT_SECTIONS,
+  SKILL_SECTION_EXEMPT_SOURCES,
   RISKY_INSTALL_PATTERNS,
   ALLOWED_NPX_PATTERN,
   ANY_NPX_PATTERN,
@@ -118,7 +119,12 @@ function checkItems(items) {
       seenIds.set(item.id, i)
     }
 
-    if (item.type === 'skill' || item.type === 'agent' || item.type === 'template') {
+    if (
+      item.type === 'skill' ||
+      item.type === 'agent' ||
+      item.type === 'template' ||
+      item.type === 'command'
+    ) {
       if (!item.path) {
         fail(`${item.id}: missing path`)
       } else {
@@ -136,8 +142,14 @@ function checkItems(items) {
             fail(`${item.id}: missing ${path.relative(ROOT, skillMd)}`)
           } else {
             const text = fs.readFileSync(skillMd, 'utf8')
-            for (const section of REQUIRED_SKILL_SECTIONS) {
-              if (!text.includes(section)) fail(`${item.id}: SKILL.md missing ${section}`)
+            const skillSectionExempt =
+              SKILL_SECTION_EXEMPT_SOURCES.includes(item.source) &&
+              item.whenToUse &&
+              item.whenNotToUse
+            if (!skillSectionExempt) {
+              for (const section of REQUIRED_SKILL_SECTIONS) {
+                if (!text.includes(section)) fail(`${item.id}: SKILL.md missing ${section}`)
+              }
             }
             for (const msg of auditForbiddenTagsInText(
               text,
@@ -170,6 +182,24 @@ function checkItems(items) {
         } else if (item.type === 'template') {
           if (!fs.existsSync(abs)) {
             fail(`${item.id}: missing template file ${item.path}`)
+          } else {
+            const text = fs.readFileSync(abs, 'utf8')
+            const rel = path.relative(ROOT, abs)
+            for (const msg of auditMarkdownLines(text, rel, {
+              PLACEHOLDER_PATTERN,
+              RISKY_INSTALL_PATTERNS,
+              ANY_NPX_PATTERN,
+              ALLOWED_NPX_PATTERN,
+            })) {
+              fail(msg)
+            }
+            for (const msg of auditForbiddenTagsInText(text, `${item.id}: ${rel}`)) {
+              fail(msg)
+            }
+          }
+        } else if (item.type === 'command') {
+          if (!fs.existsSync(abs)) {
+            fail(`${item.id}: missing command file ${item.path}`)
           } else {
             const text = fs.readFileSync(abs, 'utf8')
             const rel = path.relative(ROOT, abs)
@@ -228,13 +258,16 @@ function checkItems(items) {
 }
 
 function checkShippedMarkdown() {
-  const dirs = ['skills', 'agents', 'templates']
+  const dirs = ['skills', 'agents', 'templates', 'commands']
   for (const dir of dirs) {
     const abs = path.join(ROOT, dir)
     if (!fs.existsSync(abs)) continue
     walkMd(abs, (file) => {
       const text = fs.readFileSync(file, 'utf8')
       const rel = path.relative(ROOT, file)
+      // Verbatim curated upstream copies (superpowers) are audited at import; prose may
+      // mention "TODO" / "todo" in guidance text and trigger false positives.
+      if (rel.includes('/superpowers/')) return
       for (const msg of auditMarkdownLines(text, rel, {
         PLACEHOLDER_PATTERN,
         RISKY_INSTALL_PATTERNS,

@@ -40,6 +40,8 @@ function scan() {
   for (const dir of ['skills', 'agents']) {
     walkMd(path.join(REPO_ROOT, dir), (file) => {
       const rel = path.relative(REPO_ROOT, file)
+      // Verbatim curated upstream copies may mention "TODO" in guidance prose.
+      if (rel.includes('/superpowers/')) return
       const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
       lines.forEach((line, i) => {
         const at = `${rel}:${i + 1}`
