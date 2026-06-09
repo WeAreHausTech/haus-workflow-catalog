@@ -15,7 +15,8 @@
 
 ## Test commands (TDD / verification gate)
 
-- Test (unit + integration): `yarn validate` (catalog validation is this repo's test gate)
+- Test (unit + integration): `yarn validate` (catalog validation) **and** `yarn test`
+  (the `node:test` suite in `tests/` exercising the validator) — both are the test gate
 - Test (E2E): n/a — no runtime application code
 
 ## Highest-stakes logic

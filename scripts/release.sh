@@ -19,8 +19,8 @@ if [[ -z "$VERSION" ]]; then
   exit 1
 fi
 
-if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-  echo "Error: version must be x.y.z (got '$VERSION')"
+if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+  echo "Error: version must be semver x.y.z (optionally -prerelease / +build) (got '$VERSION')"
   exit 1
 fi
 

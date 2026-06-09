@@ -32,8 +32,19 @@ schema/                — JSON schemas for manifest and catalog items
 same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A push to
 `main` that touches `manifest.json` or `validation-rules.json` dispatches fixture sync.
 
-**Catalog size:** manifest **2.5.0**, **71 items** (61 skills, 2 agents, 3 templates,
-5 commands) — 50 `haus` + 21 `curated` superpowers.
+**Catalog size:** **71 items** (61 skills, 2 agents, 3 templates, 5 commands) —
+50 `haus` + 21 `curated` superpowers. (Manifest version lives in `manifest.json`; do
+not restate it in prose — it drifts every release.)
+
+**Tag allowlist (positive gate).** Every item tag must be a known stack in
+`validation-rules.json#allowedStacks`, an `alwaysAllowedTags` meta tag, or end with a
+`patternTagSuffixes` suffix — otherwise validation fails. Adding a new stack means adding
+its tag to `validation-rules.json#allowedStacks`, not just creating the skill.
+
+**Workflow-doc sync.** `templates/agentic-workflow-standard.md` and `.claude/WORKFLOW.md`
+must be byte-identical (`checkWorkflowDocSync` in `validate.mjs`) — the latter is the
+shipped template applied to this repo. Edit the template, then copy it over the local
+copy: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
 
 ## Adding a new item
 
@@ -44,8 +55,10 @@ same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A pus
    phrases: `autonomous`, `swarm`, `delegate`, `orchestrat`, `marketplace`.
 4. **Commands** need a `.md` file with frontmatter `description:`.
 5. Add the item entry to `manifest.json`. Set `version: "1.0.0"`.
-6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; all
-   URLs `https://`; no forbidden stack tags in item id/tags.
+6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; item
+   `references` must use `https://` (the `http://` ban is enforced on `references[]`, not
+   on prose/code bodies — local-dev `http://localhost` URLs in examples are fine); no
+   forbidden stack tags in item id/tags.
 7. TODO/placeholder checks apply to shipped **template/command** files, not skill prose.
 8. Do not hand-edit `skills/superpowers/` or `commands/superpowers/` — sync from upstream.
 
@@ -69,154 +82,6 @@ CI runs both on every push and PR. Item version check runs on PRs only.
 
 `haus install` / `haus update` fetches live from this repo at the ref specified by `HAUS_CATALOG_REF` (default: `main`). Changes to `main` are available to consumers immediately — no CLI release needed.
 
-<!-- rtk-instructions v2 -->
+## Tooling
 
-# RTK (Rust Token Killer) - Token-Optimized Commands
-
-## Golden Rule
-
-**Always prefix commands with `rtk`**. If RTK has a dedicated filter, it uses it. If not, it passes through unchanged. This means RTK is always safe to use.
-
-**Important**: Even in command chains with `&&`, use `rtk`:
-
-```bash
-# ❌ Wrong
-git add . && git commit -m "msg" && git push
-
-# ✅ Correct
-rtk git add . && rtk git commit -m "msg" && rtk git push
-```
-
-## RTK Commands by Workflow
-
-### Build & Compile (80-90% savings)
-
-```bash
-rtk cargo build         # Cargo build output
-rtk cargo check         # Cargo check output
-rtk cargo clippy        # Clippy warnings grouped by file (80%)
-rtk tsc                 # TypeScript errors grouped by file/code (83%)
-rtk lint                # ESLint/Biome violations grouped (84%)
-rtk prettier --check    # Files needing format only (70%)
-rtk next build          # Next.js build with route metrics (87%)
-```
-
-### Test (60-99% savings)
-
-```bash
-rtk cargo test          # Cargo test failures only (90%)
-rtk go test             # Go test failures only (90%)
-rtk jest                # Jest failures only (99.5%)
-rtk vitest              # Vitest failures only (99.5%)
-rtk playwright test     # Playwright failures only (94%)
-rtk pytest              # Python test failures only (90%)
-rtk rake test           # Ruby test failures only (90%)
-rtk rspec               # RSpec test failures only (60%)
-rtk test <cmd>          # Generic test wrapper - failures only
-```
-
-### Git (59-80% savings)
-
-```bash
-rtk git status          # Compact status
-rtk git log             # Compact log (works with all git flags)
-rtk git diff            # Compact diff (80%)
-rtk git show            # Compact show (80%)
-rtk git add             # Ultra-compact confirmations (59%)
-rtk git commit          # Ultra-compact confirmations (59%)
-rtk git push            # Ultra-compact confirmations
-rtk git pull            # Ultra-compact confirmations
-rtk git branch          # Compact branch list
-rtk git fetch           # Compact fetch
-rtk git stash           # Compact stash
-rtk git worktree        # Compact worktree
-```
-
-Note: Git passthrough works for ALL subcommands, even those not explicitly listed.
-
-### GitHub (26-87% savings)
-
-```bash
-rtk gh pr view <num>    # Compact PR view (87%)
-rtk gh pr checks        # Compact PR checks (79%)
-rtk gh run list         # Compact workflow runs (82%)
-rtk gh issue list       # Compact issue list (80%)
-rtk gh api              # Compact API responses (26%)
-```
-
-### JavaScript/TypeScript Tooling (70-90% savings)
-
-```bash
-rtk pnpm list           # Compact dependency tree (70%)
-rtk pnpm outdated       # Compact outdated packages (80%)
-rtk pnpm install        # Compact install output (90%)
-rtk npm run <script>    # Compact npm script output
-rtk npx <cmd>           # Compact npx command output
-rtk prisma              # Prisma without ASCII art (88%)
-```
-
-### Files & Search (60-75% savings)
-
-```bash
-rtk ls <path>           # Tree format, compact (65%)
-rtk read <file>         # Code reading with filtering (60%)
-rtk grep <pattern>      # Search grouped by file (75%). Format flags (-c, -l, -L, -o, -Z) run raw.
-rtk find <pattern>      # Find grouped by directory (70%)
-```
-
-### Analysis & Debug (70-90% savings)
-
-```bash
-rtk err <cmd>           # Filter errors only from any command
-rtk log <file>          # Deduplicated logs with counts
-rtk json <file>         # JSON structure without values
-rtk deps                # Dependency overview
-rtk env                 # Environment variables compact
-rtk summary <cmd>       # Smart summary of command output
-rtk diff                # Ultra-compact diffs
-```
-
-### Infrastructure (85% savings)
-
-```bash
-rtk docker ps           # Compact container list
-rtk docker images       # Compact image list
-rtk docker logs <c>     # Deduplicated logs
-rtk kubectl get         # Compact resource list
-rtk kubectl logs        # Deduplicated pod logs
-```
-
-### Network (65-70% savings)
-
-```bash
-rtk curl <url>          # Compact HTTP responses (70%)
-rtk wget <url>          # Compact download output (65%)
-```
-
-### Meta Commands
-
-```bash
-rtk gain                # View token savings statistics
-rtk gain --history      # View command history with savings
-rtk discover            # Analyze Claude Code sessions for missed RTK usage
-rtk proxy <cmd>         # Run command without filtering (for debugging)
-rtk init                # Add RTK instructions to CLAUDE.md
-rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
-```
-
-## Token Savings Overview
-
-| Category         | Commands                       | Typical Savings |
-| ---------------- | ------------------------------ | --------------- |
-| Tests            | vitest, playwright, cargo test | 90-99%          |
-| Build            | next, tsc, lint, prettier      | 70-87%          |
-| Git              | status, log, diff, add, commit | 59-80%          |
-| GitHub           | gh pr, gh run, gh issue        | 26-87%          |
-| Package Managers | pnpm, npm, npx                 | 70-90%          |
-| Files            | ls, read, grep, find           | 60-75%          |
-| Infrastructure   | docker, kubectl                | 85%             |
-| Network          | curl, wget                     | 65-70%          |
-
-Overall average: **60-90% token reduction** on common development operations.
-
-<!-- /rtk-instructions -->
+This repo uses **RTK** (Rust Token Killer) for token-optimized CLI output — prefix dev commands with `rtk` (e.g. `rtk git status`, `rtk validate`). Full command reference lives in the global `~/.claude/RTK.md`; not duplicated here.

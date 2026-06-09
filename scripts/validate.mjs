@@ -39,7 +39,7 @@ import {
 import {
   auditForbiddenTagsInText,
   auditMarkdownLines,
-  extractFrontmatterDescription,
+  extractFrontmatterValue,
 } from './forbidden-content.mjs'
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
@@ -65,6 +65,25 @@ let failures = 0
 function fail(msg) {
   console.error(`FAIL  ${msg}`)
   failures++
+}
+
+// Shared pattern bundle for auditMarkdownLines (skills, agents, templates, commands).
+const MARKDOWN_PATTERNS = {
+  PLACEHOLDER_PATTERN,
+  RISKY_INSTALL_PATTERNS,
+  ANY_NPX_PATTERN,
+  ALLOWED_NPX_PATTERN,
+}
+
+// Every required frontmatter key must be present and non-empty. Key-agnostic so a new
+// key added to validation-rules.json#requiredSkillFrontmatter is enforced, not ignored.
+// Applied to skills and commands (both ship a `description:` when-signal).
+function checkRequiredFrontmatter(text, label) {
+  for (const key of REQUIRED_SKILL_FRONTMATTER) {
+    if (!extractFrontmatterValue(text, key)) {
+      fail(`${label}: missing non-empty frontmatter '${key}:'`)
+    }
+  }
 }
 
 function checkManifest() {
@@ -147,12 +166,7 @@ function checkItems(items) {
             const text = fs.readFileSync(skillMd, 'utf8')
             // Skills declare their when-signal via YAML frontmatter `description:`
             // (the superpowers convention), not prose section headers.
-            const description = extractFrontmatterDescription(text)
-            for (const key of REQUIRED_SKILL_FRONTMATTER) {
-              if (key === 'description' && !description) {
-                fail(`${item.id}: SKILL.md missing non-empty frontmatter 'description:'`)
-              }
-            }
+            checkRequiredFrontmatter(text, `${item.id}: SKILL.md`)
             for (const msg of auditForbiddenTagsInText(
               text,
               `${item.id}: ${path.relative(ROOT, skillMd)}`,
@@ -187,12 +201,7 @@ function checkItems(items) {
           } else {
             const text = fs.readFileSync(abs, 'utf8')
             const rel = path.relative(ROOT, abs)
-            for (const msg of auditMarkdownLines(text, rel, {
-              PLACEHOLDER_PATTERN,
-              RISKY_INSTALL_PATTERNS,
-              ANY_NPX_PATTERN,
-              ALLOWED_NPX_PATTERN,
-            })) {
+            for (const msg of auditMarkdownLines(text, rel, MARKDOWN_PATTERNS)) {
               fail(msg)
             }
             for (const msg of auditForbiddenTagsInText(text, `${item.id}: ${rel}`)) {
@@ -205,12 +214,9 @@ function checkItems(items) {
           } else {
             const text = fs.readFileSync(abs, 'utf8')
             const rel = path.relative(ROOT, abs)
-            for (const msg of auditMarkdownLines(text, rel, {
-              PLACEHOLDER_PATTERN,
-              RISKY_INSTALL_PATTERNS,
-              ANY_NPX_PATTERN,
-              ALLOWED_NPX_PATTERN,
-            })) {
+            // Commands declare their description via frontmatter, same as skills.
+            checkRequiredFrontmatter(text, `${item.id}: ${rel}`)
+            for (const msg of auditMarkdownLines(text, rel, MARKDOWN_PATTERNS)) {
               fail(msg)
             }
             for (const msg of auditForbiddenTagsInText(text, `${item.id}: ${rel}`)) {
@@ -271,17 +277,9 @@ function checkShippedMarkdown() {
       // guard, not a safety rule, and false-positives on legitimate prose (guidance text
       // discussing TODOs, CSS `.placeholder`), so it is disabled here — per-item shipped
       // template/command audits still enforce it.
-      for (const msg of auditMarkdownLines(
-        text,
-        rel,
-        {
-          PLACEHOLDER_PATTERN,
-          RISKY_INSTALL_PATTERNS,
-          ANY_NPX_PATTERN,
-          ALLOWED_NPX_PATTERN,
-        },
-        { checkPlaceholder: false },
-      )) {
+      for (const msg of auditMarkdownLines(text, rel, MARKDOWN_PATTERNS, {
+        checkPlaceholder: false,
+      })) {
         fail(msg)
       }
       if (!rel.includes('/references/')) {

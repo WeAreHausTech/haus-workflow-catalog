@@ -14,8 +14,8 @@
   },
   "hooks": {
     "before:init": "yarn validate",
-    "before:bump": "node scripts/align-package-version-from-manifest.mjs",
-    "after:bump": "node scripts/sync-manifest-version.mjs ${version}"
+    "before:bump": "node scripts/sync-version.mjs align",
+    "after:bump": "node scripts/sync-version.mjs write ${version}"
   },
   "plugins": {
     "@release-it/conventional-changelog": {

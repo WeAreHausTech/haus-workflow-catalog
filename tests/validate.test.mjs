@@ -113,7 +113,7 @@ test('skill SKILL.md missing description frontmatter -> fail', () => {
     files: { 'skills/test-skill/SKILL.md': '# only\n\nProse without frontmatter.\n' },
   })
   assert.equal(r.status, 1)
-  assert.match(r.stderr, /SKILL\.md missing non-empty frontmatter 'description:'/)
+  assert.match(r.stderr, /SKILL\.md: missing non-empty frontmatter 'description:'/)
 })
 
 test('template missing file -> fail', () => {
@@ -238,6 +238,16 @@ test('placeholder (TODO) in shipped command content -> fail', () => {
   })
   assert.equal(r.status, 1)
   assert.match(r.stderr, /TODO or placeholder/)
+})
+
+test('command missing description frontmatter -> fail', () => {
+  const item = validSkillItem({ id: 'haus.cmd', type: 'command', path: 'commands/x.md' })
+  const r = check({
+    manifest: validManifest([item]),
+    files: { 'commands/x.md': '# Heading\n\nProse without frontmatter.\n' },
+  })
+  assert.equal(r.status, 1)
+  assert.match(r.stderr, /commands\/x\.md: missing non-empty frontmatter 'description:'/)
 })
 
 test('TODO in skill prose is allowed (authoring guard is per-item, not repo-wide)', () => {

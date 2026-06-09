@@ -24,14 +24,15 @@ function isYamlBlockScalarHeader(rest) {
   return /^[>|][-+]?(\d+)?(?:\s+#.*)?$/.test(rest)
 }
 
-/** Extracts the YAML frontmatter `description:` value (the superpowers when-signal). */
-export function extractFrontmatterDescription(text) {
+/** Extracts an arbitrary YAML frontmatter scalar (handles quotes and block scalars). */
+export function extractFrontmatterValue(text, key) {
   const m = String(text).match(/^---\r?\n([\s\S]*?)\r?\n---/)
   if (!m) return ''
   const lines = m[1].split(/\r?\n/)
-  const idx = lines.findIndex((l) => /^description:[ \t]*/.test(l))
+  const keyRe = new RegExp(`^${escapeRegExp(key)}:[ \\t]*`)
+  const idx = lines.findIndex((l) => keyRe.test(l))
   if (idx < 0) return ''
-  const rest = lines[idx].replace(/^description:[ \t]*/, '').trim()
+  const rest = lines[idx].replace(keyRe, '').trim()
   if (!rest) return ''
   if (!isYamlBlockScalarHeader(rest)) {
     return rest.replace(/^["']|["']$/g, '').trim()
@@ -45,6 +46,11 @@ export function extractFrontmatterDescription(text) {
     else break
   }
   return body.join(' ').replace(/\s+/g, ' ').trim()
+}
+
+/** Extracts the YAML frontmatter `description:` value (the superpowers when-signal). */
+export function extractFrontmatterDescription(text) {
+  return extractFrontmatterValue(text, 'description')
 }
 
 /**

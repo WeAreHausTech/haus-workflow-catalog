@@ -51,13 +51,13 @@ export const PLACEHOLDER_PATTERN = toRegExp(RULES.placeholderPattern)
  * (e.g. "haus", "security", "quality", "review"). A tag outside this set and the
  * specials below (ALWAYS_ALLOWED_TAGS, PATTERN_TAG_SUFFIXES) fails validation.
  */
-export const ALLOWED_STACKS = RULES.allowedStacks
+const ALLOWED_STACKS = RULES.allowedStacks
 
 /** Category/meta tags always permitted regardless of the stack allowlist. */
-export const ALWAYS_ALLOWED_TAGS = RULES.alwaysAllowedTags
+const ALWAYS_ALLOWED_TAGS = RULES.alwaysAllowedTags
 
 /** Tag suffixes treated as conventions, not stack names (e.g. "react-patterns"). */
-export const PATTERN_TAG_SUFFIXES = RULES.patternTagSuffixes
+const PATTERN_TAG_SUFFIXES = RULES.patternTagSuffixes
 
 const ALLOWED_SET = new Set([...ALLOWED_STACKS, ...ALWAYS_ALLOWED_TAGS].map((t) => t.toLowerCase()))
 
@@ -65,7 +65,7 @@ const ALLOWED_SET = new Set([...ALLOWED_STACKS, ...ALWAYS_ALLOWED_TAGS].map((t) 
  * Returns true when a tag is permitted: it is in the stack allowlist, an always-allowed
  * meta tag, or ends with a pattern suffix. Mirrors the CLI's `isTagAllowed`.
  */
-export function isTagAllowed(tag) {
+function isTagAllowed(tag) {
   const lower = String(tag).toLowerCase()
   if (ALLOWED_SET.has(lower)) return true
   return PATTERN_TAG_SUFFIXES.some((suffix) => lower.endsWith(suffix))
