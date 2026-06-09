@@ -72,8 +72,10 @@ special-casing of curated content remains.
 - Haus-owned skills already carry `description:` frontmatter, so no migration was needed.
 - Upstream updates are mechanical via sync script; re-licensing requires human review.
 - Net catalog change: +21 −4 items (+17).
-- CodeQL excludes `skills/superpowers/` (`.github/codeql/codeql-config.yml`) — verbatim
-  upstream includes local-dev scripts not authored by haus.
-- **Exception:** `brainstorming/scripts/helper.js` — haus patch 1.0.1 replaces `innerHTML`
-  with safe DOM APIs (CodeQL XSS). Upstream sync may reintroduce; re-patch or wait for
-  upstream fix.
+- CodeQL runs via GitHub **default setup**, which scans all code in the repo — including
+  the verbatim `skills/superpowers/` local-dev scripts not authored by haus. (Default setup
+  ignores in-repo config files, so the former `.github/codeql/codeql-config.yml` exclusion
+  was never actually applied and has been removed.)
+- **Consequence:** vendored upstream JS is scanned. `brainstorming/scripts/helper.js` — haus
+  patch 1.0.1 replaces `innerHTML` with safe DOM APIs (CodeQL XSS). Upstream sync may
+  reintroduce; re-patch or wait for upstream fix.
