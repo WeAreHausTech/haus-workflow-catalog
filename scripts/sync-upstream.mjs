@@ -337,6 +337,7 @@ function newManifestEntry(name, type, itemPath, description, sha, source) {
     licenseConfidence: 'high',
     originSourceId: ORIGIN_SOURCE_ID,
     originUrl: originUrl(name, type, sha, source.repo),
+    pinnedRef: sha,
     ecosystem: 'superpowers',
   }
 }
@@ -609,6 +610,7 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
       const newVersion = patchBump(item.version)
       item.version = newVersion
       item.originUrl = originUrl(name, type, headSha, source.repo)
+      item.pinnedRef = headSha
       item.tokenEstimate = tokenEstimateForItem(catalogPathFor(name, type), type)
 
       const desc = parseDescription(type === 'skill' ? path.join(dest, 'SKILL.md') : dest)
