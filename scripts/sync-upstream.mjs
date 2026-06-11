@@ -88,21 +88,34 @@ function todayIsoDate() {
 // Upstream git
 // ---------------------------------------------------------------------------
 
-function cloneUpstream(repoUrl) {
+/** Throws when the checked-out commit does not match the pinned snapshotRef. */
+export function verifyClonedSha(headSha, snapshotRef) {
+  if (headSha !== snapshotRef) {
+    throw new Error(`cloned HEAD ${headSha} does not match snapshotRef ${snapshotRef}`)
+  }
+}
+
+function cloneUpstream(repoUrl, snapshotRef) {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'superpowers-sync-'))
   try {
-    execSync(`git clone --depth 1 "${repoUrl}" "${tmpDir}"`, {
+    execSync(`git clone "${repoUrl}" "${tmpDir}"`, {
+      stdio: 'pipe',
+      encoding: 'utf8',
+    })
+    execSync(`git checkout ${snapshotRef}`, {
+      cwd: tmpDir,
       stdio: 'pipe',
       encoding: 'utf8',
     })
   } catch (err) {
     fs.rmSync(tmpDir, { recursive: true, force: true })
-    throw new Error(`git clone failed: ${err.stderr || err.message}`)
+    throw new Error(`git clone/checkout failed: ${err.stderr || err.message}`)
   }
   const headSha = execSync('git rev-parse HEAD', {
     cwd: tmpDir,
     encoding: 'utf8',
   }).trim()
+  verifyClonedSha(headSha, snapshotRef)
   return { tmpDir, headSha }
 }
 
@@ -113,8 +126,12 @@ function assertMitLicense(upstreamRoot) {
     process.exit(1)
   }
   const text = fs.readFileSync(licensePath, 'utf8')
-  if (!/\bMIT\b/i.test(text)) {
-    console.error('ERROR: upstream license is not MIT; refusing to apply changes.')
+  const isMit =
+    /SPDX-License-Identifier:\s*MIT\b/m.test(text) ||
+    /^MIT License\b/m.test(text) ||
+    /^The MIT License\b/m.test(text)
+  if (!isMit) {
+    console.error('ERROR: upstream license is not MIT (SPDX); refusing to apply changes.')
     process.exit(1)
   }
 }
@@ -325,6 +342,7 @@ function newManifestEntry(name, type, itemPath, description, sha, source) {
     licenseConfidence: 'high',
     originSourceId: ORIGIN_SOURCE_ID,
     originUrl: originUrl(name, type, sha, source.repo),
+    pinnedRef: sha,
     ecosystem: 'superpowers',
   }
 }
@@ -597,6 +615,7 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
       const newVersion = patchBump(item.version)
       item.version = newVersion
       item.originUrl = originUrl(name, type, headSha, source.repo)
+      item.pinnedRef = headSha
       item.tokenEstimate = tokenEstimateForItem(catalogPathFor(name, type), type)
 
       const desc = parseDescription(type === 'skill' ? path.join(dest, 'SKILL.md') : dest)
@@ -625,6 +644,7 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
     item.purpose = change.description
     item.whenToUse = change.description
     item.originUrl = originUrl(change.name, change.type, headSha, source.repo)
+    item.pinnedRef = headSha
     actions.updated.push({
       name: change.name,
       type: change.type,
@@ -668,7 +688,7 @@ function main() {
     process.exit(1)
   }
 
-  const { tmpDir, headSha } = cloneUpstream(source.repo)
+  const { tmpDir, headSha } = cloneUpstream(source.repo, source.snapshotRef)
   try {
     const manifest = loadManifest()
     const report = analyzeDrift(manifest, tmpDir)
@@ -702,4 +722,5 @@ function main() {
   }
 }
 
-main()
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+if (isMain) main()

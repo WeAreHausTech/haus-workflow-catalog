@@ -20,6 +20,19 @@ pre-commit:
       glob: '{scripts,tests}/**/*.mjs'
       run: yarn eslint {staged_files}
       fail_text: 'Lint failed. Run `yarn lint` to see details, fix, re-stage, then commit.'
+    gitleaks:
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks protect --staged --redact --no-banner
+        fi
+      fail_text: 'gitleaks found a likely secret in staged changes. Remove it, re-stage, and commit.'
+    secret-grep:
+      run: |
+        added="$(git diff --cached --no-color -U0 | grep -E '^\+' | grep -vE '^\+\+\+')"
+        if printf '%s\n' "$added" | grep -iqE "(password|secret|token|api_key)[[:space:]]*[:=]"; then
+          exit 1
+        fi
+      fail_text: 'A staged line looks like an inline credential. Move it to an env var or secret manager.'
 
 pre-push:
   commands:
