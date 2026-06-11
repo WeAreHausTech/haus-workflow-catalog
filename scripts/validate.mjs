@@ -183,7 +183,9 @@ function checkItems(items) {
         fail(`${item.id}: missing path`)
       } else {
         const norm = item.path.replace(/\\/g, '/')
-        if (seenPaths.has(norm)) {
+        if (!isSafeCatalogPath(item.path)) {
+          fail(`${item.id}: unsafe path "${item.path}" (path traversal not allowed)`)
+        } else if (seenPaths.has(norm)) {
           fail(`${item.id}: path "${norm}" already used by ${seenPaths.get(norm)}`)
         } else {
           seenPaths.set(norm, item.id)
@@ -377,7 +379,8 @@ function checkChangelogCoverage(items) {
   }
 }
 
-const isMain = process.argv[1] === fileURLToPath(import.meta.url)
+const isMain =
+  process.argv[1] != null && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 
 if (isMain) {
   // checkItems and checkChangelogCoverage depend on a valid manifest.

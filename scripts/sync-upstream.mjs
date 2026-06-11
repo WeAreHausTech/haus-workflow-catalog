@@ -6,7 +6,7 @@
  *   node scripts/sync-upstream.mjs --check  # same
  *   node scripts/sync-upstream.mjs --apply  # apply deterministic sync rules
  */
-import { execSync } from 'node:child_process'
+import { execFileSync, execSync } from 'node:child_process'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -88,7 +88,17 @@ function todayIsoDate() {
 // Upstream git
 // ---------------------------------------------------------------------------
 
+const SNAPSHOT_REF_RE = /^[0-9a-f]{40}$/i
+
+/** Reject non-SHA snapshotRef before any shell/git invocation. */
+export function assertSnapshotRef(snapshotRef) {
+  if (!SNAPSHOT_REF_RE.test(snapshotRef ?? '')) {
+    throw new Error('snapshotRef must be a 40-character git commit SHA')
+  }
+}
+
 export function cloneUpstream(repoUrl, snapshotRef) {
+  assertSnapshotRef(snapshotRef)
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'superpowers-sync-'))
   try {
     execSync(`git init -q`, { cwd: tmpDir, stdio: 'pipe', encoding: 'utf8' })
@@ -97,7 +107,7 @@ export function cloneUpstream(repoUrl, snapshotRef) {
       stdio: 'pipe',
       encoding: 'utf8',
     })
-    execSync(`git fetch --depth 1 origin ${snapshotRef}`, {
+    execFileSync('git', ['fetch', '--depth', '1', 'origin', snapshotRef], {
       cwd: tmpDir,
       stdio: 'pipe',
       encoding: 'utf8',
@@ -127,7 +137,9 @@ export function assertMitLicense(upstreamRoot) {
   const hasSpdxMit = /SPDX-License-Identifier:\s*MIT\b/m.test(text)
   const hasMitTitle = /^MIT License/m.test(text)
   if (!hasSpdxMit && !hasMitTitle) {
-    throw new Error('upstream license is not MIT (expected SPDX-License-Identifier: MIT)')
+    throw new Error(
+      'upstream license is not MIT (expected SPDX-License-Identifier: MIT or MIT License header)',
+    )
   }
 }
 
