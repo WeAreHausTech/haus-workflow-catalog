@@ -26,9 +26,7 @@ import Ajv from 'ajv'
 
 import {
   FORBIDDEN_TAGS,
-  BANNED_AGENT_PHRASES,
   REQUIRED_SKILL_FRONTMATTER,
-  REQUIRED_AGENT_SECTIONS,
   RISKY_INSTALL_PATTERNS,
   ALLOWED_NPX_PATTERN,
   ANY_NPX_PATTERN,
@@ -213,19 +211,9 @@ function checkItems(items) {
             fail(`${item.id}: missing agent file ${item.path}`)
           } else {
             const text = fs.readFileSync(abs, 'utf8')
-            if (!text.startsWith('---')) fail(`${item.id}: agent file missing YAML frontmatter`)
-            for (const section of REQUIRED_AGENT_SECTIONS) {
-              if (!text.includes(section)) fail(`${item.id}: agent file missing ${section}`)
-            }
-            const lower = text.toLowerCase()
-            for (const ban of BANNED_AGENT_PHRASES) {
-              if (lower.includes(ban))
-                fail(`${item.id}: agent file contains disallowed phrase "${ban}"`)
-            }
-            for (const msg of auditForbiddenTagsInText(
-              text,
-              `${item.id}: ${path.relative(ROOT, abs)}`,
-            )) {
+            const rel = path.relative(ROOT, abs)
+            checkRequiredFrontmatter(text, `${item.id}: ${rel}`)
+            for (const msg of auditForbiddenTagsInText(text, `${item.id}: ${rel}`)) {
               fail(msg)
             }
           }

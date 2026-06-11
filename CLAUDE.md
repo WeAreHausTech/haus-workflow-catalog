@@ -51,8 +51,8 @@ copy: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
 1. Create the file(s) under `skills/haus-owned/`, `agents/`, `templates/`, or `commands/`.
 2. **Skills** need `SKILL.md` with YAML frontmatter including non-empty `description:`.
    Optional `## Use when` / `## Do not use when` prose is fine but not required.
-3. **Agents** need `## Use when`, `## Do not use when`, and `## Verification`. No banned
-   phrases: `autonomous`, `swarm`, `delegate`, `orchestrat`, `marketplace`.
+3. **Agents** need a `.md` file with YAML frontmatter including non-empty `description:`
+   (same when-signal convention as skills). Optional prose sections are fine but not required.
 4. **Commands** need a `.md` file with frontmatter `description:`.
 5. Add the item entry to `manifest.json`. Set `version: "1.0.0"`.
 6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; item

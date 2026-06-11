@@ -89,10 +89,10 @@ in the CLI repo. Edit the JSON, never the loader.
 
 **Authoring vs safety** (see [ADR-0001](docs/adr/0001-curated-verbatim-skill-import.md)):
 
-| Kind      | Rules                                                                                                                                                                                                                                                                    | Applies to                                      |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| Authoring | Skills require non-empty YAML frontmatter `description:` (superpowers convention). Agents still require `## Use when`, `## Do not use when`, `## Verification`. TODO/placeholder scan runs on shipped **template/command** items only — not the repo-wide markdown walk. | All skills; agents; per-item templates/commands |
-| Safety    | Forbidden stack tags, risky install patterns (`npx -y`, `dlx`), `npx tsx`-only allowlist, `http://` URL ban, tag allowlist, `source: curated` requires `reviewStatus: approved`                                                                                          | All content repo-wide                           |
+| Kind      | Rules                                                                                                                                                                                                  | Applies to                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| Authoring | Skills and agents require non-empty YAML frontmatter `description:` (superpowers convention). TODO/placeholder scan runs on shipped **template/command** items only — not the repo-wide markdown walk. | All skills; agents; per-item templates/commands |
+| Safety    | Forbidden stack tags, risky install patterns (`npx -y`, `dlx`), `npx tsx`-only allowlist, `http://` URL ban, tag allowlist, `source: curated` requires `reviewStatus: approved`                        | All content repo-wide                           |
 
 Cross-repo decision log: [`haus-workflow` ADR-0001](https://github.com/WeAreHausTech/haus-workflow/blob/main/docs/adr/0001-validation-rules-single-source.md).
 

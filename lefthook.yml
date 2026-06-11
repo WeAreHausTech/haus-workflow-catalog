@@ -23,7 +23,7 @@ pre-commit:
       fail_text: 'A staged line looks like an inline credential.'
     validate:
       run: yarn validate
-      fail_text: 'Catalog validation failed. Run `yarn validate` to see the errors (manifest schema, version bumps, banned tags/phrases), fix them, then commit.'
+      fail_text: 'Catalog validation failed. Run `yarn validate` to see the errors (manifest schema, version bumps, banned tags), fix them, then commit.'
     format:
       glob: '*.{json,md,mjs,yml,yaml}'
       run: yarn prettier --write {staged_files}

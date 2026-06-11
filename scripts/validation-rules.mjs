@@ -22,14 +22,8 @@ const toRegExp = (r) => new RegExp(r.source, r.flags)
 /** Tags that identify unsupported stacks. Items using these tags fail validation. */
 export const FORBIDDEN_TAGS = RULES.forbiddenTags
 
-/** Phrases disallowed in agent files. Agents must not describe autonomous or orchestrating behavior. */
-export const BANNED_AGENT_PHRASES = RULES.bannedAgentPhrases
-
-/** Frontmatter keys required in every skill's SKILL.md (e.g. `description`). */
+/** Frontmatter keys required in skill SKILL.md, agent .md, and command .md (e.g. `description`). */
 export const REQUIRED_SKILL_FRONTMATTER = RULES.requiredSkillFrontmatter
-
-/** Sections required in every agent's .md file. */
-export const REQUIRED_AGENT_SECTIONS = RULES.requiredAgentSections
 
 /** Install patterns that must not appear in shipped markdown. */
 export const RISKY_INSTALL_PATTERNS = RULES.riskyInstallPatterns.map(toRegExp)

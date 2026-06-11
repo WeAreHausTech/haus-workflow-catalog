@@ -11,7 +11,7 @@ When changing `validation-rules.json`, follow ADR-0001 landing order:
 Key rules today:
 
 - Skills: non-empty frontmatter `description:` (`requiredSkillFrontmatter`).
-- Agents: `## Use when`, `## Do not use when`, `## Verification` + banned phrases.
+- Agents: YAML frontmatter `description:` (same as skills).
 - Repo-wide walk: safety only (install patterns, npx allowlist, forbidden stacks in
   `description:` / `## Use when` prose). No TODO/placeholder scan in the walk.
 - Per-item template/command audit: still enforces TODO/placeholder.
