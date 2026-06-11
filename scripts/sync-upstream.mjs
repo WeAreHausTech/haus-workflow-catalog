@@ -88,34 +88,46 @@ function todayIsoDate() {
 // Upstream git
 // ---------------------------------------------------------------------------
 
-function cloneUpstream(repoUrl) {
+export function cloneUpstream(repoUrl, snapshotRef) {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'superpowers-sync-'))
   try {
-    execSync(`git clone --depth 1 "${repoUrl}" "${tmpDir}"`, {
+    execSync(`git init -q`, { cwd: tmpDir, stdio: 'pipe', encoding: 'utf8' })
+    execSync(`git remote add origin "${repoUrl}"`, {
+      cwd: tmpDir,
       stdio: 'pipe',
       encoding: 'utf8',
     })
+    execSync(`git fetch --depth 1 origin ${snapshotRef}`, {
+      cwd: tmpDir,
+      stdio: 'pipe',
+      encoding: 'utf8',
+    })
+    execSync(`git checkout -q FETCH_HEAD`, { cwd: tmpDir, stdio: 'pipe', encoding: 'utf8' })
   } catch (err) {
     fs.rmSync(tmpDir, { recursive: true, force: true })
-    throw new Error(`git clone failed: ${err.stderr || err.message}`)
+    throw new Error(`git fetch failed: ${err.stderr || err.message}`)
   }
   const headSha = execSync('git rev-parse HEAD', {
     cwd: tmpDir,
     encoding: 'utf8',
   }).trim()
+  if (headSha !== snapshotRef) {
+    fs.rmSync(tmpDir, { recursive: true, force: true })
+    throw new Error(`cloned HEAD ${headSha} does not match snapshotRef ${snapshotRef}`)
+  }
   return { tmpDir, headSha }
 }
 
-function assertMitLicense(upstreamRoot) {
+export function assertMitLicense(upstreamRoot) {
   const licensePath = path.join(upstreamRoot, 'LICENSE')
   if (!fs.existsSync(licensePath)) {
-    console.error('ERROR: upstream LICENSE file missing; refusing to apply changes.')
-    process.exit(1)
+    throw new Error('upstream LICENSE file missing')
   }
   const text = fs.readFileSync(licensePath, 'utf8')
-  if (!/\bMIT\b/i.test(text)) {
-    console.error('ERROR: upstream license is not MIT; refusing to apply changes.')
-    process.exit(1)
+  const hasSpdxMit = /SPDX-License-Identifier:\s*MIT\b/m.test(text)
+  const hasMitTitle = /^MIT License/m.test(text)
+  if (!hasSpdxMit && !hasMitTitle) {
+    throw new Error('upstream license is not MIT (expected SPDX-License-Identifier: MIT)')
   }
 }
 
@@ -668,7 +680,14 @@ function main() {
     process.exit(1)
   }
 
-  const { tmpDir, headSha } = cloneUpstream(source.repo)
+  let tmpDir
+  let headSha
+  try {
+    ;({ tmpDir, headSha } = cloneUpstream(source.repo, source.snapshotRef))
+  } catch (err) {
+    console.error(`ERROR: ${err instanceof Error ? err.message : String(err)}`)
+    process.exit(1)
+  }
   try {
     const manifest = loadManifest()
     const report = analyzeDrift(manifest, tmpDir)
@@ -681,7 +700,12 @@ function main() {
       return
     }
 
-    assertMitLicense(tmpDir)
+    try {
+      assertMitLicense(tmpDir)
+    } catch (err) {
+      console.error(`ERROR: ${err instanceof Error ? err.message : String(err)}`)
+      process.exit(1)
+    }
     const actions = applySync(manifest, tmpDir, source, headSha, report)
 
     if (!actions.noChanges) {

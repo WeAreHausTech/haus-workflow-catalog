@@ -10,6 +10,15 @@ permissions:
   contents: read
 
 jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+
   validate:
     runs-on: ubuntu-latest
     steps:
@@ -36,14 +45,8 @@ jobs:
       - name: Test
         run: yarn test
 
-      - name: Install @haus-tech/haus-workflow
-        run: npm install -g @haus-tech/haus-workflow
-
-      - name: Validate catalog manifest
-        run: haus validate-catalog ./manifest.json
-
-      - name: Validate catalog (local script)
-        run: node scripts/validate.mjs
+      - name: Validate catalog
+        run: node scripts/validate.mjs ./manifest.json
 
       - name: Check item versions bumped for changed files
         if: github.event_name == 'pull_request'
