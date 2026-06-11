@@ -25,14 +25,14 @@ jobs:
     steps:
       # persist-credentials: false — required so create-pull-request pushes with
       # github.token, not the workflow_dispatch actor's cached credentials.
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
       - name: Enable Corepack
         run: corepack enable
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
 

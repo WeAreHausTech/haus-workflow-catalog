@@ -59,6 +59,38 @@ const manifestSchema = JSON.parse(
 const ajv = new Ajv({ allErrors: true })
 ajv.addSchema(catalogItemSchema)
 const validateManifest = ajv.compile(manifestSchema)
+const validateCatalogItem = ajv.compile(catalogItemSchema)
+
+/** Reject path traversal in catalog item paths. */
+export function isSafeCatalogPath(itemPath) {
+  if (!itemPath || path.isAbsolute(itemPath) || itemPath.includes('\\')) return false
+  const normalized = path.normalize(itemPath)
+  return !normalized.startsWith('..') && !normalized.includes('/..')
+}
+
+/** Returns the first forbidden stack/tag word found on an item, or null. */
+export function findForbiddenTag(item) {
+  const tagBlob = `${item.id} ${(item.tags ?? []).join(' ')}`.toLowerCase()
+  for (const word of FORBIDDEN_TAGS) {
+    if (tagBlob.includes(word)) return word
+  }
+  return null
+}
+
+/** Required skill frontmatter keys missing from `text`. */
+export function missingSkillFrontmatterKeys(text) {
+  const missing = []
+  for (const key of REQUIRED_SKILL_FRONTMATTER) {
+    if (!extractFrontmatterValue(text, key)) missing.push(key)
+  }
+  return missing
+}
+
+/** Validate a single manifest item against catalog-item.schema.json. */
+export function validateItemSchema(item) {
+  if (validateCatalogItem(item)) return { ok: true }
+  return { ok: false, errors: validateCatalogItem.errors ?? [] }
+}
 
 let failures = 0
 
@@ -151,7 +183,9 @@ function checkItems(items) {
         fail(`${item.id}: missing path`)
       } else {
         const norm = item.path.replace(/\\/g, '/')
-        if (seenPaths.has(norm)) {
+        if (!isSafeCatalogPath(item.path)) {
+          fail(`${item.id}: unsafe path "${item.path}" (path traversal not allowed)`)
+        } else if (seenPaths.has(norm)) {
           fail(`${item.id}: path "${norm}" already used by ${seenPaths.get(norm)}`)
         } else {
           seenPaths.set(norm, item.id)
@@ -345,26 +379,31 @@ function checkChangelogCoverage(items) {
   }
 }
 
-// checkItems and checkChangelogCoverage depend on a valid manifest.
-// checkShippedMarkdown is independent — runs even when manifest is broken
-// so all failures surface in a single pass.
-const manifest = checkManifest()
-if (manifest) {
-  // ajv reports missing version; SEMVER_RE check covers the broader pre-release form.
-  if (manifest.version && !SEMVER_RE.test(manifest.version)) {
-    fail(`manifest.json: top-level "version" is not valid semver (expected X.Y.Z or X.Y.Z-pre)`)
-  }
-  if (Array.isArray(manifest.items)) {
-    checkItems(manifest.items)
-    checkChangelogCoverage(manifest.items)
-    console.log(`Checked ${manifest.items.length} catalog items.`)
-  }
-}
-checkShippedMarkdown()
-checkWorkflowDocSync()
+const isMain =
+  process.argv[1] != null && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 
-if (failures > 0) {
-  console.error(`\n${failures} validation failure(s).`)
-  process.exit(1)
+if (isMain) {
+  // checkItems and checkChangelogCoverage depend on a valid manifest.
+  // checkShippedMarkdown is independent — runs even when manifest is broken
+  // so all failures surface in a single pass.
+  const manifest = checkManifest()
+  if (manifest) {
+    // ajv reports missing version; SEMVER_RE check covers the broader pre-release form.
+    if (manifest.version && !SEMVER_RE.test(manifest.version)) {
+      fail(`manifest.json: top-level "version" is not valid semver (expected X.Y.Z or X.Y.Z-pre)`)
+    }
+    if (Array.isArray(manifest.items)) {
+      checkItems(manifest.items)
+      checkChangelogCoverage(manifest.items)
+      console.log(`Checked ${manifest.items.length} catalog items.`)
+    }
+  }
+  checkShippedMarkdown()
+  checkWorkflowDocSync()
+
+  if (failures > 0) {
+    console.error(`\n${failures} validation failure(s).`)
+    process.exit(1)
+  }
+  console.log('Catalog valid.')
 }
-console.log('Catalog valid.')

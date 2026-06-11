@@ -12,21 +12,18 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Enable Corepack
         run: corepack enable
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 22
 
       - name: Install dependencies
         run: yarn install --immutable
-
-      - name: Install @haus-tech/haus-workflow
-        run: npm install -g @haus-tech/haus-workflow
 
       - name: Verify manifest version matches tag
         run: |
@@ -34,7 +31,7 @@ jobs:
           node scripts/check-manifest-version.mjs "$VERSION"
 
       - name: Validate catalog
-        run: haus validate-catalog ./manifest.json
+        run: node scripts/validate.mjs ./manifest.json
 
       - name: Extract changelog entry
         id: changelog

@@ -8,6 +8,19 @@
 pre-commit:
   parallel: true
   commands:
+    gitleaks:
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks protect --staged --redact --no-banner
+        fi
+      fail_text: 'gitleaks found a likely secret in staged changes.'
+    secret-grep:
+      run: |
+        added="$(git diff --cached --no-color -U0 -- ':!.github/workflows' | grep -E '^\+' | grep -vE '^\+\+\+')"
+        if printf '%s\n' "$added" | grep -iqE "(password|secret|token|api_key)[[:space:]]*[:=]"; then
+          exit 1
+        fi
+      fail_text: 'A staged line looks like an inline credential.'
     validate:
       run: yarn validate
       fail_text: 'Catalog validation failed. Run `yarn validate` to see the errors (manifest schema, version bumps, banned tags/phrases), fix them, then commit.'
