@@ -1,0 +1,4 @@
+title = "haus-workflow-catalog gitleaks config"
+
+[extend]
+useDefault = true
