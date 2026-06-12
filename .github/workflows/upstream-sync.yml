@@ -1,8 +1,8 @@
 name: Upstream superpowers sync
 
 # Weekly sync of curated superpowers items from pcvelz/superpowers.
-# scripts/sync-upstream.mjs clones upstream, diffs against sources.yaml
-# snapshotRef, and on --apply re-copies drifted files + updates manifest.
+# scripts/sync-upstream.mjs clones upstream HEAD, diffs local catalog against
+# that snapshot, and on --apply re-copies drifted files + updates sources.yaml.
 
 on:
   schedule:

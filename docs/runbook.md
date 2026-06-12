@@ -49,13 +49,14 @@ Commit changes + open a normal PR if not using the workflow.
 
 ### Deterministic rules (`--apply`)
 
-| Situation                  | Action                                                       |
-| -------------------------- | ------------------------------------------------------------ |
-| Upstream license ≠ MIT     | Fail job, no PR, open tracking issue                         |
-| Drifted file (still MIT)   | Re-copy verbatim, PATCH-bump item version                    |
-| Changed `description:`     | Update manifest `purpose` + `whenToUse`; keep `whenNotToUse` |
-| New upstream skill/command | Auto-register with generic defaults                          |
-| Deleted upstream item      | Remove manifest entry + delete local files                   |
+| Situation                   | Action                                                       |
+| --------------------------- | ------------------------------------------------------------ |
+| Upstream license ≠ MIT      | Fail job, no PR, open tracking issue                         |
+| Drifted file (still MIT)    | Re-copy verbatim, PATCH-bump item version                    |
+| Changed `description:`      | Update manifest `purpose` + `whenToUse`; keep `whenNotToUse` |
+| New upstream skill/command  | Auto-register with generic defaults                          |
+| Deleted upstream item       | Remove manifest entry + delete local files                   |
+| `skills/shared` support dir | Re-copy verbatim (not a manifest item; referenced by skills) |
 
 After apply: `sources.yaml` `snapshotRef` → upstream HEAD, `retrieved` → today.
 

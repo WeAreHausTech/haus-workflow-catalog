@@ -20,6 +20,7 @@ const SOURCES_PATH = path.join(ROOT, 'sources.yaml')
 const MANIFEST_PATH = path.join(ROOT, 'manifest.json')
 const ORIGIN_SOURCE_ID = 'superpowers-pcvelz'
 const DEFAULT_WHEN_NOT_TO_USE = 'Do not use when a more specific skill or command applies.'
+const SHARED_SUPPORT = { name: 'shared', type: 'support' }
 
 const args = process.argv.slice(2)
 const applyMode = args.includes('--apply')
@@ -97,8 +98,8 @@ export function assertSnapshotRef(snapshotRef) {
   }
 }
 
-export function cloneUpstream(repoUrl, snapshotRef) {
-  assertSnapshotRef(snapshotRef)
+/** Shallow-clone upstream default branch HEAD (not sources.yaml snapshotRef). */
+export function cloneUpstream(repoUrl) {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'superpowers-sync-'))
   try {
     execSync(`git init -q`, { cwd: tmpDir, stdio: 'pipe', encoding: 'utf8' })
@@ -107,7 +108,7 @@ export function cloneUpstream(repoUrl, snapshotRef) {
       stdio: 'pipe',
       encoding: 'utf8',
     })
-    execFileSync('git', ['fetch', '--depth', '1', 'origin', snapshotRef], {
+    execFileSync('git', ['fetch', '--depth', '1', 'origin', 'HEAD'], {
       cwd: tmpDir,
       stdio: 'pipe',
       encoding: 'utf8',
@@ -121,10 +122,6 @@ export function cloneUpstream(repoUrl, snapshotRef) {
     cwd: tmpDir,
     encoding: 'utf8',
   }).trim()
-  if (headSha !== snapshotRef) {
-    fs.rmSync(tmpDir, { recursive: true, force: true })
-    throw new Error(`cloned HEAD ${headSha} does not match snapshotRef ${snapshotRef}`)
-  }
   return { tmpDir, headSha }
 }
 
@@ -395,6 +392,28 @@ function catalogPathFor(name, type) {
   return type === 'skill' ? `skills/superpowers/${name}` : `commands/superpowers/${name}.md`
 }
 
+function localSharedSupportPath(catalogRoot = ROOT) {
+  return path.join(catalogRoot, 'skills/superpowers/shared')
+}
+
+function upstreamSharedSupportPath(upstreamRoot) {
+  return path.join(upstreamRoot, 'skills/shared')
+}
+
+/** Verbatim support files referenced by multiple superpowers skills (not a manifest item). */
+export function inspectSharedSupport(upstreamRoot, catalogRoot = ROOT) {
+  const local = localSharedSupportPath(catalogRoot)
+  const upstream = upstreamSharedSupportPath(upstreamRoot)
+  if (!fs.existsSync(upstream)) {
+    if (fs.existsSync(local)) {
+      return { removed: true, cmp: { equal: false, added: 0, removed: 0, files: 1 } }
+    }
+    return null
+  }
+  const cmp = comparePaths(local, upstream)
+  return cmp.equal ? null : { removed: false, cmp }
+}
+
 // ---------------------------------------------------------------------------
 // Drift analysis
 // ---------------------------------------------------------------------------
@@ -468,6 +487,16 @@ function analyzeDrift(manifest, upstreamRoot) {
     if (!upCommandSet.has(name)) {
       removed.push({ name, type: 'command', item })
     }
+  }
+
+  const shared = inspectSharedSupport(upstreamRoot)
+  if (shared?.removed) {
+    removed.push({ ...SHARED_SUPPORT })
+  } else if (shared) {
+    drifted.push({ ...SHARED_SUPPORT, ...shared.cmp })
+    totalAdded += shared.cmp.added
+    totalRemoved += shared.cmp.removed
+    totalFiles += shared.cmp.files
   }
 
   return {
@@ -612,12 +641,15 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
 
   for (const entry of report.drifted) {
     const { name, type } = entry
-    const dest = localPathFor(name, type)
-    const src = upstreamPathFor(upstreamRoot, name, type)
+    const dest = type === 'support' ? localSharedSupportPath() : localPathFor(name, type)
+    const src =
+      type === 'support'
+        ? upstreamSharedSupportPath(upstreamRoot)
+        : upstreamPathFor(upstreamRoot, name, type)
     removeRecursive(dest)
     copyRecursive(src, dest)
 
-    const item = findManifestItem(manifest, name, type)
+    const item = type === 'support' ? null : findManifestItem(manifest, name, type)
     if (item) {
       const newVersion = patchBump(item.version)
       item.version = newVersion
@@ -639,6 +671,13 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
         versionBumped: true,
         newVersion,
         descriptionUpdated,
+      })
+    } else if (type === 'support') {
+      actions.updated.push({
+        name,
+        type,
+        versionBumped: false,
+        descriptionUpdated: false,
       })
     }
   }
@@ -673,6 +712,11 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
 
   for (const entry of report.removed) {
     const { name, type, item } = entry
+    if (type === 'support') {
+      removeRecursive(localSharedSupportPath())
+      actions.removed.push({ name, type })
+      continue
+    }
     const local = localPathFor(name, type)
     removeRecursive(local)
     manifest.items = manifest.items.filter((i) => i.id !== item.id)
@@ -697,7 +741,8 @@ function main() {
   let tmpDir
   let headSha
   try {
-    ;({ tmpDir, headSha } = cloneUpstream(source.repo, source.snapshotRef))
+    assertSnapshotRef(source.snapshotRef)
+    ;({ tmpDir, headSha } = cloneUpstream(source.repo))
   } catch (err) {
     console.error(`ERROR: ${err instanceof Error ? err.message : String(err)}`)
     process.exit(1)
@@ -723,7 +768,11 @@ function main() {
     const actions = applySync(manifest, tmpDir, source, headSha, report)
 
     if (!actions.noChanges) {
-      if (actions.updated.length || actions.added.length || actions.removed.length) {
+      const manifestChanged =
+        actions.added.length > 0 ||
+        actions.removed.some((r) => r.type !== 'support') ||
+        actions.updated.some((u) => u.type !== 'support')
+      if (manifestChanged) {
         saveManifest(manifest)
       }
       const updatedSources = updateSourcesYaml(
@@ -740,4 +789,9 @@ function main() {
   }
 }
 
-main()
+const isMain =
+  process.argv[1] != null && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+
+if (isMain) {
+  main()
+}

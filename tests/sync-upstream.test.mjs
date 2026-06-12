@@ -4,7 +4,11 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 
-import { assertMitLicense, assertSnapshotRef } from '../scripts/sync-upstream.mjs'
+import {
+  assertMitLicense,
+  assertSnapshotRef,
+  inspectSharedSupport,
+} from '../scripts/sync-upstream.mjs'
 
 test('assertMitLicense accepts SPDX MIT license', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'haus-lic-'))
@@ -32,6 +36,27 @@ test('assertMitLicense accepts MIT License title header', () => {
 test('assertSnapshotRef rejects non-SHA refs', () => {
   assert.throws(() => assertSnapshotRef('main'), /40-character git commit SHA/)
   assert.throws(() => assertSnapshotRef('bd000c6; rm -rf /'), /40-character git commit SHA/)
+})
+
+test('inspectSharedSupport detects drift in skills/shared support files', () => {
+  const upstream = fs.mkdtempSync(path.join(os.tmpdir(), 'haus-up-shared-'))
+  const localRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'haus-local-shared-'))
+  const catalogShared = path.join(localRoot, 'skills/superpowers/shared')
+  const upstreamShared = path.join(upstream, 'skills/shared')
+  fs.mkdirSync(catalogShared, { recursive: true })
+  fs.mkdirSync(upstreamShared, { recursive: true })
+  fs.writeFileSync(path.join(catalogShared, 'task-format-reference.md'), 'old\n')
+  fs.writeFileSync(path.join(upstreamShared, 'task-format-reference.md'), 'new\n')
+
+  try {
+    const result = inspectSharedSupport(upstream, localRoot)
+    assert.equal(result?.removed, false)
+    assert.equal(result?.cmp.equal, false)
+    assert.ok(result.cmp.files >= 1)
+  } finally {
+    fs.rmSync(upstream, { recursive: true, force: true })
+    fs.rmSync(localRoot, { recursive: true, force: true })
+  }
 })
 
 test('assertMitLicense rejects ambiguous non-MIT license text', () => {
