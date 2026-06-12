@@ -9,6 +9,13 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.6.4](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.3...v2.6.4) (2026-06-12)
+
+### Fixed
+
+- **ci:** format sync output, ignore item trees ([113c167](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/113c167b7e7e8eb01ddefc590cc7680a3ddb8259))
+- **sync:** fetch upstream HEAD and sync skills/shared ([624160d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/624160d78905bca33fb1c7f0af37b1ca90b8e466))
+
 ## [Unreleased]
 
 ### Changed
