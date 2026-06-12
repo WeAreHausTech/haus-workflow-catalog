@@ -55,10 +55,11 @@ copy: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
    (same when-signal convention as skills). Optional prose sections are fine but not required.
 4. **Commands** need a `.md` file with frontmatter `description:`.
 5. Add the item entry to `manifest.json`. Set `version: "1.0.0"`.
-6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; item
-   `references` must use `https://` (the `http://` ban is enforced on `references[]`, not
-   on prose/code bodies — local-dev `http://localhost` URLs in examples are fine); no
-   forbidden stack tags in item id/tags.
+6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; manifest
+   `references[]` is **https:// URLs only** (no relative paths — bundled files live under
+   `item.path`; the `http://` ban is enforced on `references[]`, not on prose/code bodies —
+   local-dev `http://localhost` URLs in examples are fine); no forbidden stack tags in item
+   id/tags.
 7. TODO/placeholder checks apply to shipped **template/command** files, not skill prose.
 8. Do not hand-edit `skills/superpowers/` or `commands/superpowers/` — sync from upstream.
 

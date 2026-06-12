@@ -64,8 +64,11 @@
     },
     "references": {
       "type": "array",
-      "items": { "type": "string" },
-      "description": "Relative file paths or https:// URLs. All must exist. No http://."
+      "items": {
+        "type": "string",
+        "pattern": "^https://"
+      },
+      "description": "Optional https:// documentation URLs for this item. No relative paths — bundled files live under item.path and are installed via full-tree cache sync."
     },
     "safetyNotes": {
       "type": "array",

@@ -257,20 +257,22 @@ function checkItems(items) {
         fail(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`)
       }
 
-      for (const ref of item.references ?? []) {
-        if (HTTP_URL_PATTERN.test(ref)) {
-          fail(`${item.id}: reference uses insecure http:// URL: ${ref}`)
-        }
-        if (/^https?:\/\//i.test(ref)) continue
-        // For skills: item.path is a directory — resolve refs from that directory.
-        // For agents/templates: item.path is a file — resolve refs from its parent directory.
-        const base =
-          item.type === 'skill'
-            ? path.join(ROOT, item.path)
-            : path.dirname(path.join(ROOT, item.path))
-        const refAbs = path.resolve(base, ref)
-        if (!fs.existsSync(refAbs)) {
-          fail(`${item.id}: reference does not exist: ${ref}`)
+      if (item.references !== undefined && !Array.isArray(item.references)) {
+        fail(`${item.id}: references must be an array`)
+      } else {
+        for (const ref of item.references ?? []) {
+          if (typeof ref !== 'string') {
+            fail(`${item.id}: references[] entries must be strings`)
+            continue
+          }
+          if (HTTP_URL_PATTERN.test(ref)) {
+            fail(`${item.id}: reference uses insecure http:// URL: ${ref}`)
+          }
+          if (!ref.startsWith('https://')) {
+            fail(
+              `${item.id}: references[] must be https:// URLs only (bundled files belong under item.path, not references[]): ${ref}`,
+            )
+          }
         }
       }
     }
