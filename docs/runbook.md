@@ -32,8 +32,9 @@ Exit 0 = no drift. Exit 1 = drifted/new/removed items printed with diffstat.
 ### Automated sync
 
 `.github/workflows/upstream-sync.yml` runs weekly (Monday 06:00 UTC) and on
-`workflow_dispatch`. It runs `node scripts/sync-upstream.mjs --apply`, then `yarn validate`,
-then opens/updates PR `chore/upstream-superpowers-sync`.
+`workflow_dispatch`. It runs `node scripts/sync-upstream.mjs --apply`, then `yarn format`
+(repo plumbing only — `skills/`, `commands/`, and `agents/` are in `.prettierignore`), then
+`yarn validate`, then opens/updates PR `chore/upstream-superpowers-sync`.
 
 **Reviewer workflow:** read the PR summary, sanity-check the diff, merge. No manual edits
 required unless the license gate failed (job red, no PR — legal review needed).

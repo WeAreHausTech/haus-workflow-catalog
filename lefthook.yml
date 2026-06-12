@@ -26,6 +26,10 @@ pre-commit:
       fail_text: 'Catalog validation failed. Run `yarn validate` to see the errors (manifest schema, version bumps, banned tags), fix them, then commit.'
     format:
       glob: '*.{json,md,mjs,yml,yaml}'
+      exclude:
+        - 'skills/**'
+        - 'commands/**'
+        - 'agents/**'
       run: yarn prettier --write {staged_files}
       stage_fixed: true
       fail_text: 'Prettier could not format a staged file. Fix the syntax error it reports, re-stage, then commit.'
