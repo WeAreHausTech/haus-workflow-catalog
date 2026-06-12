@@ -6,12 +6,12 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-**71 items**: 61 skills, 2 agents, 3 templates, 5 commands. (Current manifest version lives in `manifest.json`.)
+**68 items**: 60 skills, 0 agents, 2 templates, 6 commands. (Current manifest version lives in `manifest.json`.)
 
 | Source    | Count | Notes                                                                                                     |
 | --------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| `haus`    | 50    | First-party stack skills, agents, templates                                                               |
-| `curated` | 21    | Verbatim superpowers import (16 skills + 5 commands under `skills/superpowers/`, `commands/superpowers/`) |
+| `haus`    | 46    | First-party stack skills, templates                                                                       |
+| `curated` | 22    | Verbatim superpowers import (16 skills + 6 commands under `skills/superpowers/`, `commands/superpowers/`) |
 
 See `manifest.json` for the full list. Curated provenance: `sources.yaml` → `superpowers-pcvelz`.
 
