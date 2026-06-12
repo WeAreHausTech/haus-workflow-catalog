@@ -32,8 +32,8 @@ schema/                — JSON schemas for manifest and catalog items
 same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A push to
 `main` that touches `manifest.json` or `validation-rules.json` dispatches fixture sync.
 
-**Catalog size:** **71 items** (61 skills, 2 agents, 3 templates, 5 commands) —
-50 `haus` + 21 `curated` superpowers. (Manifest version lives in `manifest.json`; do
+**Catalog size:** **68 items** (60 skills, 0 agents, 2 templates, 6 commands) —
+46 `haus` + 22 `curated` superpowers. (Manifest version lives in `manifest.json`; do
 not restate it in prose — it drifts every release.)
 
 **Tag allowlist (positive gate).** Every item tag must be a known stack in
