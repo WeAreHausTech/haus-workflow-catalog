@@ -93,13 +93,12 @@ Add to `.claude/settings.json`:
       "Bash(git commit --no-verify:*)",
       "Bash(git push --force:*)",
       "Bash(git push -f:*)",
-      "Read(.env)",
-      "Write(.env)",
       "Read(*.pem)",
       "Write(*.pem)",
       "Read(*.key)",
       "Write(*.key)"
-    ]
+    ],
+    "ask": ["Edit(.env)", "Write(.env)"]
   }
 }
 ```
