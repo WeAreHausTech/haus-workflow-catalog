@@ -25,7 +25,7 @@ let keptHttps = 0
 for (const item of manifest.items) {
   const refs = item.references
   if (!refs?.length) continue
-  const httpsOnly = refs.filter((ref) => ref.startsWith('https://'))
+  const httpsOnly = refs.filter((ref) => typeof ref === 'string' && ref.startsWith('https://'))
   prunedEntries += refs.length - httpsOnly.length
   keptHttps += httpsOnly.length
   if (httpsOnly.length === 0) {
@@ -37,8 +37,12 @@ for (const item of manifest.items) {
 }
 
 if (bumpPatch) {
-  const [major, minor, patch] = manifest.version.split('.').map(Number)
-  manifest.version = `${major}.${minor}.${patch + 1}`
+  const match = manifest.version.match(/^(\d+)\.(\d+)\.(\d+)(?:$|[-+])/)
+  if (!match) {
+    console.error(`Cannot --bump-patch: unsupported manifest.version ${manifest.version}`)
+    process.exit(1)
+  }
+  manifest.version = `${match[1]}.${match[2]}.${Number(match[3]) + 1}`
 }
 
 const summary = {
