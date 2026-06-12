@@ -171,15 +171,19 @@ use `node scripts/sync-upstream.mjs` (see `docs/runbook.md`).
 
 ### Bumping a skill or agent
 
-When you change `SKILL.md`, any `references/` file, an agent `.md`, or a command `.md`:
+When you change `SKILL.md`, any bundled file under the item directory (e.g. `references/`),
+an agent `.md`, or a command `.md`:
 
 1. Bump the item's `version` in `manifest.json`:
 
    | Change                                                | Bump            |
    | ----------------------------------------------------- | --------------- |
-   | New guideline, extended scope, new reference file     | `MINOR` (x.1.x) |
+   | New guideline, extended scope, new bundled file       | `MINOR` (x.1.x) |
    | Wording fix, typo, reordering                         | `PATCH` (x.x.1) |
    | Removed section, breaking scope change, renamed skill | `MAJOR` (1.x.x) |
+
+   Bundled files under `references/` are part of the skill directory — do **not** list them
+   in manifest `references[]`. Use `references` only for optional `https://` documentation URLs.
 
 2. Add entry to `CHANGELOG.md` under `## [Unreleased]`:
 

@@ -9,6 +9,12 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Manifest `references[]` is https:// URLs only; relative paths removed (bundled files install via haus-workflow full-tree cache). Schema and validator updated.
+
 ## [2.6.3](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.2...v2.6.3) (2026-06-11)
 
 ### Changed

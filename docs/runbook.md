@@ -10,6 +10,8 @@ When changing `validation-rules.json`, follow ADR-0001 landing order:
 
 Key rules today:
 
+- Manifest `references[]`: `https://` URLs only (no relative paths — bundled files under
+  `item.path` are installed via haus-workflow full-tree cache).
 - Skills: non-empty frontmatter `description:` (`requiredSkillFrontmatter`).
 - Agents: YAML frontmatter `description:` (same as skills).
 - Repo-wide walk: safety only (install patterns, npx allowlist, forbidden stacks in
