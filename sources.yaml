@@ -3,6 +3,6 @@ sources:
     repo: https://github.com/pcvelz/superpowers
     license: MIT
     licenseConfidence: high
-    snapshotRef: bd000c6ec1df53449a74397f55305b22802b9a2b
-    retrieved: 2026-06-09
+    snapshotRef: 48f5123e18a1a92dfba962da8dc2509391c821ee
+    retrieved: 2026-06-12
     useMode: copy
