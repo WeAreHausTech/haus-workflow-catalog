@@ -3,8 +3,8 @@ sources:
     repo: https://github.com/pcvelz/superpowers
     license: MIT
     licenseConfidence: high
-    snapshotRef: 48f5123e18a1a92dfba962da8dc2509391c821ee
-    retrieved: 2026-06-12
+    snapshotRef: 20c0b1ed71cb073c847432fe01379f48c5278a5f
+    retrieved: 2026-06-15
     useMode: copy
     mode: mirror
   - id: ecc-affaanm
