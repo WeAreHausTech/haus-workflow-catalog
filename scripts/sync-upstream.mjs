@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 /**
- * Sync curated superpowers items from upstream pcvelz/superpowers.
+ * Sync curated catalog items from upstream sources declared in sources.yaml.
+ *
+ * Each source declares a `mode`:
+ *   - mirror: full-directory mirror of upstream skills/ + commands/ (auto-adds new
+ *     upstream items, removes deleted ones). Used by superpowers-pcvelz.
+ *   - select: sync only an explicit per-source `items[]` allowlist (curated agents).
+ *     Never auto-adds upstream items, never removes manifest entries — the allowlist
+ *     governs which FILES are mirrored; the manifest governs which ENTRIES exist
+ *     (entry tags/gating are human-owned, so sync only refreshes derived fields).
  *
  *   node scripts/sync-upstream.mjs          # --check (default): drift report, exit 1 if drift
  *   node scripts/sync-upstream.mjs --check  # same
@@ -12,6 +20,8 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+import YAML from 'yaml'
 
 import { extractFrontmatterDescription } from './forbidden-content.mjs'
 
@@ -32,18 +42,61 @@ if (args.some((a) => a.startsWith('-') && a !== '--check' && a !== '--apply')) {
 }
 
 // ---------------------------------------------------------------------------
-// YAML / manifest helpers (regex-only YAML parsing per spec)
+// YAML / manifest helpers
 // ---------------------------------------------------------------------------
 
-function extractSourceBlock(content, sourceId) {
+// sources.yaml is parsed with a real YAML parser (the `select` mode introduces
+// nested `items:` lists with multi-key flow maps that the previous regex/line-walk
+// parser could not read — see ADR-0002). Writes back are done with targeted line
+// replacement on the source's block so comments and flow-style item lists are
+// preserved verbatim (a YAML.stringify round-trip would reformat the whole file).
+
+const VALID_MODES = new Set(['mirror', 'select'])
+
+export function parseAllSources(content) {
+  const doc = YAML.parse(content)
+  const sources = doc?.sources
+  if (!Array.isArray(sources) || sources.length === 0) {
+    throw new Error('sources.yaml: no sources[] found')
+  }
+  return sources.map((s) => {
+    // Absent `mode` falls back to `mirror` (safe default — a source missing the field is
+    // never silently skipped). But an explicit unknown value (e.g. a typo `miror`) is a
+    // hard error: silently treating it as mirror could run destructive full-dir sync on a
+    // source meant to be `select`.
+    const mode = s.mode == null ? 'mirror' : s.mode
+    if (!VALID_MODES.has(mode)) {
+      throw new Error(
+        `sources.yaml: source "${s.id}" has unknown mode "${s.mode}" (expected mirror or select)`,
+      )
+    }
+    return {
+      id: s.id,
+      repo: s.repo,
+      slug: s.slug,
+      license: s.license,
+      licenseConfidence: s.licenseConfidence,
+      snapshotRef: s.snapshotRef,
+      retrieved: s.retrieved,
+      useMode: s.useMode || 'copy',
+      mode,
+      items: Array.isArray(s.items) ? s.items : [],
+    }
+  })
+}
+
+/** Block spanning one source entry (`- id: <sourceId>` to the next `- id:` or EOF). */
+export function extractSourceBlock(content, sourceId) {
   const lines = content.split('\n')
   const blockLines = []
   let capturing = false
   for (const line of lines) {
-    const isItemStart = /^\s*-\s+id:\s*/.test(line)
-    if (isItemStart) {
+    // Parse the id token exactly (not a substring): `line.includes(sourceId)` could match
+    // the wrong block when one id is a substring of another or appears in a trailing comment.
+    const idMatch = line.match(/^\s*-\s+id:\s*(\S+)/)
+    if (idMatch) {
       if (capturing) break
-      if (line.includes(sourceId)) {
+      if (idMatch[1] === sourceId) {
         capturing = true
         blockLines.push(line)
       }
@@ -57,24 +110,9 @@ function extractSourceBlock(content, sourceId) {
   return blockLines.join('\n')
 }
 
-function parseSourcesYaml(content) {
-  const block = extractSourceBlock(content, ORIGIN_SOURCE_ID)
-  const pick = (key) => {
-    const m = block.match(new RegExp(`^\\s*${key}:\\s*(.+)$`, 'm'))
-    return m ? m[1].trim() : ''
-  }
-  return {
-    id: ORIGIN_SOURCE_ID,
-    repo: pick('repo'),
-    license: pick('license'),
-    snapshotRef: pick('snapshotRef'),
-    retrieved: pick('retrieved'),
-    useMode: pick('useMode') || 'copy',
-  }
-}
-
-function updateSourcesYaml(content, snapshotRef, retrieved) {
-  const block = extractSourceBlock(content, ORIGIN_SOURCE_ID)
+/** Replace snapshotRef/retrieved within a single source's block, preserving the rest. */
+function updateSourcesYaml(content, sourceId, snapshotRef, retrieved) {
+  const block = extractSourceBlock(content, sourceId)
   const updated = block
     .replace(/^(\s*snapshotRef:\s*)\S+/m, `$1${snapshotRef}`)
     .replace(/^(\s*retrieved:\s*)\S+/m, `$1${retrieved}`)
@@ -727,42 +765,226 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
 }
 
 // ---------------------------------------------------------------------------
+// Select mode (curated agents — explicit per-source items[] allowlist)
+// ---------------------------------------------------------------------------
+
+function selectCatalogPath(slug, name) {
+  return `agents/${slug}/${name}.md`
+}
+
+function selectManifestId(slug, name) {
+  return `haus.${slug}-${name}`
+}
+
+function selectOriginUrl(repo, sha, upstreamPath) {
+  const base = repo.replace(/\.git$/, '')
+  return `${base}/blob/${sha}/${upstreamPath}`
+}
+
+function findSelectManifestItem(manifest, slug, name) {
+  const id = selectManifestId(slug, name)
+  return manifest.items.find((i) => i.id === id && i.type === 'agent')
+}
+
+/**
+ * Compare each allowlisted item's local file against its upstream file.
+ * Returns the items that differ (need copy + bump) and those whose upstream
+ * description has changed. Items missing upstream are flagged as errors —
+ * a wrong upstreamPath should fail loudly, not silently skip.
+ */
+function analyzeSelectDrift(manifest, upstreamRoot, source) {
+  const { slug } = source
+  const drifted = []
+  const descriptionChanges = []
+  const missingUpstream = []
+  let totalAdded = 0
+  let totalRemoved = 0
+  let totalFiles = 0
+
+  for (const item of source.items) {
+    const { name, upstreamPath } = item
+    const upstreamAbs = path.join(upstreamRoot, upstreamPath)
+    if (!fs.existsSync(upstreamAbs)) {
+      missingUpstream.push({ name, upstreamPath })
+      continue
+    }
+    const localAbs = path.join(ROOT, selectCatalogPath(slug, name))
+    const cmp = comparePaths(localAbs, upstreamAbs)
+    if (!cmp.equal) {
+      drifted.push({ name, upstreamPath, ...cmp })
+      totalAdded += cmp.added
+      totalRemoved += cmp.removed
+      totalFiles += cmp.files
+    }
+    const manifestItem = findSelectManifestItem(manifest, slug, name)
+    if (manifestItem) {
+      const desc = parseDescription(upstreamAbs)
+      if (desc && (manifestItem.purpose !== desc || manifestItem.whenToUse !== desc)) {
+        descriptionChanges.push({ name, upstreamPath, description: desc, item: manifestItem })
+      }
+    }
+  }
+
+  return { drifted, descriptionChanges, missingUpstream, totalAdded, totalRemoved, totalFiles }
+}
+
+function hasSelectDrift(report, snapshotRef, headSha) {
+  return (
+    snapshotRef !== headSha ||
+    report.drifted.length > 0 ||
+    report.descriptionChanges.length > 0 ||
+    report.missingUpstream.length > 0
+  )
+}
+
+function applySelectSync(manifest, upstreamRoot, source, headSha, report) {
+  const { slug } = source
+  const actions = {
+    updated: [],
+    copiedNoEntry: [],
+    newSnapshotRef: headSha,
+    newRetrieved: todayIsoDate(),
+  }
+
+  for (const entry of report.drifted) {
+    const { name, upstreamPath } = entry
+    const src = path.join(upstreamRoot, upstreamPath)
+    const dest = path.join(ROOT, selectCatalogPath(slug, name))
+    fs.mkdirSync(path.dirname(dest), { recursive: true })
+    fs.copyFileSync(src, dest)
+
+    const item = findSelectManifestItem(manifest, slug, name)
+    if (!item) {
+      // Allowlist governs FILES; manifest governs ENTRIES. Never fabricate an entry
+      // (tags/gating are human-owned) — copy the file and report the gap.
+      actions.copiedNoEntry.push({ name })
+      continue
+    }
+    const newVersion = patchBump(item.version)
+    item.version = newVersion
+    item.originUrl = selectOriginUrl(source.repo, headSha, upstreamPath)
+    item.pinnedRef = headSha
+    item.tokenEstimate = Math.ceil(fs.statSync(dest).size / 4)
+    const desc = parseDescription(dest)
+    let descriptionUpdated = false
+    if (desc && (item.purpose !== desc || item.whenToUse !== desc)) {
+      item.purpose = desc
+      item.whenToUse = desc
+      descriptionUpdated = true
+    }
+    actions.updated.push({ name, versionBumped: true, newVersion, descriptionUpdated })
+  }
+
+  // Description-only changes (file content identical, frontmatter desc differs from manifest).
+  for (const change of report.descriptionChanges) {
+    if (actions.updated.some((u) => u.name === change.name)) continue
+    const item = change.item
+    item.purpose = change.description
+    item.whenToUse = change.description
+    item.originUrl = selectOriginUrl(source.repo, headSha, change.upstreamPath)
+    item.pinnedRef = headSha
+    actions.updated.push({ name: change.name, versionBumped: false, descriptionUpdated: true })
+  }
+
+  return actions
+}
+
+function printSelectCheckReport(source, headSha, report) {
+  const lines = []
+  lines.push(`# Upstream select sync check — ${source.id}`)
+  lines.push('')
+  lines.push(`| | |`)
+  lines.push(`|---|---|`)
+  lines.push(`| snapshotRef | \`${source.snapshotRef}\` |`)
+  lines.push(`| upstream HEAD | \`${headSha}\` |`)
+  lines.push(`| retrieved | ${source.retrieved} |`)
+  lines.push('')
+
+  if (!hasSelectDrift(report, source.snapshotRef, headSha)) {
+    lines.push('In sync.')
+    console.log(lines.join('\n'))
+    return
+  }
+  if (source.snapshotRef !== headSha) {
+    lines.push('Ref drift: snapshotRef differs from upstream HEAD.')
+    lines.push('')
+  }
+  lines.push(`## Drifted (${report.drifted.length})`)
+  if (report.drifted.length === 0) lines.push('_none_')
+  else
+    lines.push(...report.drifted.map((d) => `- agent: \`${d.name}\` (+${d.added} -${d.removed})`))
+  lines.push('')
+  lines.push(`## Description changes (${report.descriptionChanges.length})`)
+  if (report.descriptionChanges.length === 0) lines.push('_none_')
+  else lines.push(...report.descriptionChanges.map((d) => `- agent: \`${d.name}\``))
+  lines.push('')
+  if (report.missingUpstream.length > 0) {
+    lines.push(`## Missing upstream (${report.missingUpstream.length})`)
+    lines.push(
+      ...report.missingUpstream.map((m) => `- \`${m.name}\` → \`${m.upstreamPath}\` not found`),
+    )
+    lines.push('')
+  }
+  lines.push('## Diffstat')
+  lines.push(`${report.totalFiles} file(s) changed, +${report.totalAdded} -${report.totalRemoved}`)
+  console.log(lines.join('\n'))
+}
+
+function printSelectApplyReport(source, headSha, actions) {
+  const lines = []
+  lines.push(`# Upstream select sync applied — ${source.id}`)
+  lines.push('')
+  lines.push(`| | |`)
+  lines.push(`|---|---|`)
+  lines.push(`| previous snapshotRef | \`${source.snapshotRef}\` |`)
+  lines.push(`| new snapshotRef | \`${actions.newSnapshotRef}\` |`)
+  lines.push(`| retrieved | ${actions.newRetrieved} |`)
+  lines.push('')
+  lines.push(`## Updated (${actions.updated.length})`)
+  if (actions.updated.length === 0) lines.push('_none_')
+  else {
+    for (const u of actions.updated) {
+      const bump = u.versionBumped ? ` → v${u.newVersion}` : ''
+      lines.push(`- agent: \`${u.name}\`${bump}${u.descriptionUpdated ? ' (description)' : ''}`)
+    }
+  }
+  lines.push('')
+  if (actions.copiedNoEntry.length > 0) {
+    lines.push(`## Copied without manifest entry (${actions.copiedNoEntry.length})`)
+    lines.push(...actions.copiedNoEntry.map((c) => `- \`${c.name}\` — add a manifest entry`))
+    lines.push('')
+  }
+  console.log(lines.join('\n'))
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
-function main() {
-  const sourcesContent = fs.readFileSync(SOURCES_PATH, 'utf8')
-  const source = parseSourcesYaml(sourcesContent)
-  if (!source.repo) {
-    console.error('ERROR: sources.yaml missing repo for superpowers-pcvelz')
-    process.exit(1)
-  }
-
+/** mirror mode: full-directory sync of upstream skills/ + commands/ (superpowers). */
+function processMirrorSource(source, manifest, state) {
   let tmpDir
   let headSha
   try {
     assertSnapshotRef(source.snapshotRef)
     ;({ tmpDir, headSha } = cloneUpstream(source.repo))
   } catch (err) {
-    console.error(`ERROR: ${err instanceof Error ? err.message : String(err)}`)
+    console.error(`ERROR (${source.id}): ${err instanceof Error ? err.message : String(err)}`)
     process.exit(1)
   }
   try {
-    const manifest = loadManifest()
     const report = analyzeDrift(manifest, tmpDir)
 
     if (checkMode) {
       printCheckReport(source, headSha, report)
-      if (hasDrift(report, source.snapshotRef, headSha)) {
-        process.exit(1)
-      }
+      if (hasDrift(report, source.snapshotRef, headSha)) state.drift = true
       return
     }
 
     try {
       assertMitLicense(tmpDir)
     } catch (err) {
-      console.error(`ERROR: ${err instanceof Error ? err.message : String(err)}`)
+      console.error(`ERROR (${source.id}): ${err instanceof Error ? err.message : String(err)}`)
       process.exit(1)
     }
     const actions = applySync(manifest, tmpDir, source, headSha, report)
@@ -772,21 +994,107 @@ function main() {
         actions.added.length > 0 ||
         actions.removed.some((r) => r.type !== 'support') ||
         actions.updated.some((u) => u.type !== 'support')
-      if (manifestChanged) {
-        saveManifest(manifest)
-      }
-      const updatedSources = updateSourcesYaml(
-        sourcesContent,
+      if (manifestChanged) state.manifestChanged = true
+      state.sourcesContent = updateSourcesYaml(
+        state.sourcesContent,
+        source.id,
         actions.newSnapshotRef,
         actions.newRetrieved,
       )
-      fs.writeFileSync(SOURCES_PATH, updatedSources)
+      state.sourcesChanged = true
     }
-
     printApplyReport(source, headSha, actions)
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true })
   }
+}
+
+/** select mode: explicit per-source items[] allowlist (curated agents). */
+function processSelectSource(source, manifest, state) {
+  if (!source.slug) {
+    console.error(`ERROR (${source.id}): select source missing required \`slug\``)
+    process.exit(1)
+  }
+  let tmpDir
+  let headSha
+  try {
+    assertSnapshotRef(source.snapshotRef)
+    ;({ tmpDir, headSha } = cloneUpstream(source.repo))
+  } catch (err) {
+    console.error(`ERROR (${source.id}): ${err instanceof Error ? err.message : String(err)}`)
+    process.exit(1)
+  }
+  try {
+    const report = analyzeSelectDrift(manifest, tmpDir, source)
+
+    if (checkMode) {
+      printSelectCheckReport(source, headSha, report)
+      if (hasSelectDrift(report, source.snapshotRef, headSha)) state.drift = true
+      return
+    }
+
+    if (report.missingUpstream.length > 0) {
+      console.error(
+        `ERROR (${source.id}): upstream path(s) not found: ` +
+          report.missingUpstream.map((m) => m.upstreamPath).join(', '),
+      )
+      process.exit(1)
+    }
+    try {
+      assertMitLicense(tmpDir)
+    } catch (err) {
+      console.error(`ERROR (${source.id}): ${err instanceof Error ? err.message : String(err)}`)
+      process.exit(1)
+    }
+    const actions = applySelectSync(manifest, tmpDir, source, headSha, report)
+
+    const refChanged = source.snapshotRef !== headSha
+    if (actions.updated.length > 0 || actions.copiedNoEntry.length > 0 || refChanged) {
+      if (actions.updated.length > 0) state.manifestChanged = true
+      state.sourcesContent = updateSourcesYaml(
+        state.sourcesContent,
+        source.id,
+        actions.newSnapshotRef,
+        actions.newRetrieved,
+      )
+      state.sourcesChanged = true
+    }
+    printSelectApplyReport(source, headSha, actions)
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true })
+  }
+}
+
+function main() {
+  const sourcesContent = fs.readFileSync(SOURCES_PATH, 'utf8')
+  const sources = parseAllSources(sourcesContent)
+  const manifest = loadManifest()
+  const state = {
+    drift: false,
+    manifestChanged: false,
+    sourcesChanged: false,
+    sourcesContent,
+  }
+
+  for (const source of sources) {
+    if (!source.repo) {
+      console.error(`ERROR: sources.yaml missing repo for ${source.id}`)
+      process.exit(1)
+    }
+    if (source.mode === 'select') {
+      processSelectSource(source, manifest, state)
+    } else {
+      processMirrorSource(source, manifest, state)
+    }
+  }
+
+  if (checkMode) {
+    if (state.drift) process.exit(1)
+    return
+  }
+
+  if (state.manifestChanged) saveManifest(manifest)
+  if (state.sourcesChanged) fs.writeFileSync(SOURCES_PATH, state.sourcesContent)
 }
 
 const isMain =

@@ -7,7 +7,9 @@ import path from 'node:path'
 import {
   assertMitLicense,
   assertSnapshotRef,
+  extractSourceBlock,
   inspectSharedSupport,
+  parseAllSources,
 } from '../scripts/sync-upstream.mjs'
 
 test('assertMitLicense accepts SPDX MIT license', () => {
@@ -36,6 +38,33 @@ test('assertMitLicense accepts MIT License title header', () => {
 test('assertSnapshotRef rejects non-SHA refs', () => {
   assert.throws(() => assertSnapshotRef('main'), /40-character git commit SHA/)
   assert.throws(() => assertSnapshotRef('bd000c6; rm -rf /'), /40-character git commit SHA/)
+})
+
+test('parseAllSources defaults absent mode to mirror but rejects an unknown mode', () => {
+  const ok = parseAllSources('sources:\n  - id: a\n    repo: https://x/a\n')
+  assert.equal(ok[0].mode, 'mirror')
+  const sel = parseAllSources('sources:\n  - id: a\n    repo: https://x/a\n    mode: select\n')
+  assert.equal(sel[0].mode, 'select')
+  assert.throws(
+    () => parseAllSources('sources:\n  - id: a\n    repo: https://x/a\n    mode: miror\n'),
+    /unknown mode "miror"/,
+  )
+})
+
+test('extractSourceBlock matches the id token exactly, not as a substring', () => {
+  // `foo` must not select the `foo-bar` block (substring trap).
+  const yaml = [
+    'sources:',
+    '  - id: foo-bar',
+    '    snapshotRef: AAA',
+    '  - id: foo',
+    '    snapshotRef: BBB',
+    '',
+  ].join('\n')
+  const fooBlock = extractSourceBlock(yaml, 'foo')
+  assert.match(fooBlock, /snapshotRef: BBB/)
+  assert.ok(!fooBlock.includes('AAA'), 'foo block must not bleed into foo-bar')
+  assert.match(extractSourceBlock(yaml, 'foo-bar'), /snapshotRef: AAA/)
 })
 
 test('inspectSharedSupport detects drift in skills/shared support files', () => {

@@ -24,7 +24,8 @@
     "globals": "^16.2.0",
     "lefthook": "1.13.6",
     "prettier": "^3.5.3",
-    "release-it": "20.0.1"
+    "release-it": "20.0.1",
+    "yaml": "^2.9.0"
   },
   "packageManager": "yarn@4.15.0",
   "dependenciesMeta": {

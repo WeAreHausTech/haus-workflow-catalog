@@ -32,6 +32,7 @@ import {
   ANY_NPX_PATTERN,
   HTTP_URL_PATTERN,
   PLACEHOLDER_PATTERN,
+  NPX_TSX_ONLY_EXEMPT_TYPES,
   auditDisallowedTags,
 } from './validation-rules.mjs'
 import {
@@ -289,11 +290,25 @@ function checkItems(items) {
   for (const msg of auditDisallowedTags(items)) fail(msg)
 }
 
+// Maps a shipped-content directory to the catalog item type it holds, so the
+// per-type npx exemption (NPX_TSX_ONLY_EXEMPT_TYPES) can be applied during the walk.
+const DIR_ITEM_TYPE = {
+  skills: 'skill',
+  agents: 'agent',
+  templates: 'template',
+  commands: 'command',
+}
+
 function checkShippedMarkdown() {
   const dirs = ['skills', 'agents', 'templates', 'commands']
   for (const dir of dirs) {
     const abs = path.join(ROOT, dir)
     if (!fs.existsSync(abs)) continue
+    // Agent files are AI-instruction prose where `npx <tool>` is legitimate guidance, not a
+    // catalog-executed installer — so the "only npx tsx" rule is waived for exempt types.
+    // Risky-install patterns (npx -y / dlx) are NOT waived (auditMarkdownLines enforces them
+    // regardless of this flag).
+    const checkNonTsxNpx = !NPX_TSX_ONLY_EXEMPT_TYPES.includes(DIR_ITEM_TYPE[dir])
     walkMd(abs, (file) => {
       const text = fs.readFileSync(file, 'utf8')
       const rel = path.relative(ROOT, file).replace(/\\/g, '/')
@@ -303,6 +318,7 @@ function checkShippedMarkdown() {
       // template/command audits still enforce it.
       for (const msg of auditMarkdownLines(text, rel, MARKDOWN_PATTERNS, {
         checkPlaceholder: false,
+        checkNonTsxNpx,
       })) {
         fail(msg)
       }

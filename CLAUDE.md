@@ -14,7 +14,8 @@ sources.yaml           — curated upstream snapshots
 skills/
   haus-owned/          — first-party skills
   superpowers/         — verbatim curated skills (do not hand-edit)
-agents/                — agent definition files (.md)
+agents/
+  <source-slug>/       — verbatim curated agents, e.g. ecc/, oh-my-claudecode/ (do not hand-edit)
 commands/superpowers/  — verbatim curated slash commands
 templates/             — managed file templates
 scripts/               — validate.mjs, sync-upstream.mjs, validation-rules.mjs
@@ -32,9 +33,9 @@ schema/                — JSON schemas for manifest and catalog items
 same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A push to
 `main` that touches `manifest.json` or `validation-rules.json` dispatches fixture sync.
 
-**Catalog size:** **68 items** (60 skills, 0 agents, 2 templates, 6 commands) —
-46 `haus` + 22 `curated` superpowers. (Manifest version lives in `manifest.json`; do
-not restate it in prose — it drifts every release.)
+**Catalog size:** **79 items** (60 skills, 11 agents, 2 templates, 6 commands) —
+46 `haus` + 33 `curated` (22 superpowers skills/commands + 11 agents). (Manifest version
+lives in `manifest.json`; do not restate it in prose — it drifts every release.)
 
 **Tag allowlist (positive gate).** Every item tag must be a known stack in
 `validation-rules.json#allowedStacks`, an `alwaysAllowedTags` meta tag, or end with a
@@ -61,7 +62,8 @@ copy: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
    local-dev `http://localhost` URLs in examples are fine); no forbidden stack tags in item
    id/tags.
 7. TODO/placeholder checks apply to shipped **template/command** files, not skill prose.
-8. Do not hand-edit `skills/superpowers/` or `commands/superpowers/` — sync from upstream.
+8. Do not hand-edit `skills/superpowers/`, `commands/superpowers/`, or `agents/<source-slug>/`
+   (curated) — sync from upstream via `scripts/sync-upstream.mjs`.
 
 ## Validation
 
