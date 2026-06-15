@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.7.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.1...v2.7.2) (2026-06-15)
+
+### Changed
+
+- update changelog generation and documentation ([9f26e9e](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/9f26e9e4144678fd438a703284e85ba78f1ae478))
+
 ## [2.7.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.0...v2.7.1) (2026-06-15)
 
 ### Changed
