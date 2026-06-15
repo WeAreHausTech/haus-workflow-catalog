@@ -5,6 +5,30 @@
 
 Content catalog for `@haus-tech/haus-workflow`. Consumed at runtime by the CLI — not bundled into the npm package.
 
+## Setup
+
+```bash
+node >= 18, yarn >= 4
+yarn install   # installs deps + lefthook hooks
+```
+
+No `.env` or external services required.
+
+## Commands
+
+| Command              | Action                                  |
+| -------------------- | --------------------------------------- |
+| `yarn validate`      | Full catalog validation (test gate)     |
+| `yarn test`          | Node:test suite in `tests/`             |
+| `yarn lint`          | ESLint over `scripts/`                  |
+| `yarn format:check`  | Prettier check (CI gate)                |
+| `yarn format`        | Prettier write                          |
+| `yarn release`       | Interactive release (patch/minor/major) |
+| `yarn release:dry`   | Preview release without committing      |
+| `yarn release 2.1.1` | Explicit version release                |
+
+Use `rtk` prefix for token-efficient output (e.g. `rtk yarn validate`). See `~/.claude/RTK.md`.
+
 ## Repo structure
 
 ```
@@ -20,71 +44,57 @@ commands/superpowers/  — verbatim curated slash commands
 templates/             — managed file templates
 scripts/               — validate.mjs, sync-upstream.mjs, validation-rules.mjs
 schema/                — JSON schemas for manifest and catalog items
+tests/                 — node:test suite for validation logic
+docs/                  — ADRs and runbooks
 ```
 
-## Key rules
+## Key conventions
 
-**Manifest and item versions are independent.** Bump `manifest.json` top-level `version` on every release. Bump individual item `version` in `manifest.json` whenever any file under that item's `path` changes — CI will catch missed bumps on PRs.
-
-**Before release:** `manifest.json` top-level `version` must match the git tag (e.g. tag `v2.0.2` → version `"2.0.2"`). `scripts/check-manifest-version.mjs` enforces this.
-
-**Validation rules have one source.** `validation-rules.json` (repo root) is canonical.
-`scripts/validation-rules.mjs` is a thin loader; the haus-workflow CLI consumes the
-same JSON as a synced fixture (ADR-0001). Edit the JSON, never the loader. A push to
-`main` that touches `manifest.json` or `validation-rules.json` dispatches fixture sync.
-
-**Catalog size:** **79 items** (60 skills, 11 agents, 2 templates, 6 commands) —
-46 `haus` + 33 `curated` (22 superpowers skills/commands + 11 agents). (Manifest version
-lives in `manifest.json`; do not restate it in prose — it drifts every release.)
-
-**Tag allowlist (positive gate).** Every item tag must be a known stack in
-`validation-rules.json#allowedStacks`, an `alwaysAllowedTags` meta tag, or end with a
-`patternTagSuffixes` suffix — otherwise validation fails. Adding a new stack means adding
-its tag to `validation-rules.json#allowedStacks`, not just creating the skill.
-
-**Workflow-doc sync.** `templates/agentic-workflow-standard.md` and `.claude/WORKFLOW.md`
-must be byte-identical (`checkWorkflowDocSync` in `validate.mjs`) — the latter is the
-shipped template applied to this repo. Edit the template, then copy it over the local
-copy: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
+- **Manifest and item versions are independent.** Bump `manifest.json` top-level `version` on every release. Bump individual item `version` in `manifest.json` whenever any file under that item's `path` changes — CI catches missed bumps on PRs.
+- **Validation rules have one source.** `validation-rules.json` is canonical. Edit the JSON, never `scripts/validation-rules.mjs` (thin loader). A push touching `manifest.json` or `validation-rules.json` dispatches fixture sync to the CLI repo.
+- **Tag allowlist (positive gate).** Every item tag must be in `validation-rules.json#allowedStacks`, an `alwaysAllowedTags` meta tag, or end with a `patternTagSuffixes` suffix — adding a new stack means adding it to the allowlist first.
+- **Workflow-doc sync.** `templates/agentic-workflow-standard.md` and `.claude/WORKFLOW.md` must be byte-identical. Edit the template, then: `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`.
+- **Do not hand-edit curated dirs** (`skills/<source-slug>/`, `commands/<source-slug>/`, `agents/<source-slug>/`) — sync from upstream via `node scripts/sync-upstream.mjs --apply`.
+- **Docs are an index.** Use path references in `docs/`; read source for implementation detail.
+- **Keep docs in sync.** When commands, structure, or release process change, run the **writing-documentation** skill and commit doc updates with the code change.
 
 ## Adding a new item
 
-1. Create the file(s) under `skills/haus-owned/`, `agents/`, `templates/`, or `commands/`.
-2. **Skills** need `SKILL.md` with YAML frontmatter including non-empty `description:`.
-   Optional `## Use when` / `## Do not use when` prose is fine but not required.
-3. **Agents** need a `.md` file with YAML frontmatter including non-empty `description:`
-   (same when-signal convention as skills). Optional prose sections are fine but not required.
-4. **Commands** need a `.md` file with frontmatter `description:`.
-5. Add the item entry to `manifest.json`. Set `version: "1.0.0"`.
-6. Safety rules (all markdown): no risky install patterns; only `npx tsx` allowed; manifest
-   `references[]` is **https:// URLs only** (no relative paths — bundled files live under
-   `item.path`; the `http://` ban is enforced on `references[]`, not on prose/code bodies —
-   local-dev `http://localhost` URLs in examples are fine); no forbidden stack tags in item
-   id/tags.
-7. TODO/placeholder checks apply to shipped **template/command** files, not skill prose.
-8. Do not hand-edit `skills/superpowers/`, `commands/superpowers/`, or `agents/<source-slug>/`
-   (curated) — sync from upstream via `scripts/sync-upstream.mjs`.
+1. Create file(s) under `skills/`, `agents/`, `templates/`, or `commands/`.
+2. Skills: `SKILL.md` with non-empty `description:` frontmatter.
+3. Agents: `.md` file with non-empty `description:` frontmatter.
+4. Commands: `.md` file with `description:` frontmatter.
+5. Add entry to `manifest.json` with `version: "1.0.0"`.
+6. Safety rules: no risky install patterns; `npx tsx` only; `references[]` = `https://` URLs only; no forbidden stack tags.
+7. TODO/placeholder checks apply to shipped template/command files, not skill prose.
 
 ## Validation
 
 ```bash
 yarn validate                        # full local check
-node scripts/validate.mjs            # same, explicit
+yarn test                            # node:test suite
 haus validate-catalog ./manifest.json  # via CLI
 ```
 
-CI runs both on every push and PR. Item version check runs on PRs only.
+CI runs on every push and PR. Item version bump check runs on PRs only.
 
 ## Release process
 
+See [docs/deployment.md](docs/deployment.md) for the full flow.
+
 1. Merge to `main` with conventional commits (`feat:`, `fix:`, …).
-2. `yarn release` (or `yarn release:dry`, or `yarn release 2.1.1`). Uses release-it + conventional-changelog; syncs `manifest.json#version` via hooks.
-3. Tag push triggers release CI → GitHub Release + `manifest.json` artifact.
+2. `yarn release` — bumps `package.json`, syncs `manifest.json#version`, updates `CHANGELOG.md`, commits, tags, pushes.
+3. Tag push triggers CI → GitHub Release + `manifest.json` artifact.
 
-## How consumers get updates
+## Before opening a PR
 
-`haus install` / `haus update` fetches live from this repo at the ref specified by `HAUS_CATALOG_REF` (default: `main`). Changes to `main` are available to consumers immediately — no CLI release needed.
+- [ ] `yarn validate` passes
+- [ ] `yarn test` passes
+- [ ] Item version bumped in `manifest.json` for every changed item path
+- [ ] `templates/agentic-workflow-standard.md` and `.claude/WORKFLOW.md` are byte-identical if either changed
+- [ ] New stack tags added to `validation-rules.json#allowedStacks`
+- [ ] Run the **writing-documentation** skill if structure, commands, or deploy process changed (or N/A)
 
-## Tooling
+## Docs
 
-This repo uses **RTK** (Rust Token Killer) for token-optimized CLI output — prefix dev commands with `rtk` (e.g. `rtk git status`, `rtk validate`). Full command reference lives in the global `~/.claude/RTK.md`; not duplicated here.
+[docs/SUMMARY.md](docs/SUMMARY.md)
