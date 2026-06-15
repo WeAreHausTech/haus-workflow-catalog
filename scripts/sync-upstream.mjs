@@ -51,38 +51,52 @@ if (args.some((a) => a.startsWith('-') && a !== '--check' && a !== '--apply')) {
 // replacement on the source's block so comments and flow-style item lists are
 // preserved verbatim (a YAML.stringify round-trip would reformat the whole file).
 
-function parseAllSources(content) {
+const VALID_MODES = new Set(['mirror', 'select'])
+
+export function parseAllSources(content) {
   const doc = YAML.parse(content)
   const sources = doc?.sources
   if (!Array.isArray(sources) || sources.length === 0) {
     throw new Error('sources.yaml: no sources[] found')
   }
-  return sources.map((s) => ({
-    id: s.id,
-    repo: s.repo,
-    slug: s.slug,
-    license: s.license,
-    licenseConfidence: s.licenseConfidence,
-    snapshotRef: s.snapshotRef,
-    retrieved: s.retrieved,
-    useMode: s.useMode || 'copy',
-    // Absent `mode` falls back to `mirror` so a source missing the field is never
-    // silently skipped (it gets the full-directory treatment, the safe default).
-    mode: s.mode || 'mirror',
-    items: Array.isArray(s.items) ? s.items : [],
-  }))
+  return sources.map((s) => {
+    // Absent `mode` falls back to `mirror` (safe default — a source missing the field is
+    // never silently skipped). But an explicit unknown value (e.g. a typo `miror`) is a
+    // hard error: silently treating it as mirror could run destructive full-dir sync on a
+    // source meant to be `select`.
+    const mode = s.mode == null ? 'mirror' : s.mode
+    if (!VALID_MODES.has(mode)) {
+      throw new Error(
+        `sources.yaml: source "${s.id}" has unknown mode "${s.mode}" (expected mirror or select)`,
+      )
+    }
+    return {
+      id: s.id,
+      repo: s.repo,
+      slug: s.slug,
+      license: s.license,
+      licenseConfidence: s.licenseConfidence,
+      snapshotRef: s.snapshotRef,
+      retrieved: s.retrieved,
+      useMode: s.useMode || 'copy',
+      mode,
+      items: Array.isArray(s.items) ? s.items : [],
+    }
+  })
 }
 
 /** Block spanning one source entry (`- id: <sourceId>` to the next `- id:` or EOF). */
-function extractSourceBlock(content, sourceId) {
+export function extractSourceBlock(content, sourceId) {
   const lines = content.split('\n')
   const blockLines = []
   let capturing = false
   for (const line of lines) {
-    const isItemStart = /^\s*-\s+id:\s*/.test(line)
-    if (isItemStart) {
+    // Parse the id token exactly (not a substring): `line.includes(sourceId)` could match
+    // the wrong block when one id is a substring of another or appears in a trailing comment.
+    const idMatch = line.match(/^\s*-\s+id:\s*(\S+)/)
+    if (idMatch) {
       if (capturing) break
-      if (line.includes(sourceId)) {
+      if (idMatch[1] === sourceId) {
         capturing = true
         blockLines.push(line)
       }
