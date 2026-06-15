@@ -6,3 +6,35 @@ sources:
     snapshotRef: 48f5123e18a1a92dfba962da8dc2509391c821ee
     retrieved: 2026-06-12
     useMode: copy
+    mode: mirror
+  - id: ecc-affaanm
+    repo: https://github.com/affaan-m/ECC
+    slug: ecc
+    license: MIT
+    licenseConfidence: high
+    snapshotRef: 5b173d2e6c11b976a0f13b2f59125e08956c1d47
+    retrieved: 2026-06-15
+    useMode: copy
+    mode: select
+    items:
+      - { name: react-reviewer, type: agent, upstreamPath: agents/react-reviewer.md }
+      - { name: react-build-resolver, type: agent, upstreamPath: agents/react-build-resolver.md }
+      - { name: php-reviewer, type: agent, upstreamPath: agents/php-reviewer.md }
+      - { name: csharp-reviewer, type: agent, upstreamPath: agents/csharp-reviewer.md }
+      - { name: database-reviewer, type: agent, upstreamPath: agents/database-reviewer.md }
+      - { name: e2e-runner, type: agent, upstreamPath: agents/e2e-runner.md }
+      - { name: performance-optimizer, type: agent, upstreamPath: agents/performance-optimizer.md }
+      - { name: refactor-cleaner, type: agent, upstreamPath: .kiro/agents/refactor-cleaner.md }
+  - id: omcc-yeachanheo
+    repo: https://github.com/yeachan-heo/oh-my-claudecode
+    slug: oh-my-claudecode
+    license: MIT
+    licenseConfidence: high
+    snapshotRef: 50f6ff05eb5d9ebed66f05d8c4580c0b119f37af
+    retrieved: 2026-06-15
+    useMode: copy
+    mode: select
+    items:
+      - { name: test-engineer, type: agent, upstreamPath: agents/test-engineer.md }
+      - { name: designer, type: agent, upstreamPath: agents/designer.md }
+      - { name: tracer, type: agent, upstreamPath: agents/tracer.md }

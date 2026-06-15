@@ -6,14 +6,14 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-**68 items**: 60 skills, 0 agents, 2 templates, 6 commands. (Current manifest version lives in `manifest.json`.)
+**79 items**: 60 skills, 11 agents, 2 templates, 6 commands. (Current manifest version lives in `manifest.json`.)
 
-| Source    | Count | Notes                                                                                                     |
-| --------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| `haus`    | 46    | First-party stack skills, templates                                                                       |
-| `curated` | 22    | Verbatim superpowers import (16 skills + 6 commands under `skills/superpowers/`, `commands/superpowers/`) |
+| Source    | Count | Notes                                                                                                                                                                       |
+| --------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `haus`    | 46    | First-party stack skills, templates                                                                                                                                         |
+| `curated` | 33    | Verbatim upstream import: 16 skills + 6 commands (superpowers) + 11 agents (ECC, oh-my-claudecode) under `skills/superpowers/`, `commands/superpowers/`, `agents/<source>/` |
 
-See `manifest.json` for the full list. Curated provenance: `sources.yaml` → `superpowers-pcvelz`.
+See `manifest.json` for the full list. Curated provenance: `sources.yaml` → `superpowers-pcvelz` (mirror), `ecc-affaanm` + `omcc-yeachanheo` (select).
 
 Compatible with `@haus-tech/haus-workflow >= 0.18.0` (requiredSkillFrontmatter validation, command install, stale-item cleanup on apply).
 
@@ -22,11 +22,13 @@ Compatible with `@haus-tech/haus-workflow >= 0.18.0` (requiredSkillFrontmatter v
 ```
 manifest.json          — catalog item registry (source of truth)
 validation-rules.json  — canonical validation rules (see Validation rules below)
-sources.yaml           — curated upstream snapshots (superpowers)
+sources.yaml           — curated upstream snapshots (superpowers + agents)
 skills/
   haus-owned/          — first-party skills
   superpowers/         — verbatim curated skills (pcvelz/superpowers)
-agents/                — agent definition files (.md)
+agents/
+  ecc/                 — verbatim curated agents (affaan-m/ECC)
+  oh-my-claudecode/    — verbatim curated agents (yeachan-heo/oh-my-claudecode)
 commands/
   superpowers/         — verbatim curated slash commands
 templates/             — managed file templates (agentic-workflow-standard.md etc.)

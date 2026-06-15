@@ -1,7 +1,9 @@
-name: Upstream superpowers sync
+name: Upstream catalog sync
 
-# Weekly sync of curated superpowers items from pcvelz/superpowers.
-# scripts/sync-upstream.mjs clones upstream HEAD, diffs local catalog against
+# Weekly sync of curated items from every source in sources.yaml:
+#   - superpowers-pcvelz (mode: mirror) — skills + commands
+#   - ecc-affaanm, omcc-yeachanheo (mode: select) — curated agents
+# scripts/sync-upstream.mjs clones each upstream HEAD, diffs the local catalog against
 # that snapshot, and on --apply re-copies drifted files + updates sources.yaml.
 
 on:
@@ -11,7 +13,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: upstream-superpowers-sync
+  group: upstream-catalog-sync
   cancel-in-progress: true
 
 permissions:
@@ -39,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Sync upstream superpowers
+      - name: Sync upstream catalog sources
         run: node scripts/sync-upstream.mjs --apply
 
       # manifest.json, sources.yaml, etc. — catalog item trees are in .prettierignore.
@@ -66,12 +68,15 @@ jobs:
           token: ${{ github.token }}
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          branch: chore/upstream-superpowers-sync
+          branch: chore/upstream-catalog-sync
           delete-branch: false
-          commit-message: 'chore(superpowers): sync upstream pcvelz/superpowers'
-          title: 'chore(superpowers): sync upstream pcvelz/superpowers'
+          commit-message: 'chore(catalog): sync upstream sources'
+          title: 'chore(catalog): sync upstream sources'
           body: |
-            Automated sync of curated superpowers skills and commands from
-            [pcvelz/superpowers](https://github.com/pcvelz/superpowers).
+            Automated sync of curated catalog items from the sources in `sources.yaml`:
+
+            - skills + commands from [pcvelz/superpowers](https://github.com/pcvelz/superpowers) (mirror)
+            - agents from [affaan-m/ECC](https://github.com/affaan-m/ECC) and
+              [yeachan-heo/oh-my-claudecode](https://github.com/yeachan-heo/oh-my-claudecode) (select)
 
             See workflow run summary for the sync report from `scripts/sync-upstream.mjs`.

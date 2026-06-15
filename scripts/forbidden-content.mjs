@@ -77,12 +77,16 @@ export function auditForbiddenTagsInText(text, label) {
  * not a safety rule, and produces false positives on legitimate prose (e.g. "scan for
  * TODOs", CSS `.placeholder`). The repo-wide markdown walk disables it; per-item shipped
  * template/command audits keep it on.
+ * `checkNonTsxNpx` gates the "only npx tsx" rule: agent definitions are AI-instruction
+ * prose that legitimately names tools to run (`npx playwright`, `npx eslint`), so the ban
+ * is disabled for them. The risky-install scan (npx -y / dlx) is NEVER gated — it stays
+ * on for every type, agents included.
  */
 export function auditMarkdownLines(
   text,
   rel,
   { PLACEHOLDER_PATTERN, RISKY_INSTALL_PATTERNS, ANY_NPX_PATTERN, ALLOWED_NPX_PATTERN },
-  { checkPlaceholder = true } = {},
+  { checkPlaceholder = true, checkNonTsxNpx = true } = {},
 ) {
   const failures = []
   const lines = text.split(/\r?\n/)
@@ -94,7 +98,7 @@ export function auditMarkdownLines(
     if (RISKY_INSTALL_PATTERNS.some((re) => re.test(line))) {
       failures.push(`${rel}:${i + 1}: risky install pattern`)
     }
-    if (ANY_NPX_PATTERN.test(line) && !ALLOWED_NPX_PATTERN.test(line)) {
+    if (checkNonTsxNpx && ANY_NPX_PATTERN.test(line) && !ALLOWED_NPX_PATTERN.test(line)) {
       failures.push(`${rel}:${i + 1}: disallowed npx (only npx tsx allowed)`)
     }
   }
