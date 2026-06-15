@@ -11,6 +11,7 @@
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "validate": "node scripts/validate.mjs",
+    "changelog:regenerate": "node scripts/regenerate-changelog.mjs",
     "test": "node --test \"tests/**/*.test.mjs\"",
     "release": "GITHUB_TOKEN=$(gh auth token) release-it",
     "release:dry": "GITHUB_TOKEN=$(gh auth token) release-it --dry-run",

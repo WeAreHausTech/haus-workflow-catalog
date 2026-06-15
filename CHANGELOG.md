@@ -4,12 +4,16 @@ All notable changes to this catalog are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
-Each entry covers catalog-level changes (new/removed items, schema changes)
-and individual skill/agent version bumps. See `manifest.json` for per-item versions.
+Release sections are generated from conventional commits since the previous git tag.
+Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
 ## [2.7.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.0...v2.7.1) (2026-06-15)
+
+### Changed
+
+- **catalog:** sync upstream sources ([#21](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/21)) ([cddbea6](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/cddbea61a9b53de4203e9d9e31a7d159b32f05dc))
 
 ## [2.7.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.5...v2.7.0) (2026-06-15)
 
@@ -26,11 +30,10 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 - **ci:** format sync output, ignore item trees ([113c167](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/113c167b7e7e8eb01ddefc590cc7680a3ddb8259))
 - **sync:** fetch upstream HEAD and sync skills/shared ([624160d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/624160d78905bca33fb1c7f0af37b1ca90b8e466))
 
-## [Unreleased]
-
 ### Changed
 
-- Manifest `references[]` is https:// URLs only; relative paths removed (bundled files install via haus-workflow full-tree cache). Schema and validator updated.
+- **manifest:** prune relative references[] entries ([#18](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/18)) ([9cb57c0](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/9cb57c069963144cde0ea3f9c9d654a22ffd6aef))
+- **superpowers:** sync upstream pcvelz/superpowers ([#17](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/17)) ([a6166b5](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/a6166b50bf777e3742be7e6343bb0e7269ea8bc0))
 
 ## [2.6.3](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.2...v2.6.3) (2026-06-11)
 
@@ -44,7 +47,7 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ### Changed
 
-- `superpowers-brainstorming` 1.0.2 — haus patch to `scripts/helper.js` replacing `innerHTML` with safe DOM APIs (CodeQL XSS). See ADR-0001.
+- **superpowers:** sync upstream pcvelz/superpowers ([#13](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/13)) ([5336517](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/5336517f90436c4b11f5cacc64071b65bfe767cb))
 
 ## [2.6.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.5.0...v2.6.0) (2026-06-09)
 
@@ -75,25 +78,26 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ### Fixed
 
-- bump template version + address review on [#9](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/9) ([8fc12ec](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/8fc12ecfb11a35acafc0e54f09379157699257cf))
+- bump template version + address review on #9 ([8fc12ec](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/8fc12ecfb11a35acafc0e54f09379157699257cf))
 
 ## [2.3.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.2.0...v2.3.0) (2026-06-03)
 
 ### Added
 
-- add haus.lefthook-security template; fix deny-rule syntax in workflow standard ([271c6a9](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/271c6a9fb70e0c93ec7fe73be2771dfb9d9c664b))
 - **templates:** add haus.memory-conventions doc ([18e31e7](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/18e31e7b9bc1c7a850cfa66d318c1f10fbdb48f6))
+- add haus.lefthook-security template; fix deny-rule syntax in workflow standard ([271c6a9](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/271c6a9fb70e0c93ec7fe73be2771dfb9d9c664b))
 
 ### Fixed
 
-- make gitleaks optional and grep added-lines-only in lefthook-security ([e0b691d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/e0b691d7a3edbaba8b75671ca634b9106d1b2e4f))
 - **scripts:** skip id-less items in tag audit; byte-compare workflow docs ([eefd05d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/eefd05dd5c2a456ea1e0b52797e59a1b7242b1b4))
+- make gitleaks optional and grep added-lines-only in lefthook-security ([e0b691d](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/e0b691d7a3edbaba8b75671ca634b9106d1b2e4f))
 - use allowlisted tags for haus.lefthook-security ([3b64988](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/3b64988be97c9d037863b36210fbb16d2d575dde))
 
 ### Changed
 
-- remove global engineering rules skill and update manifest ([98b4a3a](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/98b4a3a59abb6b8d40a8a2896282b7dcdb3770d6))
+- **manifest:** set explicit default:false on haus.memory-conventions ([3ab87f6](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/3ab87f6a9c7fcfc26fc636bab349b12cca7574fe))
 - **scripts:** single-source validation rules + unify tag allowlist ([4281b44](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/4281b443a880ed94db9db547c4194636b666c456))
+- remove global engineering rules skill and update manifest ([98b4a3a](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/98b4a3a59abb6b8d40a8a2896282b7dcdb3770d6))
 
 ## [2.2.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.0.2...v2.2.0) (2026-06-01)
 
@@ -104,10 +108,8 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ### Fixed
 
-- negate secret-scan grep, correct CHANGELOG path ([99940d0](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/99940d06acf2bb1aaec52f7e76308f263f914696))
 - revert CHANGELOG path to .haus-workflow/WORKFLOW.md ([d1ad319](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/d1ad3195a6de5fefee5faf3576b297248bb90404))
-
-## [Unreleased]
+- negate secret-scan grep, correct CHANGELOG path ([99940d0](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/99940d06acf2bb1aaec52f7e76308f263f914696))
 
 ## [2.1.0] - 2026-05-29
 
@@ -257,5 +259,4 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
-[Unreleased]: https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/WeAreHausTech/haus-workflow-catalog/releases/tag/v1.0.0

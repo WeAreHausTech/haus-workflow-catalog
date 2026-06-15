@@ -364,32 +364,11 @@ function walkMd(dir, fn) {
   }
 }
 
-/**
- * Warn when an item's version is > 1.0.0 but CHANGELOG.md has no mention
- * of that item's id. Soft warning (no failure increment) — first bump may
- * predate this check, but subsequent bumps should always have an entry.
- */
-function checkChangelogCoverage(items) {
-  const changelogPath = path.join(ROOT, 'CHANGELOG.md')
-  if (!fs.existsSync(changelogPath)) return
-  const changelog = fs.readFileSync(changelogPath, 'utf8')
-  for (const item of items) {
-    if (!item.version || item.version === '1.0.0') continue
-    // Strip "haus." prefix for readability matching (entries use short names)
-    const shortId = item.id.replace(/^haus\./, '')
-    if (!changelog.includes(item.id) && !changelog.includes(shortId)) {
-      console.warn(
-        `WARN  ${item.id}: version is ${item.version} but no CHANGELOG.md entry found (see README Contributing)`,
-      )
-    }
-  }
-}
-
 const isMain =
   process.argv[1] != null && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 
 if (isMain) {
-  // checkItems and checkChangelogCoverage depend on a valid manifest.
+  // checkItems depends on a valid manifest.
   // checkShippedMarkdown is independent — runs even when manifest is broken
   // so all failures surface in a single pass.
   const manifest = checkManifest()
@@ -400,7 +379,6 @@ if (isMain) {
     }
     if (Array.isArray(manifest.items)) {
       checkItems(manifest.items)
-      checkChangelogCoverage(manifest.items)
       console.log(`Checked ${manifest.items.length} catalog items.`)
     }
   }

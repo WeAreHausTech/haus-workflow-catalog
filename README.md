@@ -187,15 +187,10 @@ an agent `.md`, or a command `.md`:
    Bundled files under `references/` are part of the skill directory — do **not** list them
    in manifest `references[]`. Use `references` only for optional `https://` documentation URLs.
 
-2. Add entry to `CHANGELOG.md` under `## [Unreleased]`:
-
-   ```markdown
-   ### Changed
-
-   - **nextjs-patterns** `1.0.0 → 1.1.0`: Added RSC caching patterns to workflow.md
-   ```
-
-   PRs without a CHANGELOG entry for bumped items will be flagged by the validator.
+   Per-item versions live in `manifest.json` only. Catalog release notes are generated
+   automatically from [Conventional Commits](https://www.conventionalcommits.org/) at
+   `yarn release` time — do not edit `CHANGELOG.md` by hand. To rebuild auto sections
+   from git tags: `yarn changelog:regenerate`.
 
 ### Versioning the manifest itself
 
