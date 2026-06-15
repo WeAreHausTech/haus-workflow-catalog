@@ -9,6 +9,12 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.7.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.5...v2.7.0) (2026-06-15)
+
+### Added
+
+- **agents:** add 11 curated agents + multi-source upstream sync ([#20](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/20)) ([2f3989a](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/2f3989a29959201f50ed1818c764437ad0a590cd))
+
 ## [2.6.5](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.4...v2.6.5) (2026-06-12)
 
 ## [2.6.4](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.3...v2.6.4) (2026-06-12)
