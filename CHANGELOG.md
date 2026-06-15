@@ -9,6 +9,8 @@ and individual skill/agent version bumps. See `manifest.json` for per-item versi
 
 ---
 
+## [2.7.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.0...v2.7.1) (2026-06-15)
+
 ## [2.7.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.6.5...v2.7.0) (2026-06-15)
 
 ### Added
