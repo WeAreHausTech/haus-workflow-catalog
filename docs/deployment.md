@@ -2,7 +2,7 @@
 
 ## Overview
 
-No deployed application. Releases publish a GitHub Release with `manifest.json` as an artifact. Consumers fetch the catalog live from `main` via `haus update`.
+No deployed application. Releases publish a GitHub Release with `manifest.json` as an artifact. Consumers fetch the catalog from the latest release tag by default (`HAUS_CATALOG_REF` override remains available).
 
 ## CI pipelines
 
@@ -31,9 +31,9 @@ No deployed application. Releases publish a GitHub Release with `manifest.json` 
 
 If the upstream license is not MIT, the job fails and no PR is opened (legal review required).
 
-### `dispatch-fixture-sync.yml` — on push to `main` touching `manifest.json` or `validation-rules.json`
+### `dispatch-fixture-sync.yml` — on tag push `v*.*.*` (backup)
 
-Dispatches `sync-catalog-fixture` in the `haus-workflow` CLI repo to keep the CLI's offline fixture in sync. See ADR-0001 for the landing order required when changing `validation-rules.json`.
+Optional backup dispatch to `sync-catalog-fixture` in the `haus-workflow` CLI repo when `HAUS_WORKFLOW_DISPATCH_TOKEN` is configured. **Primary** fixture sync is pull-based in `haus-workflow` (`sync-catalog-from-release` — weekly cron + manual, no PAT here). See ADR-0001 for the landing order required when changing `validation-rules.json`.
 
 ## Release checklist
 
@@ -58,8 +58,8 @@ Dispatches `sync-catalog-fixture` in the `haus-workflow` CLI repo to keep the CL
 
 ## Consumer update propagation
 
-Changes merged to `main` are available to consumers immediately — no CLI release needed. `haus update` fetches the latest catalog from `main` (or the ref in `HAUS_CATALOG_REF`).
+Changes merged to `main` are available to consumers when a new catalog release tag is cut. `haus update` fetches the latest release tag by default (or an explicit ref via `HAUS_CATALOG_REF`).
 
 ## Rollback
 
-No server to roll back. If a bad catalog lands on `main`, revert the commit and push — consumers on `main` ref pick up the revert on their next `haus update`.
+No server to roll back. If a bad catalog release is cut, ship a corrective release tag; consumers pick it up on their next `haus update`.

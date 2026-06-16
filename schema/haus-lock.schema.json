@@ -15,7 +15,7 @@
       },
       "type": {
         "type": "string",
-        "enum": ["skill", "agent", "template", "rule", "command"],
+        "enum": ["skill", "agent", "template", "command"],
         "description": "Item type. Must match catalog-item.schema.json type enum."
       },
       "source": {
@@ -29,6 +29,7 @@
       },
       "catalogRef": {
         "type": "string",
+        "$comment": "Downstream-owned by haus-workflow runtime; kept here as contract mirror for cross-repo drift checks.",
         "description": "Git ref (tag or branch) the catalog was fetched from at install time. Matches HAUS_CATALOG_REF env var. Defaults to 'main'."
       },
       "hash": {
