@@ -1,0 +1,400 @@
+# Import-ready shortlist from skills.sh audit (2026-06-16)
+# Scope: new candidates only, deduped against prior recommended set.
+# Status: content located + basic safety scan passed.
+
+sources:
+  - id: vercel-agent-skills
+    repo: https://github.com/vercel-labs/agent-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: react-best-practices,
+          type: skill,
+          upstreamPath: skills/react-best-practices/SKILL.md,
+        }
+      - {
+          name: composition-patterns,
+          type: skill,
+          upstreamPath: skills/composition-patterns/SKILL.md,
+        }
+      - {
+          name: react-native-skills,
+          type: skill,
+          upstreamPath: skills/react-native-skills/SKILL.md,
+        }
+
+  - id: vercel-nextjs-skills
+    repo: https://github.com/vercel/nextjs-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: next-best-practices,
+          type: skill,
+          upstreamPath: skills/next-best-practices/SKILL.md,
+        }
+      - { name: next-upgrade, type: skill, upstreamPath: skills/next-upgrade/SKILL.md }
+
+  - id: stripe-ai
+    repo: https://github.com/stripe/ai
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: stripe-projects, type: skill, upstreamPath: skills/stripe-projects/SKILL.md }
+
+  - id: anthropics-skills
+    repo: https://github.com/anthropics/skills
+    license: Unknown
+    licenseConfidence: low
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: webapp-testing, type: skill, upstreamPath: skills/webapp-testing/SKILL.md }
+
+  - id: hyf0-vue-skills
+    repo: https://github.com/hyf0/vue-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: vue-best-practices, type: skill, upstreamPath: skills/vue-best-practices/SKILL.md }
+      - { name: vue-debug-guides, type: skill, upstreamPath: skills/vue-debug-guides/SKILL.md }
+      - {
+          name: vue-pinia-best-practices,
+          type: skill,
+          upstreamPath: skills/vue-pinia-best-practices/SKILL.md,
+        }
+      - {
+          name: vue-router-best-practices,
+          type: skill,
+          upstreamPath: skills/vue-router-best-practices/SKILL.md,
+        }
+      - {
+          name: vue-testing-best-practices,
+          type: skill,
+          upstreamPath: skills/vue-testing-best-practices/SKILL.md,
+        }
+
+  - id: ecc-affaanm-extra
+    repo: https://github.com/affaan-m/everything-claude-code
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: laravel-tdd, type: skill, upstreamPath: skills/laravel-tdd/SKILL.md }
+
+  - id: wordpress-agent-skills-extra
+    repo: https://github.com/wordpress/agent-skills
+    license: GPL-2.0-or-later
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: wp-plugin-development,
+          type: skill,
+          upstreamPath: skills/wp-plugin-development/SKILL.md,
+        }
+      - { name: wp-rest-api, type: skill, upstreamPath: skills/wp-rest-api/SKILL.md }
+      - { name: wp-block-themes, type: skill, upstreamPath: skills/wp-block-themes/SKILL.md }
+      - { name: wp-performance, type: skill, upstreamPath: skills/wp-performance/SKILL.md }
+      - {
+          name: wp-block-development,
+          type: skill,
+          upstreamPath: skills/wp-block-development/SKILL.md,
+        }
+      - { name: wp-project-triage, type: skill, upstreamPath: skills/wp-project-triage/SKILL.md }
+
+  - id: prisma-skills-extra
+    repo: https://github.com/prisma/skills
+    license: Apache-2.0
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: prisma-postgres, type: skill, upstreamPath: prisma-postgres/SKILL.md }
+      - { name: prisma-upgrade-v7, type: skill, upstreamPath: prisma-upgrade-v7/SKILL.md }
+
+  - id: redis-agent-skills-extra
+    repo: https://github.com/redis/agent-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: redis-core, type: skill, upstreamPath: skills/redis-core/SKILL.md }
+      - { name: redis-connections, type: skill, upstreamPath: skills/redis-connections/SKILL.md }
+      - { name: redis-security, type: skill, upstreamPath: skills/redis-security/SKILL.md }
+      - {
+          name: redis-observability,
+          type: skill,
+          upstreamPath: skills/redis-observability/SKILL.md,
+        }
+      # skills.sh lists as redis-development; upstream file is iris-development
+      - { name: iris-development, type: skill, upstreamPath: skills/iris-development/SKILL.md }
+
+  - id: sanity-agent-toolkit-extra
+    repo: https://github.com/sanity-io/agent-toolkit
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: content-modeling-best-practices,
+          type: skill,
+          upstreamPath: skills/content-modeling-best-practices/SKILL.md,
+        }
+      - { name: sanity-migration, type: skill, upstreamPath: skills/sanity-migration/SKILL.md }
+
+  - id: expo-skills-extra
+    repo: https://github.com/expo/skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: building-native-ui,
+          type: skill,
+          upstreamPath: plugins/expo/skills/building-native-ui/SKILL.md,
+        }
+      - {
+          name: native-data-fetching,
+          type: skill,
+          upstreamPath: plugins/expo/skills/native-data-fetching/SKILL.md,
+        }
+      - {
+          name: upgrading-expo,
+          type: skill,
+          upstreamPath: plugins/expo/skills/upgrading-expo/SKILL.md,
+        }
+      - {
+          name: expo-dev-client,
+          type: skill,
+          upstreamPath: plugins/expo/skills/expo-dev-client/SKILL.md,
+        }
+      - {
+          name: expo-api-routes,
+          type: skill,
+          upstreamPath: plugins/expo/skills/expo-api-routes/SKILL.md,
+        }
+
+  - id: vue-ecosystem-skills
+    repo: https://github.com/harlan-zw/vue-ecosystem-skills
+    license: MIT
+    licenseConfidence: low
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: vue-i18n-skilld, type: skill, upstreamPath: skills/vue-i18n-skilld/SKILL.md }
+
+  # Hold-list re-audit (2026-06-16): resolved paths only
+
+  - id: currents-playwright-best-practices
+    repo: https://github.com/currents-dev/playwright-best-practices-skill
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: playwright-best-practices, type: skill, upstreamPath: SKILL.md }
+
+  - id: kadajett-nestjs-skills
+    repo: https://github.com/kadajett/agent-nestjs-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: nestjs-best-practices, type: skill, upstreamPath: SKILL.md }
+
+  - id: deckardger-tanstack-agent-skills
+    repo: https://github.com/deckardger/tanstack-agent-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: tanstack-query, type: skill, upstreamPath: skills/tanstack-query/SKILL.md }
+      - { name: tanstack-router, type: skill, upstreamPath: skills/tanstack-router/SKILL.md }
+
+  - id: jpcaparas-superpowers-laravel
+    repo: https://github.com/jpcaparas/superpowers-laravel
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: nova-resource-patterns,
+          type: skill,
+          upstreamPath: skills/nova-resource-patterns/SKILL.md,
+        }
+
+  - id: vasilyu1983-ai-agents-public
+    repo: https://github.com/vasilyu1983/ai-agents-public
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: qa-testing-playwright,
+          type: skill,
+          upstreamPath: frameworks/shared-skills/skills/qa-testing-playwright/SKILL.md,
+        }
+
+  - id: mattpocock-skills
+    repo: https://github.com/mattpocock/skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: tdd, type: skill, upstreamPath: skills/engineering/tdd/SKILL.md }
+
+  - id: laravel-boost
+    repo: https://github.com/laravel/boost
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: laravel-best-practices,
+          type: skill,
+          upstreamPath: .ai/laravel/skill/laravel-best-practices/SKILL.md,
+        }
+
+  - id: jezweb-claude-skills
+    repo: https://github.com/jezweb/claude-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: wordpress-elementor,
+          type: skill,
+          upstreamPath: plugins/wordpress/skills/wordpress-elementor/SKILL.md,
+        }
+      # caution: contains pnpm dlx — sanitize before import
+      - {
+          name: tanstack-start,
+          type: skill,
+          upstreamPath: plugins/cloudflare/skills/tanstack-start/SKILL.md,
+        }
+
+  - id: sickn33-antigravity-awesome-skills
+    repo: https://github.com/sickn33/antigravity-awesome-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: docker-expert, type: skill, upstreamPath: skills/docker-expert/SKILL.md }
+
+  - id: github-awesome-copilot
+    repo: https://github.com/github/awesome-copilot
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: multi-stage-dockerfile,
+          type: skill,
+          upstreamPath: skills/multi-stage-dockerfile/SKILL.md,
+        }
+
+  - id: moteodimassi-strapi-v5-expert
+    repo: https://github.com/moteodimassi/strapi-v5-expert
+    license: MIT
+    licenseConfidence: low
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      # caution: Russian-language skill content
+      - { name: strapi-v5-expert, type: skill, upstreamPath: SKILL.md }
+
+  - id: wshobson-agents
+    repo: https://github.com/wshobson/agents
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: tailwind-design-system,
+          type: skill,
+          upstreamPath: plugins/frontend-mobile-development/skills/tailwind-design-system/SKILL.md,
+        }
+      - {
+          name: postgresql-table-design,
+          type: skill,
+          upstreamPath: plugins/database-design/skills/postgresql/SKILL.md,
+        }
+      - {
+          name: react-state-management,
+          type: skill,
+          upstreamPath: plugins/frontend-mobile-development/skills/react-state-management/SKILL.md,
+        }
+      - {
+          name: nx-workspace-patterns,
+          type: skill,
+          upstreamPath: plugins/developer-essentials/skills/nx-workspace-patterns/SKILL.md,
+        }
+      - {
+          name: monorepo-management,
+          type: skill,
+          upstreamPath: plugins/developer-essentials/skills/monorepo-management/SKILL.md,
+        }
+      - {
+          name: dotnet-backend-patterns,
+          type: skill,
+          upstreamPath: plugins/dotnet-contribution/skills/dotnet-backend-patterns/SKILL.md,
+        }
+      - {
+          name: auth-implementation-patterns,
+          type: skill,
+          upstreamPath: plugins/developer-essentials/skills/auth-implementation-patterns/SKILL.md,
+        }
+      - {
+          name: workflow-orchestration-patterns,
+          type: skill,
+          upstreamPath: plugins/backend-development/skills/workflow-orchestration-patterns/SKILL.md,
+        }

@@ -1,0 +1,207 @@
+[
+  {
+    "id": "mattpocock/skills/tdd",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "currents-dev/playwright-best-practices-skill/playwright-best-practices",
+    "status": "resolved",
+    "candidates": [
+      {
+        "path": "SKILL.md",
+        "url": "https://raw.githubusercontent.com/currents-dev/playwright-best-practices-skill/main/SKILL.md",
+        "via": "guess"
+      },
+      {
+        "path": "SKILL.md",
+        "url": "https://raw.githubusercontent.com/currents-dev/playwright-best-practices-skill/master/SKILL.md",
+        "via": "guess"
+      }
+    ],
+    "path": "SKILL.md",
+    "url": "https://raw.githubusercontent.com/currents-dev/playwright-best-practices-skill/main/SKILL.md",
+    "lines": 304,
+    "risk": [],
+    "hasDesc": true
+  },
+  {
+    "id": "laravel/boost/laravel-best-practices",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "jpcaparas/superpowers-laravel/laravel:nova:resource-patterns",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/tailwind-design-system",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/postgresql-table-design",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/react-state-management",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/nx-workspace-patterns",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/monorepo-management",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/dotnet-backend-patterns",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/auth-implementation-patterns",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "wshobson/agents/workflow-orchestration-patterns",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "redis/agent-skills/redis-development",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "kadajett/agent-nestjs-skills/nestjs-best-practices",
+    "status": "resolved",
+    "candidates": [
+      {
+        "path": "SKILL.md",
+        "url": "https://raw.githubusercontent.com/kadajett/agent-nestjs-skills/main/SKILL.md",
+        "via": "guess"
+      },
+      {
+        "path": "SKILL.md",
+        "url": "https://raw.githubusercontent.com/kadajett/agent-nestjs-skills/master/SKILL.md",
+        "via": "guess"
+      }
+    ],
+    "path": "SKILL.md",
+    "url": "https://raw.githubusercontent.com/kadajett/agent-nestjs-skills/main/SKILL.md",
+    "lines": 131,
+    "risk": [],
+    "hasDesc": true
+  },
+  {
+    "id": "deckardger/tanstack-agent-skills/tanstack-query-best-practices",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "deckardger/tanstack-agent-skills/tanstack-router-best-practices",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "moteodimassi/strapi-v5-expert/strapi-v5-expert",
+    "status": "resolved",
+    "candidates": [
+      {
+        "path": "SKILL.md",
+        "url": "https://raw.githubusercontent.com/moteodimassi/strapi-v5-expert/main/SKILL.md",
+        "via": "guess"
+      },
+      {
+        "path": "SKILL.md",
+        "url": "https://raw.githubusercontent.com/moteodimassi/strapi-v5-expert/master/SKILL.md",
+        "via": "guess"
+      }
+    ],
+    "path": "SKILL.md",
+    "url": "https://raw.githubusercontent.com/moteodimassi/strapi-v5-expert/main/SKILL.md",
+    "lines": 210,
+    "risk": [],
+    "hasDesc": true
+  },
+  {
+    "id": "meriley/claude-code-skills/vendure-developing",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "shipshitdev/library/nestjs-testing-expert",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "vasilyu1983/ai-agents-public/qa-testing-playwright",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "jezweb/claude-skills/tanstack-query",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "jezweb/claude-skills/tanstack-start",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "jezweb/claude-skills/wordpress-elementor",
+    "status": "unresolved",
+    "candidates": []
+  },
+  {
+    "id": "sickn33/antigravity-awesome-skills/docker-expert",
+    "status": "resolved",
+    "candidates": [
+      {
+        "path": "skills/docker-expert/SKILL.md",
+        "url": "https://raw.githubusercontent.com/sickn33/antigravity-awesome-skills/main/skills/docker-expert/SKILL.md",
+        "via": "guess"
+      },
+      {
+        "path": "skills/docker-expert/SKILL.md",
+        "url": "https://raw.githubusercontent.com/sickn33/antigravity-awesome-skills/master/skills/docker-expert/SKILL.md",
+        "via": "guess"
+      }
+    ],
+    "path": "skills/docker-expert/SKILL.md",
+    "url": "https://raw.githubusercontent.com/sickn33/antigravity-awesome-skills/main/skills/docker-expert/SKILL.md",
+    "lines": 419,
+    "risk": [],
+    "hasDesc": true
+  },
+  {
+    "id": "github/awesome-copilot/multi-stage-dockerfile",
+    "status": "resolved",
+    "candidates": [
+      {
+        "path": "skills/multi-stage-dockerfile/SKILL.md",
+        "url": "https://raw.githubusercontent.com/github/awesome-copilot/main/skills/multi-stage-dockerfile/SKILL.md",
+        "via": "guess"
+      },
+      {
+        "path": "skills/multi-stage-dockerfile/SKILL.md",
+        "url": "https://raw.githubusercontent.com/github/awesome-copilot/master/skills/multi-stage-dockerfile/SKILL.md",
+        "via": "guess"
+      }
+    ],
+    "path": "skills/multi-stage-dockerfile/SKILL.md",
+    "url": "https://raw.githubusercontent.com/github/awesome-copilot/main/skills/multi-stage-dockerfile/SKILL.md",
+    "lines": 47,
+    "risk": [],
+    "hasDesc": true
+  }
+]
