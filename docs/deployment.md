@@ -31,9 +31,9 @@ No deployed application. Releases publish a GitHub Release with `manifest.json` 
 
 If the upstream license is not MIT, the job fails and no PR is opened (legal review required).
 
-### `dispatch-fixture-sync.yml` — on tag push `v*.*.*`
+### `dispatch-fixture-sync.yml` — on tag push `v*.*.*` (backup)
 
-Dispatches `sync-catalog-fixture` in the `haus-workflow` CLI repo so bundled fixtures track released catalog refs. See ADR-0001 for the landing order required when changing `validation-rules.json`.
+Optional backup dispatch to `sync-catalog-fixture` in the `haus-workflow` CLI repo when `HAUS_WORKFLOW_DISPATCH_TOKEN` is configured. **Primary** fixture sync is pull-based in `haus-workflow` (`sync-catalog-from-release` — weekly cron + manual, no PAT here). See ADR-0001 for the landing order required when changing `validation-rules.json`.
 
 ## Release checklist
 
