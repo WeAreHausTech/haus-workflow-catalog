@@ -148,7 +148,7 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 ### Fixed
 
 - All 52 manifest items now carry `reviewStatus: "approved"` and `riskLevel` (`low` for most; `medium` for stripe, qliro, auth-oidc, nextauth). Fields were defined in schema but unpopulated.
-- `release.yml` validation step switched from offline `node scripts/validate.mjs` to `haus validate-catalog ./manifest.json`, matching `validate.yml`.
+- `release.yml` validation step remains `node scripts/validate.mjs ./manifest.json` (same validator used by `validate.yml`).
 - Removed stale `EXECUTION-PLAN.md F6` reference from `scripts/validation-rules.mjs`.
 
 ### Added
@@ -188,7 +188,7 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 - `haus.database-patterns` `1.0.0 → 1.2.0`: add `redis` (1.1.0) then `mysql` (1.2.0) stacks to `requiresAny` + tags; SKILL.md now covers Redis cache/TTL/namespace inspection and MySQL
 - `haus.wordpress-acf-elementor-jetengine-patterns` `1.0.0 → 1.1.0`: add `elementor`, `acf-pro`, `jetengine` stack tokens to `requiresAny` so composer-driven Bedrock sites match without role detection
 - `haus.radix-shadcn-patterns` `1.0.0 → 1.1.0`: add `shadcn` stack token to `requiresAny`
-- CI validation switched from `node scripts/validate.mjs` to the published `@haus-tech/haus-workflow` CLI (`haus validate-catalog ./manifest.json`); script remains available for offline checks.
+- CI validation uses `node scripts/validate.mjs ./manifest.json` (catalog-native validator); `haus validate-catalog` remains available as a separate CLI path.
 
 ### Compatibility
 

@@ -15,7 +15,7 @@
       },
       "type": {
         "type": "string",
-        "enum": ["skill", "agent", "template", "rule", "command"],
+        "enum": ["skill", "agent", "template", "command"],
         "description": "Item type. Must match catalog-item.schema.json type enum."
       },
       "source": {

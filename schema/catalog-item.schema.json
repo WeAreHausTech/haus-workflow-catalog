@@ -14,7 +14,7 @@
     },
     "type": {
       "type": "string",
-      "enum": ["skill", "agent", "template", "rule", "command"],
+      "enum": ["skill", "agent", "template", "command"],
       "description": "Item type. 'template' for universal project instruction files."
     },
     "source": {

@@ -6,9 +6,8 @@ concurrency:
 
 permissions: {}
 
-# Fires whenever manifest.json or validation-rules.json lands on main, triggering
-# the sync-catalog-fixture workflow in WeAreHausTech/haus-workflow so its test
-# fixtures stay in sync with the published catalog.
+# Fires on catalog release tags, triggering sync-catalog-fixture in
+# WeAreHausTech/haus-workflow so bundled fixtures track released catalog refs.
 #
 # Required secret: HAUS_WORKFLOW_DISPATCH_TOKEN
 #   A fine-grained PAT scoped to WeAreHausTech/haus-workflow with
@@ -18,10 +17,8 @@ permissions: {}
 
 on:
   push:
-    branches: [main]
-    paths:
-      - manifest.json
-      - validation-rules.json
+    tags:
+      - 'v*.*.*'
 
 jobs:
   dispatch:
