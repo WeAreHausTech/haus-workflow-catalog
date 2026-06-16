@@ -18,9 +18,9 @@ function checkWorkflowDocSync() {
   if (!fs.existsSync(template) || !fs.existsSync(workflow)) {
     return ['workflow-doc-sync: template or .claude/WORKFLOW.md missing']
   }
-  const a = fs.readFileSync(template, 'utf8')
-  const b = fs.readFileSync(workflow, 'utf8')
-  if (a !== b) {
+  const a = fs.readFileSync(template)
+  const b = fs.readFileSync(workflow)
+  if (!a.equals(b)) {
     return [
       'workflow-doc-sync: templates/agentic-workflow-standard.md and .claude/WORKFLOW.md differ (must be byte-identical)',
     ]
@@ -49,6 +49,10 @@ export {
   validateItemSchema,
 } from './validate-core.mjs'
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+const isMain =
+  process.argv[1] != null &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))
+
+if (isMain) {
   main()
 }

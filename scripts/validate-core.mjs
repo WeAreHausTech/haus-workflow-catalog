@@ -30,7 +30,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const SCHEMA_DIR = path.join(__dirname, '..', 'schema')
 
 const ITEM_SEMVER_RE = /^\d+\.\d+\.\d+$/
-const MANIFEST_SEMVER_RE = /^\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/
+const MANIFEST_SEMVER_RE = /^\d+\.\d+\.\d+$/
 
 const ajv = new Ajv({ allErrors: true, strict: false })
 
@@ -92,9 +92,7 @@ function auditManifestStructure(manifestVersion, items) {
   const seenPaths = new Map()
 
   if (typeof manifestVersion !== 'string' || !MANIFEST_SEMVER_RE.test(manifestVersion)) {
-    failures.push(
-      'manifest.json: top-level "version" is not valid semver (expected X.Y.Z or X.Y.Z-pre)',
-    )
+    failures.push('manifest.json: top-level "version" is not valid semver (expected X.Y.Z)')
   }
 
   for (let i = 0; i < items.length; i++) {
@@ -144,7 +142,12 @@ function auditManifestStructure(manifestVersion, items) {
         failures.push(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`)
       }
 
-      for (const ref of item.references ?? []) {
+      const references = Array.isArray(item.references) ? item.references : []
+      for (const ref of references) {
+        if (typeof ref !== 'string') {
+          failures.push(`${item.id}: references[] entries must be strings`)
+          continue
+        }
         if (/^https?:\/\//i.test(ref)) {
           if (!ref.startsWith('https://')) {
             failures.push(`${item.id}: reference must be https:// URL: ${ref}`)
@@ -271,7 +274,29 @@ function auditMarkdownContent(root) {
  */
 export function validateCatalog(root, manifest) {
   const manifestPath = path.join(root, 'manifest.json')
-  const data = manifest ?? JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+  let data
+  if (manifest !== undefined) {
+    data = manifest
+  } else {
+    if (!fs.existsSync(manifestPath)) {
+      return {
+        ok: false,
+        failures: ['manifest.json missing'],
+        items: [],
+        itemCount: 0,
+      }
+    }
+    try {
+      data = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+    } catch (error) {
+      return {
+        ok: false,
+        failures: [`manifest.json invalid JSON: ${error.message}`],
+        items: [],
+        itemCount: 0,
+      }
+    }
+  }
   const failures = []
 
   if (!validateManifest(data)) {
