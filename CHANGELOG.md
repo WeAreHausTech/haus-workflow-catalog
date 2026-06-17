@@ -9,6 +9,26 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.8.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.3...v2.8.0) (2026-06-17)
+
+### Added
+
+- add 5 ECC agents with recommendation metadata ([#24](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/24)) ([0b167ff](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/0b167fff48a9bb72e214abdd4d3a673fc46d7d43))
+- consolidated skills.sh import (11 skills) ([#26](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/26)) ([07230b4](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/07230b4ff1f50b6672ecbcdcd4f4f0c2b50b8a11))
+- llms.txt references and router deprecations ([#28](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/28)) ([e8dc419](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/e8dc4197ff73536ef49615037b311c81d480edb8)), closes [#27](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/27)
+- Sentry + Apollo vendor skills (4 items) ([#27](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/27)) ([5e1297e](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/5e1297e97215ddfb496a4f60056b5af90b1b285e))
+- strict-gate subset import + deferred blocked skills ([#25](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/25)) ([1c29b1e](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/1c29b1e2283d759f4bba64c8ee39e7c51b19c148))
+- sync tooling generalization and curated validation ([#23](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/23)) ([4aa0c8c](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/4aa0c8c5617d45618f977e0c3ee01d38d0a09df7))
+
+### Fixed
+
+- canonical title casing for NestJS, PostgreSQL, GraphQL ([cc96de2](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/cc96de2183e840e9c38dc338bd3c55f8bb655d38))
+
+### Changed
+
+- add hold list resolution and import-ready shortlist files ([36811e6](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/36811e639f6785ec4ff828a4d5f737b6ca938f9b))
+- remove unused "soup-base" rule from validation rules ([706d139](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/706d1394a9b879cbb00cc14f74da4768e1f430bd))
+
 ## [2.7.3](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.2...v2.7.3) (2026-06-16)
 
 ### Changed
