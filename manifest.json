@@ -3091,39 +3091,6 @@
           "stack": "csharp"
         }
       ]
-    },
-    {
-      "id": "haus.jezweb-wordpress-elementor",
-      "version": "1.0.0",
-      "source": "curated",
-      "type": "skill",
-      "path": "skills/jezweb/wordpress-elementor",
-      "title": "Jezweb Wordpress Elementor",
-      "purpose": "Edit Elementor pages and manage templates on WordPress sites via browser automation (for visual / structural changes) or WP-CLI (for safe text replacements). Use whenever the user wants to edit an Elementor page, update text in Elementor widgets, apply or manage Elementor templates, or make content changes to pages built with the Elementor page builder.",
-      "whenToUse": "Edit Elementor pages and manage templates on WordPress sites via browser automation (for visual / structural changes) or WP-CLI (for safe text replacements). Use whenever the user wants to edit an Elementor page, update text in Elementor widgets, apply or manage Elementor templates, or make content changes to pages built with the Elementor page builder.",
-      "whenNotToUse": "Do not use when a more specific skill or command applies.",
-      "tags": ["workflow", "wordpress", "elementor-pro"],
-      "repoRoles": [],
-      "tokenEstimate": 2240,
-      "installMode": "copy-selected",
-      "default": false,
-      "reviewStatus": "approved",
-      "riskLevel": "low",
-      "useMode": "copy",
-      "license": "MIT",
-      "licenseConfidence": "medium",
-      "originSourceId": "jezweb",
-      "originUrl": "https://github.com/jezweb/claude-skills/blob/0aa0f4437e0e70dda1e4e62df3a9d9cb8170f8ba/plugins/wordpress/skills/wordpress-elementor/SKILL.md",
-      "pinnedRef": "0aa0f4437e0e70dda1e4e62df3a9d9cb8170f8ba",
-      "ecosystem": "wordpress",
-      "requiresAny": [
-        {
-          "stack": "wordpress"
-        },
-        {
-          "stack": "elementor-pro"
-        }
-      ]
     }
   ]
 }

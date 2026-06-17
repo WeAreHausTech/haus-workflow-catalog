@@ -150,21 +150,6 @@ sources:
           type: skill,
           upstreamPath: plugins/dotnet-contribution/skills/dotnet-backend-patterns,
         }
-  - id: jezweb-claude-skills
-    repo: https://github.com/jezweb/claude-skills
-    slug: jezweb
-    license: MIT
-    licenseConfidence: medium
-    snapshotRef: 0aa0f4437e0e70dda1e4e62df3a9d9cb8170f8ba
-    retrieved: 2026-06-17
-    useMode: copy
-    mode: select
-    items:
-      - {
-          name: wordpress-elementor,
-          type: skill,
-          upstreamPath: plugins/wordpress/skills/wordpress-elementor,
-        }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode
     slug: oh-my-claudecode

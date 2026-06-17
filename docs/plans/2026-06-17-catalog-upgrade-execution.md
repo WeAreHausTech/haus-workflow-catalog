@@ -30,7 +30,7 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 
 **Strategy:** merge planned 5a + 5b + partial 5c into one PR to reduce review churn.
 
-**Imported (15 skills, 91 → 106 items):**
+**Imported (14 skills, 91 → 105 items):**
 
 | Source        | Skills                                                                         |
 | ------------- | ------------------------------------------------------------------------------ |
@@ -41,7 +41,6 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 | sanity        | `content-modeling-best-practices`                                              |
 | sickn33       | `docker-expert`                                                                |
 | wshobson      | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns` |
-| jezweb        | `wordpress-elementor`                                                          |
 
 **Tooling:** `assertMitLicense` now accepts `The MIT License` headers and `LICENSE.md`.
 
