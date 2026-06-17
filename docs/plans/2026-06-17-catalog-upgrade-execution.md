@@ -18,7 +18,7 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 | 8 — CLI fixtures + archetype tests | pending     | —                                                                                          |
 | 9 — Release both repos             | pending     | —                                                                                          |
 
-**Next:** Open PR for Wave4; then CLI fixture sync (step 8).
+**Next:** Merge/land Wave4 PR; then CLI fixture sync (step 8).
 
 ## Step 7 — Wave4 llms.txt + deprecations (in progress)
 
