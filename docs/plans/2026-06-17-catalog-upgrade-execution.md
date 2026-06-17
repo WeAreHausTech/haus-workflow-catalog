@@ -13,14 +13,26 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 | 3 — Wave1 ECC agents               | merged      | [haus-workflow-catalog#24](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/24) |
 | 4 — Wave2 skills                   | merged      | [haus-workflow-catalog#25](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/25) |
 | 5a–5c — Wave3 skills.sh (bulk PR)  | merged      | [haus-workflow-catalog#26](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/26) |
-| 6 — Wave3b vendors                 | in progress | —                                                                                          |
-| 7 — Wave4 llms + deprecations      | pending     | —                                                                                          |
+| 6 — Wave3b vendors                 | merged      | [haus-workflow-catalog#27](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/27) |
+| 7 — Wave4 llms + deprecations      | in progress | —                                                                                          |
 | 8 — CLI fixtures + archetype tests | pending     | —                                                                                          |
 | 9 — Release both repos             | pending     | —                                                                                          |
 
-**Next:** Open PR for Wave3b (Sentry + Apollo); Auth0/Better Auth/shadcn deferred.
+**Next:** Merge/land Wave4 PR; then CLI fixture sync (step 8).
 
-## Step 6 — Wave3b vendors (in progress)
+## Step 7 — Wave4 llms.txt + deprecations (in progress)
+
+**llms.txt `references[]`** on 18 vendor feeds (manifest-only): nextjs, react, vite, vue, prisma, nx, turbo, tanstack, vitest, storybook, bullmq, i18next, strapi, sanity, vendure (existing), elasticsearch, nova, shadcn. Also `haus.sanity-content-modeling-best-practices`.
+
+**Deprecations:** `haus.sanity-patterns` → `haus.sanity-content-modeling-best-practices` + https://docs.sanity.io/llms.txt; `haus.database-patterns` → `haus.wshobson-postgresql-table-design`, `haus.redis-redis-*`, https://www.elastic.co/docs/llms.txt.
+
+**Held:** `haus.radix-shadcn-patterns` deprecation until shadcn skill lands.
+
+## Remaining scope
+
+- CLI fixture sync + archetype golden tests + release
+
+## Step 6 — Wave3b vendors (merged #27)
 
 **Imported (4 skills, 102 → 106 items):**
 
@@ -33,22 +45,7 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 
 **Deprecations:** `haus.sentry-patterns` → Sentry upstream; `haus.nestjs-graphql-patterns` → Apollo GraphQL skills.
 
-**Deferred:**
-
-- **Auth0** (`auth0/agent-skills`) — Apache-2.0; catalog MIT-only gate
-- **Better Auth** (`better-auth/skills`) — no upstream LICENSE
-- **shadcn** (`shadcn-ui/ui`) — skill tree embeds hundreds of `npx shadcn@latest` lines; impractical to sanitize
-
-## Remaining scope
-
-- Wave4 llms.txt `references[]` + further router deprecations (`sanity-patterns`, `database-patterns`, `radix-shadcn-patterns` when shadcn lands)
-- CLI fixture sync + archetype golden tests + release
-
-## Step 4 — Wave2 skills (merged #25)
-
-Merged strict-gate subset: 7 ECC skills.
-
-Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-links).
+**Deferred:** Auth0 (Apache-2.0), Better Auth (no LICENSE), shadcn (`npx` policy).
 
 ## Step 5 — Wave3 skills.sh consolidated import (merged #26)
 
@@ -65,16 +62,12 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 | sickn33  | `docker-expert`                                              |
 | wshobson | `tailwind-design-system`, `postgresql-table-design`          |
 
-**Dropped from PR:** hyf0 vue pack, jezweb wordpress-elementor, `laravel-boost`, `supabase-postgres-best-practices` (14k overlap with `postgresql-table-design`), `wshobson/dotnet-backend-patterns` (20k overlap with ECC + Haus dotnet routers).
+**Dropped from PR:** hyf0 vue pack, jezweb wordpress-elementor, `laravel-boost`, `supabase-postgres-best-practices`, `wshobson/dotnet-backend-patterns`.
 
-**Wave4 deprecations (in this PR):** `reviewStatus: deprecated` on Haus stack routers superseded by upstream — `haus.stripe-patterns` → `haus.stripe-stripe-best-practices`, `haus.supabase-patterns` → `haus.supabase-supabase`, `haus.tailwind-scss-patterns` → `haus.wshobson-tailwind-design-system`, `haus.laravel-patterns` → `haus.ecc-laravel-patterns`. Held: `haus.sanity-patterns` (no full Sanity upstream yet), `haus.database-patterns` (multi-engine).
+**Deprecations (partial wave4):** `haus.stripe-patterns`, `haus.supabase-patterns`, `haus.tailwind-scss-patterns`, `haus.laravel-patterns`. Held: `haus.sanity-patterns`, `haus.database-patterns` (addressed in step 7).
 
-**Tooling:** `assertMitLicense` now accepts `The MIT License` headers and `LICENSE.md`.
+## Step 4 — Wave2 skills (merged #25)
 
-**Deferred (strict gates):**
+Merged strict-gate subset: 7 ECC skills.
 
-- License gate: `vercel-agent-skills`, `vercel-nextjs-skills`, `deckardger-tanstack-agent-skills` (no upstream `LICENSE`/`LICENSE.md`)
-- License gate: `wordpress/agent-skills` (GPL), `currents-playwright-best-practices` (MIT body without MIT title)
-- Content policy: `vue-testing-best-practices`, all expo pack (5), `prisma-upgrade-v7`, `sanity-migration`, `monorepo-management` (disallowed `npx`)
-- Content policy: `redis-core` (`http://` in references), `iris-development` (forbidden `python` mention)
-- Dropped from PR: hyf0 vue pack (4 skills) — oversized reference trees per skill; defer to later wave or slimmer upstream pick
+Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-links).
