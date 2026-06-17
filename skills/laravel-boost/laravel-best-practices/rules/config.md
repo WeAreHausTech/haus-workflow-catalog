@@ -25,8 +25,8 @@ Never store production secrets in plain `.env` files in version control.
 Incorrect:
 ```bash
 # .env committed to repo or shared in Slack
-STRIPE_SECRET=sk_live_abc123
-AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI
+STRIPE_SECRET=<do-not-commit-stripe-secret>
+AWS_SECRET_ACCESS_KEY=<do-not-commit-aws-secret>
 ```
 
 Correct:

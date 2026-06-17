@@ -2899,7 +2899,7 @@
     },
     {
       "id": "haus.laravel-boost-laravel-best-practices",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/laravel-boost/laravel-best-practices",
