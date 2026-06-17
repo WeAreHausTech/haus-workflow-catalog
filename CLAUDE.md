@@ -42,6 +42,7 @@ agents/
   <source-slug>/       — verbatim curated agents, e.g. ecc/, oh-my-claudecode/ (do not hand-edit)
 commands/superpowers/  — verbatim curated slash commands
 templates/             — managed file templates
+configs/               — project-root tooling configs (eslint/, prettier/); type: config, distributed via CLI `haus scaffold` (not `haus apply`)
 scripts/               — validate.mjs, sync-upstream.mjs, validation-rules.mjs
 schema/                — JSON schemas for manifest and catalog items
 tests/                 — node:test suite for validation logic
@@ -60,13 +61,14 @@ docs/                  — ADRs and runbooks
 
 ## Adding a new item
 
-1. Create file(s) under `skills/`, `agents/`, `templates/`, or `commands/`.
+1. Create file(s) under `skills/`, `agents/`, `templates/`, `commands/`, or `configs/`.
 2. Skills: `SKILL.md` with non-empty `description:` frontmatter.
 3. Agents: `.md` file with non-empty `description:` frontmatter.
 4. Commands: `.md` file with `description:` frontmatter.
-5. Add entry to `manifest.json` with `version: "1.0.0"`.
-6. Safety rules: no risky install patterns; `npx tsx` only; `references[]` = `https://` URLs only; no forbidden stack tags.
-7. TODO/placeholder checks apply to shipped template/command files, not skill prose.
+5. Configs: tooling files under `configs/<tool>/`; `type: config`, `tokenEstimate: 0` (not loaded into agent context).
+6. Add entry to `manifest.json` with `version: "1.0.0"`.
+7. Safety rules: no risky install patterns; `npx tsx` only; `references[]` = `https://` URLs only; no forbidden stack tags.
+8. TODO/placeholder checks apply to shipped template/command files, not skill prose.
 
 ## Validation
 

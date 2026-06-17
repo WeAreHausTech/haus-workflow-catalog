@@ -2,21 +2,22 @@
 
 ## Scope
 
-This repo is a **content catalog** — skills, agents, templates, and slash commands — plus the Node.js tooling to validate, sync, and release them. There is no runtime application.
+This repo is a **content catalog** — skills, agents, templates, slash commands, and project-root config files (ESLint, Prettier) — plus the Node.js tooling to validate, sync, and release them. There is no runtime application.
 
 ## Common change types
 
-| Change type                    | Primary path(s)                          | Also touch                                                            |
-| ------------------------------ | ---------------------------------------- | --------------------------------------------------------------------- |
-| Add/edit skill                 | `skills/<source>/<skill-name>/SKILL.md`  | `manifest.json` (version bump + fields)                               |
-| Add/edit agent                 | `agents/<source>/<agent>.md`             | `manifest.json`                                                       |
-| Add/edit template              | `templates/<name>.md`                    | `manifest.json`                                                       |
-| Add/edit slash command         | `commands/<name>.md`                     | `manifest.json`                                                       |
-| Add a new stack tag            | `validation-rules.json#allowedStacks`    | Item files using the tag                                              |
-| Edit validation rules          | `validation-rules.json`                  | `scripts/validate.mjs`, `docs/runbook.md`; see ADR-0001 landing order |
-| Edit agentic workflow standard | `templates/agentic-workflow-standard.md` | `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`       |
-| Edit a script                  | `scripts/*.mjs`                          | `tests/` (add/update tests)                                           |
-| Release                        | See [deployment.md](deployment.md)       | —                                                                     |
+| Change type                       | Primary path(s)                          | Also touch                                                            |
+| --------------------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
+| Add/edit skill                    | `skills/<source>/<skill-name>/SKILL.md`  | `manifest.json` (version bump + fields)                               |
+| Add/edit agent                    | `agents/<source>/<agent>.md`             | `manifest.json`                                                       |
+| Add/edit template                 | `templates/<name>.md`                    | `manifest.json`                                                       |
+| Add/edit slash command            | `commands/<name>.md`                     | `manifest.json`                                                       |
+| Add/edit config (ESLint/Prettier) | `configs/<tool>/`                        | `manifest.json` (`type: config`); distributed via CLI `haus scaffold` |
+| Add a new stack tag               | `validation-rules.json#allowedStacks`    | Item files using the tag                                              |
+| Edit validation rules             | `validation-rules.json`                  | `scripts/validate.mjs`, `docs/runbook.md`; see ADR-0001 landing order |
+| Edit agentic workflow standard    | `templates/agentic-workflow-standard.md` | `cp templates/agentic-workflow-standard.md .claude/WORKFLOW.md`       |
+| Edit a script                     | `scripts/*.mjs`                          | `tests/` (add/update tests)                                           |
+| Release                           | See [deployment.md](deployment.md)       | —                                                                     |
 
 ## Item version bumps
 

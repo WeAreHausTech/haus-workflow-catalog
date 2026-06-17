@@ -1,6 +1,6 @@
 # haus-workflow-catalog
 
-Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templates, and slash commands that the CLI fetches at runtime and installs into consuming projects.
+Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templates, slash commands, and project-root configs (ESLint, Prettier) that the CLI fetches at runtime and installs into consuming projects.
 
 ## Agent Context Guide
 
