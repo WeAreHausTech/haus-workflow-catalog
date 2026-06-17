@@ -2290,6 +2290,9 @@
       "requiresAny": [
         {
           "stack": "vue"
+        },
+        {
+          "dependency": "vue"
         }
       ],
       "whenNotToUse": "Do not use when a more specific skill or command applies."
