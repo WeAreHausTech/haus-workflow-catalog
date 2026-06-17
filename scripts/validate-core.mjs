@@ -142,7 +142,8 @@ function auditManifestStructure(manifestVersion, items) {
       item.type === 'skill' ||
       item.type === 'agent' ||
       item.type === 'template' ||
-      item.type === 'command'
+      item.type === 'command' ||
+      item.type === 'config'
     ) {
       if (!item.path) {
         failures.push(`${item.id}: missing path`)
@@ -159,6 +160,20 @@ function auditManifestStructure(manifestVersion, items) {
       const isCuratedApproved = item.source === 'curated' && item.reviewStatus === 'approved'
       if (!isHaus && !isCuratedApproved) {
         failures.push(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`)
+      }
+    }
+
+    // Config items skip content audits (they are tooling files, not agent context),
+    // so enforce their structural contract explicitly: under configs/ and weightless.
+    if (item.type === 'config') {
+      const norm = (item.path ?? '').replace(/\\/g, '/')
+      if (!norm.startsWith('configs/')) {
+        failures.push(`${item.id}: config items must live under configs/ (got "${item.path}")`)
+      }
+      if (item.tokenEstimate !== 0) {
+        failures.push(
+          `${item.id}: config items must set tokenEstimate: 0 (got ${item.tokenEstimate})`,
+        )
       }
     }
   }
@@ -227,6 +242,13 @@ function auditShippedFiles(root, items) {
       const rel = path.relative(root, absPath)
       failures.push(...checkRequiredFrontmatter(text, `${item.id}: ${rel}`))
       failures.push(...auditTemplateContent(root, absPath, item.id))
+    } else if (item.type === 'config') {
+      // Config items ship a file (eslint.config.mjs) or a directory of files
+      // (configs/prettier/). Verify the path exists; they are not loaded into
+      // agent context, so no frontmatter/forbidden-tag audit applies.
+      if (!fs.existsSync(absPath)) {
+        failures.push(`${item.id}: missing config path ${item.path}`)
+      }
     }
   }
   return failures
