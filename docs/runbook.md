@@ -12,6 +12,8 @@ Key rules today:
 
 - Manifest `references[]`: `https://` URLs only (no relative paths — bundled files under
   `item.path` are installed via haus-workflow full-tree cache).
+- Vendor `llms.txt` feeds: attach via manifest `references[]` only — never sync or copy into
+  the catalog tree (`sync-upstream.mjs` does not handle llms feeds).
 - Skills: non-empty frontmatter `description:` (`requiredSkillFrontmatter`).
 - Agents: YAML frontmatter `description:` (same as skills).
 - Repo-wide walk: safety only (install patterns, npx allowlist, forbidden stacks in

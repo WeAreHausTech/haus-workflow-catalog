@@ -6,6 +6,25 @@
   "type": "object",
   "required": ["id", "type", "source", "version", "path", "tags", "repoRoles", "tokenEstimate"],
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "source": { "const": "curated" } },
+        "required": ["source"]
+      },
+      "then": {
+        "required": [
+          "reviewStatus",
+          "riskLevel",
+          "originSourceId",
+          "originUrl",
+          "useMode",
+          "license",
+          "licenseConfidence"
+        ]
+      }
+    }
+  ],
   "properties": {
     "id": {
       "type": "string",

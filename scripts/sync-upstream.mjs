@@ -28,7 +28,6 @@ import { extractFrontmatterDescription } from './forbidden-content.mjs'
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const SOURCES_PATH = path.join(ROOT, 'sources.yaml')
 const MANIFEST_PATH = path.join(ROOT, 'manifest.json')
-const ORIGIN_SOURCE_ID = 'superpowers-pcvelz'
 const DEFAULT_WHEN_NOT_TO_USE = 'Do not use when a more specific skill or command applies.'
 const SHARED_SUPPORT = { name: 'shared', type: 'support' }
 
@@ -80,7 +79,13 @@ export function parseAllSources(content) {
       retrieved: s.retrieved,
       useMode: s.useMode || 'copy',
       mode,
-      items: Array.isArray(s.items) ? s.items : [],
+      items: Array.isArray(s.items)
+        ? s.items.map((item) => ({
+            name: item.name,
+            type: item.type ?? 'agent',
+            upstreamPath: item.upstreamPath,
+          }))
+        : [],
     }
   })
 }
@@ -349,26 +354,27 @@ function saveManifest(manifest) {
   fs.writeFileSync(MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`)
 }
 
-function superpowersItems(manifest) {
-  return manifest.items.filter((i) => i.originSourceId === ORIGIN_SOURCE_ID)
+function sourceItems(manifest, sourceId) {
+  return manifest.items.filter((i) => i.originSourceId === sourceId)
 }
 
-function findManifestItem(manifest, name, type) {
-  const id = `haus.superpowers-${name}`
+function findManifestItem(manifest, slug, name, type) {
+  const id = `haus.${slug}-${name}`
   return manifest.items.find((i) => i.id === id && i.type === type)
 }
 
 function newManifestEntry(name, type, itemPath, description, sha, source) {
+  const { slug } = source
   const tokenFile =
     type === 'skill' ? path.join(ROOT, itemPath, 'SKILL.md') : path.join(ROOT, itemPath)
   const chars = fs.statSync(tokenFile).size
   return {
-    id: `haus.superpowers-${name}`,
+    id: `haus.${slug}-${name}`,
     version: '1.0.0',
     source: 'curated',
     type,
     path: itemPath,
-    title: `Superpowers ${titleCase(name)}`,
+    title: `${titleCase(slug)} ${titleCase(name)}`,
     purpose: description,
     whenToUse: description,
     whenNotToUse: DEFAULT_WHEN_NOT_TO_USE,
@@ -382,10 +388,10 @@ function newManifestEntry(name, type, itemPath, description, sha, source) {
     useMode: source.useMode,
     license: source.license,
     licenseConfidence: 'high',
-    originSourceId: ORIGIN_SOURCE_ID,
+    originSourceId: source.id,
     originUrl: originUrl(name, type, sha, source.repo),
     pinnedRef: sha,
-    ecosystem: 'superpowers',
+    ecosystem: slug,
   }
 }
 
@@ -414,10 +420,10 @@ function upstreamCommandNames(upstreamRoot) {
     .sort()
 }
 
-function localPathFor(name, type) {
+function localPathFor(slug, name, type) {
   return type === 'skill'
-    ? path.join(ROOT, 'skills/superpowers', name)
-    : path.join(ROOT, 'commands/superpowers', `${name}.md`)
+    ? path.join(ROOT, 'skills', slug, name)
+    : path.join(ROOT, 'commands', slug, `${name}.md`)
 }
 
 function upstreamPathFor(upstreamRoot, name, type) {
@@ -426,21 +432,21 @@ function upstreamPathFor(upstreamRoot, name, type) {
     : path.join(upstreamRoot, 'commands', `${name}.md`)
 }
 
-function catalogPathFor(name, type) {
-  return type === 'skill' ? `skills/superpowers/${name}` : `commands/superpowers/${name}.md`
+function catalogPathFor(slug, name, type) {
+  return type === 'skill' ? `skills/${slug}/${name}` : `commands/${slug}/${name}.md`
 }
 
-function localSharedSupportPath(catalogRoot = ROOT) {
-  return path.join(catalogRoot, 'skills/superpowers/shared')
+function localSharedSupportPath(slug, catalogRoot = ROOT) {
+  return path.join(catalogRoot, 'skills', slug, 'shared')
 }
 
 function upstreamSharedSupportPath(upstreamRoot) {
   return path.join(upstreamRoot, 'skills/shared')
 }
 
-/** Verbatim support files referenced by multiple superpowers skills (not a manifest item). */
-export function inspectSharedSupport(upstreamRoot, catalogRoot = ROOT) {
-  const local = localSharedSupportPath(catalogRoot)
+/** Verbatim support files referenced by multiple curated skills (not a manifest item). */
+export function inspectSharedSupport(upstreamRoot, slug, catalogRoot = ROOT) {
+  const local = localSharedSupportPath(slug, catalogRoot)
   const upstream = upstreamSharedSupportPath(upstreamRoot)
   if (!fs.existsSync(upstream)) {
     if (fs.existsSync(local)) {
@@ -456,8 +462,9 @@ export function inspectSharedSupport(upstreamRoot, catalogRoot = ROOT) {
 // Drift analysis
 // ---------------------------------------------------------------------------
 
-function analyzeDrift(manifest, upstreamRoot) {
-  const curated = superpowersItems(manifest)
+function analyzeDrift(manifest, upstreamRoot, source) {
+  const { id: sourceId, slug } = source
+  const curated = sourceItems(manifest, sourceId)
   const curatedSkills = new Map(
     curated.filter((i) => i.type === 'skill').map((i) => [itemName(i), i]),
   )
@@ -479,7 +486,7 @@ function analyzeDrift(manifest, upstreamRoot) {
   let totalFiles = 0
 
   function inspect(name, type, manifestItem) {
-    const local = localPathFor(name, type)
+    const local = localPathFor(slug, name, type)
     const upstream = upstreamPathFor(upstreamRoot, name, type)
     const cmp = comparePaths(local, upstream)
     if (!cmp.equal) {
@@ -527,7 +534,7 @@ function analyzeDrift(manifest, upstreamRoot) {
     }
   }
 
-  const shared = inspectSharedSupport(upstreamRoot)
+  const shared = inspectSharedSupport(upstreamRoot, slug)
   if (shared?.removed) {
     removed.push({ ...SHARED_SUPPORT })
   } else if (shared) {
@@ -656,6 +663,7 @@ function printApplyReport(source, headSha, actions) {
 // ---------------------------------------------------------------------------
 
 function applySync(manifest, upstreamRoot, source, headSha, report) {
+  const { slug } = source
   const actions = {
     updated: [],
     added: [],
@@ -679,7 +687,7 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
 
   for (const entry of report.drifted) {
     const { name, type } = entry
-    const dest = type === 'support' ? localSharedSupportPath() : localPathFor(name, type)
+    const dest = type === 'support' ? localSharedSupportPath(slug) : localPathFor(slug, name, type)
     const src =
       type === 'support'
         ? upstreamSharedSupportPath(upstreamRoot)
@@ -687,13 +695,13 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
     removeRecursive(dest)
     copyRecursive(src, dest)
 
-    const item = type === 'support' ? null : findManifestItem(manifest, name, type)
+    const item = type === 'support' ? null : findManifestItem(manifest, slug, name, type)
     if (item) {
       const newVersion = patchBump(item.version)
       item.version = newVersion
       item.originUrl = originUrl(name, type, headSha, source.repo)
       item.pinnedRef = headSha
-      item.tokenEstimate = tokenEstimateForItem(catalogPathFor(name, type), type)
+      item.tokenEstimate = tokenEstimateForItem(catalogPathFor(slug, name, type), type)
 
       const desc = parseDescription(type === 'skill' ? path.join(dest, 'SKILL.md') : dest)
       let descriptionUpdated = false
@@ -738,10 +746,10 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
 
   for (const entry of report.added) {
     const { name, type } = entry
-    const dest = localPathFor(name, type)
+    const dest = localPathFor(slug, name, type)
     const src = upstreamPathFor(upstreamRoot, name, type)
     copyRecursive(src, dest)
-    const catalogPath = catalogPathFor(name, type)
+    const catalogPath = catalogPathFor(slug, name, type)
     const descFile = type === 'skill' ? path.join(dest, 'SKILL.md') : dest
     const description = parseDescription(descFile)
     manifest.items.push(newManifestEntry(name, type, catalogPath, description, headSha, source))
@@ -751,11 +759,11 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
   for (const entry of report.removed) {
     const { name, type, item } = entry
     if (type === 'support') {
-      removeRecursive(localSharedSupportPath())
+      removeRecursive(localSharedSupportPath(slug))
       actions.removed.push({ name, type })
       continue
     }
-    const local = localPathFor(name, type)
+    const local = localPathFor(slug, name, type)
     removeRecursive(local)
     manifest.items = manifest.items.filter((i) => i.id !== item.id)
     actions.removed.push({ name, type })
@@ -768,22 +776,34 @@ function applySync(manifest, upstreamRoot, source, headSha, report) {
 // Select mode (curated agents — explicit per-source items[] allowlist)
 // ---------------------------------------------------------------------------
 
-function selectCatalogPath(slug, name) {
-  return `agents/${slug}/${name}.md`
+export function selectCatalogPath(slug, name, type) {
+  if (type === 'skill') return `skills/${slug}/${name}`
+  if (type === 'agent') return `agents/${slug}/${name}.md`
+  if (type === 'command') return `commands/${slug}/${name}.md`
+  throw new Error(`unsupported select type: ${type}`)
 }
 
 function selectManifestId(slug, name) {
   return `haus.${slug}-${name}`
 }
 
-function selectOriginUrl(repo, sha, upstreamPath) {
-  const base = repo.replace(/\.git$/, '')
-  return `${base}/blob/${sha}/${upstreamPath}`
+function selectUpstreamContentPath(upstreamRoot, upstreamPath, type) {
+  const upstreamAbs = path.join(upstreamRoot, upstreamPath)
+  return type === 'skill' ? path.join(upstreamAbs, 'SKILL.md') : upstreamAbs
 }
 
-function findSelectManifestItem(manifest, slug, name) {
+function selectOriginPath(upstreamPath, type) {
+  return type === 'skill' ? `${upstreamPath.replace(/\/+$/, '')}/SKILL.md` : upstreamPath
+}
+
+function selectOriginUrl(repo, sha, upstreamPath, type) {
+  const base = repo.replace(/\.git$/, '')
+  return `${base}/blob/${sha}/${selectOriginPath(upstreamPath, type)}`
+}
+
+function findSelectManifestItem(manifest, slug, name, type) {
   const id = selectManifestId(slug, name)
-  return manifest.items.find((i) => i.id === id && i.type === 'agent')
+  return manifest.items.find((i) => i.id === id && i.type === type)
 }
 
 /**
@@ -802,25 +822,25 @@ function analyzeSelectDrift(manifest, upstreamRoot, source) {
   let totalFiles = 0
 
   for (const item of source.items) {
-    const { name, upstreamPath } = item
+    const { name, upstreamPath, type } = item
     const upstreamAbs = path.join(upstreamRoot, upstreamPath)
     if (!fs.existsSync(upstreamAbs)) {
-      missingUpstream.push({ name, upstreamPath })
+      missingUpstream.push({ name, type, upstreamPath })
       continue
     }
-    const localAbs = path.join(ROOT, selectCatalogPath(slug, name))
+    const localAbs = path.join(ROOT, selectCatalogPath(slug, name, type))
     const cmp = comparePaths(localAbs, upstreamAbs)
     if (!cmp.equal) {
-      drifted.push({ name, upstreamPath, ...cmp })
+      drifted.push({ name, type, upstreamPath, ...cmp })
       totalAdded += cmp.added
       totalRemoved += cmp.removed
       totalFiles += cmp.files
     }
-    const manifestItem = findSelectManifestItem(manifest, slug, name)
+    const manifestItem = findSelectManifestItem(manifest, slug, name, type)
     if (manifestItem) {
-      const desc = parseDescription(upstreamAbs)
+      const desc = parseDescription(selectUpstreamContentPath(upstreamRoot, upstreamPath, type))
       if (desc && (manifestItem.purpose !== desc || manifestItem.whenToUse !== desc)) {
-        descriptionChanges.push({ name, upstreamPath, description: desc, item: manifestItem })
+        descriptionChanges.push({ name, type, upstreamPath, description: desc, item: manifestItem })
       }
     }
   }
@@ -847,13 +867,18 @@ function applySelectSync(manifest, upstreamRoot, source, headSha, report) {
   }
 
   for (const entry of report.drifted) {
-    const { name, upstreamPath } = entry
+    const { name, upstreamPath, type } = entry
     const src = path.join(upstreamRoot, upstreamPath)
-    const dest = path.join(ROOT, selectCatalogPath(slug, name))
+    const dest = path.join(ROOT, selectCatalogPath(slug, name, type))
     fs.mkdirSync(path.dirname(dest), { recursive: true })
-    fs.copyFileSync(src, dest)
+    if (type === 'skill') {
+      removeRecursive(dest)
+      copyRecursive(src, dest)
+    } else {
+      fs.copyFileSync(src, dest)
+    }
 
-    const item = findSelectManifestItem(manifest, slug, name)
+    const item = findSelectManifestItem(manifest, slug, name, type)
     if (!item) {
       // Allowlist governs FILES; manifest governs ENTRIES. Never fabricate an entry
       // (tags/gating are human-owned) — copy the file and report the gap.
@@ -862,28 +887,35 @@ function applySelectSync(manifest, upstreamRoot, source, headSha, report) {
     }
     const newVersion = patchBump(item.version)
     item.version = newVersion
-    item.originUrl = selectOriginUrl(source.repo, headSha, upstreamPath)
+    item.originUrl = selectOriginUrl(source.repo, headSha, upstreamPath, type)
     item.pinnedRef = headSha
-    item.tokenEstimate = Math.ceil(fs.statSync(dest).size / 4)
-    const desc = parseDescription(dest)
+    item.tokenEstimate = Math.ceil(
+      fs.statSync(selectUpstreamContentPath(upstreamRoot, upstreamPath, type)).size / 4,
+    )
+    const desc = parseDescription(selectUpstreamContentPath(upstreamRoot, upstreamPath, type))
     let descriptionUpdated = false
     if (desc && (item.purpose !== desc || item.whenToUse !== desc)) {
       item.purpose = desc
       item.whenToUse = desc
       descriptionUpdated = true
     }
-    actions.updated.push({ name, versionBumped: true, newVersion, descriptionUpdated })
+    actions.updated.push({ name, type, versionBumped: true, newVersion, descriptionUpdated })
   }
 
   // Description-only changes (file content identical, frontmatter desc differs from manifest).
   for (const change of report.descriptionChanges) {
-    if (actions.updated.some((u) => u.name === change.name)) continue
+    if (actions.updated.some((u) => u.name === change.name && u.type === change.type)) continue
     const item = change.item
     item.purpose = change.description
     item.whenToUse = change.description
-    item.originUrl = selectOriginUrl(source.repo, headSha, change.upstreamPath)
+    item.originUrl = selectOriginUrl(source.repo, headSha, change.upstreamPath, change.type)
     item.pinnedRef = headSha
-    actions.updated.push({ name: change.name, versionBumped: false, descriptionUpdated: true })
+    actions.updated.push({
+      name: change.name,
+      type: change.type,
+      versionBumped: false,
+      descriptionUpdated: true,
+    })
   }
 
   return actions
@@ -912,11 +944,13 @@ function printSelectCheckReport(source, headSha, report) {
   lines.push(`## Drifted (${report.drifted.length})`)
   if (report.drifted.length === 0) lines.push('_none_')
   else
-    lines.push(...report.drifted.map((d) => `- agent: \`${d.name}\` (+${d.added} -${d.removed})`))
+    lines.push(
+      ...report.drifted.map((d) => `- ${d.type}: \`${d.name}\` (+${d.added} -${d.removed})`),
+    )
   lines.push('')
   lines.push(`## Description changes (${report.descriptionChanges.length})`)
   if (report.descriptionChanges.length === 0) lines.push('_none_')
-  else lines.push(...report.descriptionChanges.map((d) => `- agent: \`${d.name}\``))
+  else lines.push(...report.descriptionChanges.map((d) => `- ${d.type}: \`${d.name}\``))
   lines.push('')
   if (report.missingUpstream.length > 0) {
     lines.push(`## Missing upstream (${report.missingUpstream.length})`)
@@ -945,7 +979,7 @@ function printSelectApplyReport(source, headSha, actions) {
   else {
     for (const u of actions.updated) {
       const bump = u.versionBumped ? ` → v${u.newVersion}` : ''
-      lines.push(`- agent: \`${u.name}\`${bump}${u.descriptionUpdated ? ' (description)' : ''}`)
+      lines.push(`- ${u.type}: \`${u.name}\`${bump}${u.descriptionUpdated ? ' (description)' : ''}`)
     }
   }
   lines.push('')
@@ -961,8 +995,12 @@ function printSelectApplyReport(source, headSha, actions) {
 // Main
 // ---------------------------------------------------------------------------
 
-/** mirror mode: full-directory sync of upstream skills/ + commands/ (superpowers). */
+/** mirror mode: full-directory sync of upstream skills/ + commands/. */
 function processMirrorSource(source, manifest, state) {
+  if (!source.slug) {
+    console.error(`ERROR (${source.id}): mirror source missing required \`slug\``)
+    process.exit(1)
+  }
   let tmpDir
   let headSha
   try {
@@ -973,7 +1011,7 @@ function processMirrorSource(source, manifest, state) {
     process.exit(1)
   }
   try {
-    const report = analyzeDrift(manifest, tmpDir)
+    const report = analyzeDrift(manifest, tmpDir, source)
 
     if (checkMode) {
       printCheckReport(source, headSha, report)

@@ -1,10 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import {
   findForbiddenTag,
   isSafeCatalogPath,
   missingSkillFrontmatterKeys,
+  validateCatalog,
   validateItemSchema,
 } from '../scripts/validate.mjs'
 
@@ -53,4 +56,50 @@ test('accepts a well-formed item', () => {
     tokenEstimate: 100,
   })
   assert.equal(result.ok, true)
+})
+
+test('rejects curated item missing provenance fields', () => {
+  const result = validateItemSchema({
+    id: 'haus.curated-bad',
+    type: 'skill',
+    source: 'curated',
+    version: '1.0.0',
+    path: 'skills/bad',
+    title: 'Bad',
+    tags: ['workflow'],
+    repoRoles: [],
+    tokenEstimate: 100,
+    reviewStatus: 'approved',
+    riskLevel: 'low',
+  })
+  assert.equal(result.ok, false)
+})
+
+test('rejects non-default curated item without requiresAny', () => {
+  const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
+  const result = validateCatalog(root, {
+    version: '1.0.0',
+    items: [
+      {
+        id: 'haus.ecc-example',
+        type: 'agent',
+        source: 'curated',
+        version: '1.0.0',
+        path: 'agents/ecc/example.md',
+        title: 'Example',
+        tags: ['agent'],
+        repoRoles: [],
+        tokenEstimate: 100,
+        reviewStatus: 'approved',
+        riskLevel: 'low',
+        useMode: 'copy',
+        license: 'MIT',
+        licenseConfidence: 'high',
+        originSourceId: 'ecc-affaanm',
+        originUrl: 'https://github.com/example/repo/blob/sha/agents/example.md',
+      },
+    ],
+  })
+  assert.equal(result.ok, false)
+  assert.ok(result.failures.some((f) => f.includes('requiresAny')))
 })

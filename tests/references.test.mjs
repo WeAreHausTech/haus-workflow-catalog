@@ -38,3 +38,23 @@ test('references entries are https URLs or absent', () => {
     }
   }
 })
+
+test('llms.txt feeds live in manifest references only, not synced catalog files', () => {
+  const hits = []
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) walk(full)
+      else if (entry.name === 'llms.txt') hits.push(path.relative(REPO_ROOT, full))
+    }
+  }
+  for (const dir of ['skills', 'agents', 'commands', 'templates']) {
+    const abs = path.join(REPO_ROOT, dir)
+    if (fs.existsSync(abs)) walk(abs)
+  }
+  assert.deepEqual(
+    hits,
+    [],
+    `llms.txt must not be synced into catalog tree — use manifest references[] (${hits.join(', ')})`,
+  )
+})

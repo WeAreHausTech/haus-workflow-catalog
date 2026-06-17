@@ -1,6 +1,7 @@
 sources:
   - id: superpowers-pcvelz
     repo: https://github.com/pcvelz/superpowers
+    slug: superpowers
     license: MIT
     licenseConfidence: high
     snapshotRef: 20c0b1ed71cb073c847432fe01379f48c5278a5f
