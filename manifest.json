@@ -1,5 +1,5 @@
 {
-  "version": "2.8.0",
+  "version": "2.9.0",
   "items": [
     {
       "id": "haus.nextjs-patterns",
@@ -3146,7 +3146,11 @@
       "whenNotToUse": "Do not scaffold if the project already has a custom ESLint config that extends beyond the Haus baseline.",
       "tags": ["frontend", "backend", "typescript", "quality"],
       "repoRoles": ["next-app", "react-app", "nestjs-api", "vendure-plugin", "vendure-app"],
-      "requiresAny": [{ "dependency": "typescript" }],
+      "requiresAny": [
+        {
+          "dependency": "typescript"
+        }
+      ],
       "tokenEstimate": 0,
       "installMode": "copy-selected",
       "reviewStatus": "approved",

@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.9.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.8.0...v2.9.0) (2026-06-17)
+
+### Added
+
+- add config item type and eslint/prettier catalog items ([#29](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/29)) ([595843a](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/595843ac51cd3d8ac8f6346c92b9648a6217a758))
+
 ## [2.8.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.7.3...v2.8.0) (2026-06-17)
 
 ### Added
