@@ -33,8 +33,8 @@
     },
     "type": {
       "type": "string",
-      "enum": ["skill", "agent", "template", "command"],
-      "description": "Item type. 'template' for universal project instruction files."
+      "enum": ["skill", "agent", "template", "command", "config"],
+      "description": "Item type. 'template' for universal project instruction files. 'config' for project-root tooling config files (ESLint, Prettier) distributed via `haus scaffold`."
     },
     "source": {
       "type": "string",
