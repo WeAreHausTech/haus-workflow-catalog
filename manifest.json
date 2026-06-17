@@ -334,14 +334,14 @@
     },
     {
       "id": "haus.stripe-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/stripe-patterns",
       "title": "Haus Stripe patterns",
       "purpose": "Guide Stripe Elements, Checkout, webhook handling, and PCI-safe integration changes.",
       "whenToUse": "Use for `@stripe/stripe-js` / `@stripe/react-stripe-js` integrations, payment intents, webhooks, and Checkout.",
-      "whenNotToUse": "Do not use for non-Stripe payment providers (Qliro, Klarna, etc.).",
+      "whenNotToUse": "Deprecated — use haus.stripe-stripe-best-practices (official Stripe skill).",
       "references": ["https://docs.stripe.com/"],
       "tokenBudget": 1200,
       "tags": ["stripe", "payments", "tooling"],
@@ -360,7 +360,7 @@
       "ecosystem": "payments",
       "tokenEstimate": 2000,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "medium"
     },
     {
@@ -392,14 +392,14 @@
     },
     {
       "id": "haus.supabase-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/supabase-patterns",
       "title": "Haus Supabase patterns",
       "purpose": "Guide Supabase client wiring, Row-Level Security, edge functions, and auth integration.",
       "whenToUse": "Use for `@supabase/supabase-js` queries, RLS policies, edge functions, and Supabase Auth flows.",
-      "whenNotToUse": "Do not use for non-Supabase BaaS (Firebase, AWS Amplify) or self-hosted Postgres without Supabase.",
+      "whenNotToUse": "Deprecated — use haus.supabase-supabase (official Supabase skill).",
       "references": ["https://supabase.com/docs"],
       "tokenBudget": 1200,
       "tags": ["supabase", "database", "backend"],
@@ -418,7 +418,7 @@
       "ecosystem": "database",
       "tokenEstimate": 2000,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -550,14 +550,14 @@
     },
     {
       "id": "haus.laravel-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/laravel-patterns",
       "title": "Haus Laravel patterns",
       "purpose": "Guide Laravel domain, routing, policy, and persistence changes.",
       "whenToUse": "Use for Laravel controllers/services/models/jobs/policies and route changes.",
-      "whenNotToUse": "Do not use for Nova-only admin resource customization tasks.",
+      "whenNotToUse": "Deprecated — use haus.ecc-laravel-patterns.",
       "references": ["https://laravel.com/docs"],
       "tokenBudget": 1200,
       "tags": ["backend", "laravel", "php"],
@@ -573,7 +573,7 @@
       "ecosystem": "laravel",
       "tokenEstimate": 2800,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -853,14 +853,14 @@
     },
     {
       "id": "haus.tailwind-scss-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/tailwind-scss-patterns",
       "title": "Haus Tailwind SCSS patterns",
       "purpose": "Guide style-system-safe Tailwind and SCSS module changes.",
       "whenToUse": "Use for Tailwind token/utility and SCSS module behavior updates.",
-      "whenNotToUse": "Do not use for non-style backend/service changes.",
+      "whenNotToUse": "Deprecated — use haus.wshobson-tailwind-design-system.",
       "references": ["https://tailwindcss.com/docs"],
       "tokenBudget": 1200,
       "tags": ["tailwind", "scss", "react19"],
@@ -879,7 +879,7 @@
       "ecosystem": "tailwind",
       "tokenEstimate": 1800,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -2766,39 +2766,6 @@
       ]
     },
     {
-      "id": "haus.supabase-supabase-postgres-best-practices",
-      "version": "1.0.0",
-      "source": "curated",
-      "type": "skill",
-      "path": "skills/supabase/supabase-postgres-best-practices",
-      "title": "Supabase Supabase Postgres Best Practices",
-      "purpose": "Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
-      "whenToUse": "Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.",
-      "whenNotToUse": "Do not use when a more specific skill or command applies.",
-      "tags": ["workflow", "supabase", "postgresql"],
-      "repoRoles": [],
-      "tokenEstimate": 14426,
-      "installMode": "copy-selected",
-      "default": false,
-      "reviewStatus": "approved",
-      "riskLevel": "low",
-      "useMode": "copy",
-      "license": "MIT",
-      "licenseConfidence": "medium",
-      "originSourceId": "supabase",
-      "originUrl": "https://github.com/supabase/agent-skills/blob/1356046015476711a769601079262b5635929427/skills/supabase-postgres-best-practices/SKILL.md",
-      "pinnedRef": "1356046015476711a769601079262b5635929427",
-      "ecosystem": "supabase",
-      "requiresAny": [
-        {
-          "stack": "supabase"
-        },
-        {
-          "stack": "postgresql"
-        }
-      ]
-    },
-    {
       "id": "haus.redis-redis-connections",
       "version": "1.0.1",
       "source": "curated",
@@ -3023,39 +2990,6 @@
         },
         {
           "stack": "database"
-        }
-      ]
-    },
-    {
-      "id": "haus.wshobson-dotnet-backend-patterns",
-      "version": "1.0.0",
-      "source": "curated",
-      "type": "skill",
-      "path": "skills/wshobson/dotnet-backend-patterns",
-      "title": "Wshobson Dotnet Backend Patterns",
-      "purpose": "Master C#/.NET backend development patterns for building robust APIs, MCP servers, and enterprise applications. Covers async/await, dependency injection, Entity Framework Core, Dapper, configuration, caching, and testing with xUnit. Use when developing .NET backends, reviewing C# code, or designing API architectures.",
-      "whenToUse": "Master C#/.NET backend development patterns for building robust APIs, MCP servers, and enterprise applications. Covers async/await, dependency injection, Entity Framework Core, Dapper, configuration, caching, and testing with xUnit. Use when developing .NET backends, reviewing C# code, or designing API architectures.",
-      "whenNotToUse": "Do not use when a more specific skill or command applies.",
-      "tags": ["workflow", "dotnet", "csharp"],
-      "repoRoles": [],
-      "tokenEstimate": 20013,
-      "installMode": "copy-selected",
-      "default": false,
-      "reviewStatus": "approved",
-      "riskLevel": "low",
-      "useMode": "copy",
-      "license": "MIT",
-      "licenseConfidence": "medium",
-      "originSourceId": "wshobson",
-      "originUrl": "https://github.com/wshobson/agents/blob/cc37bfdd292ce520ba1c44df7a3a70d5f8137236/plugins/dotnet-contribution/skills/dotnet-backend-patterns/SKILL.md",
-      "pinnedRef": "cc37bfdd292ce520ba1c44df7a3a70d5f8137236",
-      "ecosystem": "dotnet",
-      "requiresAny": [
-        {
-          "stack": "dotnet"
-        },
-        {
-          "stack": "csharp"
         }
       ]
     }

@@ -66,11 +66,6 @@ sources:
     mode: select
     items:
       - { name: supabase, type: skill, upstreamPath: skills/supabase }
-      - {
-          name: supabase-postgres-best-practices,
-          type: skill,
-          upstreamPath: skills/supabase-postgres-best-practices,
-        }
   - id: redis-agent-skills-extra
     repo: https://github.com/redis/agent-skills
     slug: redis
@@ -129,11 +124,6 @@ sources:
           name: postgresql-table-design,
           type: skill,
           upstreamPath: plugins/database-design/skills/postgresql,
-        }
-      - {
-          name: dotnet-backend-patterns,
-          type: skill,
-          upstreamPath: plugins/dotnet-contribution/skills/dotnet-backend-patterns,
         }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode

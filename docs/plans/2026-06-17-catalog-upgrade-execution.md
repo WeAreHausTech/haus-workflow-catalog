@@ -30,18 +30,20 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 
 **Strategy:** merge planned 5a + 5b + partial 5c into one PR to reduce review churn.
 
-**Imported (13 skills, 91 → 104 items):**
+**Imported (11 skills, 91 → 102 items):**
 
-| Source   | Skills                                                                         |
-| -------- | ------------------------------------------------------------------------------ |
-| stripe   | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects`                   |
-| supabase | `supabase`, `supabase-postgres-best-practices`                                 |
-| redis    | `redis-connections`, `redis-security`, `redis-observability`                   |
-| sanity   | `content-modeling-best-practices`                                              |
-| sickn33  | `docker-expert`                                                                |
-| wshobson | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns` |
+| Source   | Skills                                                       |
+| -------- | ------------------------------------------------------------ |
+| stripe   | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects` |
+| supabase | `supabase`                                                   |
+| redis    | `redis-connections`, `redis-security`, `redis-observability` |
+| sanity   | `content-modeling-best-practices`                            |
+| sickn33  | `docker-expert`                                              |
+| wshobson | `tailwind-design-system`, `postgresql-table-design`          |
 
-**Dropped from PR:** hyf0 vue pack (oversized reference trees), jezweb wordpress-elementor (redundant), `laravel-boost` (overlaps ECC `laravel-patterns` + Haus `laravel-patterns`).
+**Dropped from PR:** hyf0 vue pack, jezweb wordpress-elementor, `laravel-boost`, `supabase-postgres-best-practices` (14k overlap with `postgresql-table-design`), `wshobson/dotnet-backend-patterns` (20k overlap with ECC + Haus dotnet routers).
+
+**Wave4 deprecations (in this PR):** `reviewStatus: deprecated` on Haus stack routers superseded by upstream — `haus.stripe-patterns` → `haus.stripe-stripe-best-practices`, `haus.supabase-patterns` → `haus.supabase-supabase`, `haus.tailwind-scss-patterns` → `haus.wshobson-tailwind-design-system`, `haus.laravel-patterns` → `haus.ecc-laravel-patterns`. Held: `haus.sanity-patterns` (no full Sanity upstream yet), `haus.database-patterns` (multi-engine).
 
 **Tooling:** `assertMitLicense` now accepts `The MIT License` headers and `LICENSE.md`.
 
@@ -55,6 +57,6 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 
 ## Remaining scope
 
-- Wave3b vendor repos (Sentry, Apollo, Auth0, Better Auth, shadcn)
-- 18 llms.txt `references[]` + haus router deprecations (Wave 4)
+- Wave3b vendor repos (Sentry, Apollo, Auth0, Better Auth, shadcn) — import workflow + detected SDK only, not full trees
+- 18 llms.txt `references[]` + further router deprecations (`sanity-patterns`, `database-patterns`, `sentry-patterns` when upstream lands)
 - CLI fixture sync + archetype golden tests + release
