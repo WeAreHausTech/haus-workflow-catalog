@@ -259,7 +259,7 @@
       "title": "Haus Sentry patterns",
       "purpose": "Guide Sentry SDK setup, error capture, performance tracing, and PII scrubbing.",
       "whenToUse": "Use for `@sentry/*` SDK init, scope/breadcrumb config, source map upload, and PII redaction.",
-      "whenNotToUse": "Do not use for non-Sentry monitoring (Datadog, New Relic, etc.).",
+      "whenNotToUse": "Deprecated — use haus.sentry-sentry-workflow and haus.sentry-sentry-php-sdk from getsentry/sentry-for-ai.",
       "references": ["https://docs.sentry.io/"],
       "tokenBudget": 1200,
       "tags": ["sentry", "observability", "tooling"],
@@ -281,7 +281,7 @@
       "ecosystem": "tooling",
       "tokenEstimate": 1800,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -693,7 +693,7 @@
       "title": "Haus NestJS GraphQL patterns",
       "purpose": "Guide resolver/module/guard/DTO-safe GraphQL implementation in NestJS.",
       "whenToUse": "Use for NestJS GraphQL resolver, module, DTO/input, and guard changes.",
-      "whenNotToUse": "Do not use for REST-only controller tasks.",
+      "whenNotToUse": "Deprecated — use haus.apollo-apollo-server and haus.apollo-graphql-schema for GraphQL in NestJS.",
       "references": ["https://docs.nestjs.com/"],
       "tokenBudget": 1200,
       "tags": ["nestjs", "graphql", "typescript5"],
@@ -712,7 +712,7 @@
       "ecosystem": "nestjs",
       "tokenEstimate": 2600,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -2990,6 +2990,144 @@
         },
         {
           "stack": "database"
+        }
+      ]
+    },
+    {
+      "id": "haus.apollo-apollo-server",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/apollo/apollo-server",
+      "title": "Apollo Apollo Server",
+      "purpose": "Guide for building GraphQL servers with Apollo Server 5.x. Use this skill when: (1) setting up a new Apollo Server project, (2) writing resolvers or defining GraphQL schemas, (3) implementing authentication or authorization, (4) creating plugins or custom data sources, (5) troubleshooting Apollo Server errors or performance issues.",
+      "whenToUse": "Guide for building GraphQL servers with Apollo Server 5.x. Use this skill when: (1) setting up a new Apollo Server project, (2) writing resolvers or defining GraphQL schemas, (3) implementing authentication or authorization, (4) creating plugins or custom data sources, (5) troubleshooting Apollo Server errors or performance issues.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "graphql", "nestjs"],
+      "repoRoles": [],
+      "tokenEstimate": 1803,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "apollographql-skills",
+      "originUrl": "https://github.com/apollographql/skills/blob/605089108a198e412f7f0c1926c91eb94a6d1727/skills/apollo-server/SKILL.md",
+      "pinnedRef": "605089108a198e412f7f0c1926c91eb94a6d1727",
+      "ecosystem": "graphql",
+      "requiresAny": [
+        {
+          "stack": "graphql"
+        },
+        {
+          "dependency": "@apollo/server"
+        },
+        {
+          "dependency": "@nestjs/graphql"
+        }
+      ]
+    },
+    {
+      "id": "haus.apollo-graphql-schema",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/apollo/graphql-schema",
+      "title": "Apollo Graphql Schema",
+      "purpose": "Guide for designing GraphQL schemas following industry best practices. Use this skill when: (1) designing a new GraphQL schema or API, (2) reviewing existing schema for improvements, (3) deciding on type structures or nullability, (4) implementing pagination or error patterns, (5) ensuring security in schema design.",
+      "whenToUse": "Guide for designing GraphQL schemas following industry best practices. Use this skill when: (1) designing a new GraphQL schema or API, (2) reviewing existing schema for improvements, (3) deciding on type structures or nullability, (4) implementing pagination or error patterns, (5) ensuring security in schema design.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "graphql"],
+      "repoRoles": [],
+      "tokenEstimate": 1106,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "apollographql-skills",
+      "originUrl": "https://github.com/apollographql/skills/blob/605089108a198e412f7f0c1926c91eb94a6d1727/skills/graphql-schema/SKILL.md",
+      "pinnedRef": "605089108a198e412f7f0c1926c91eb94a6d1727",
+      "ecosystem": "graphql",
+      "requiresAny": [
+        {
+          "stack": "graphql"
+        },
+        {
+          "dependency": "graphql"
+        }
+      ]
+    },
+    {
+      "id": "haus.sentry-sentry-php-sdk",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/sentry/sentry-php-sdk",
+      "title": "Sentry Sentry Php Sdk",
+      "purpose": "Full Sentry SDK setup for PHP. Use when asked to \"add Sentry to PHP\", \"install sentry/sentry\", \"setup Sentry in PHP\", or configure error monitoring, tracing, profiling, logging, metrics, or crons for PHP applications. Supports plain PHP, Laravel, and Symfony.",
+      "whenToUse": "Full Sentry SDK setup for PHP. Use when asked to \"add Sentry to PHP\", \"install sentry/sentry\", \"setup Sentry in PHP\", or configure error monitoring, tracing, profiling, logging, metrics, or crons for PHP applications. Supports plain PHP, Laravel, and Symfony.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "sentry", "laravel", "observability"],
+      "repoRoles": [],
+      "tokenEstimate": 3588,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "getsentry-sentry-for-ai",
+      "originUrl": "https://github.com/getsentry/sentry-for-ai/blob/34da65c94c93aed40a20ae85d9e1d1935591ad39/skills/sentry-php-sdk/SKILL.md",
+      "pinnedRef": "34da65c94c93aed40a20ae85d9e1d1935591ad39",
+      "ecosystem": "sentry",
+      "requiresAny": [
+        {
+          "stack": "sentry"
+        },
+        {
+          "dependency": "sentry/sentry"
+        },
+        {
+          "stack": "laravel"
+        }
+      ]
+    },
+    {
+      "id": "haus.sentry-sentry-workflow",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/sentry/sentry-workflow",
+      "title": "Sentry Sentry Workflow",
+      "purpose": "Fix production issues and review code with Sentry context. Use when asked to fix Sentry errors, debug issues, triage exceptions, review PR comments from Sentry, or resolve bugs.",
+      "whenToUse": "Fix production issues and review code with Sentry context. Use when asked to fix Sentry errors, debug issues, triage exceptions, review PR comments from Sentry, or resolve bugs.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "sentry", "observability"],
+      "repoRoles": [],
+      "tokenEstimate": 633,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "getsentry-sentry-for-ai",
+      "originUrl": "https://github.com/getsentry/sentry-for-ai/blob/34da65c94c93aed40a20ae85d9e1d1935591ad39/skills/sentry-workflow/SKILL.md",
+      "pinnedRef": "34da65c94c93aed40a20ae85d9e1d1935591ad39",
+      "ecosystem": "sentry",
+      "requiresAny": [
+        {
+          "stack": "sentry"
+        },
+        {
+          "packageNamePattern": "@sentry/*"
         }
       ]
     }

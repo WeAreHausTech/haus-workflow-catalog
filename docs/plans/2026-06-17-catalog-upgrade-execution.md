@@ -6,19 +6,43 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 
 ## Summary
 
-| Step                               | Status  | PR                                                                                         |
-| ---------------------------------- | ------- | ------------------------------------------------------------------------------------------ |
-| 1 — CLI Phase0                     | merged  | [haus-workflow#121](https://github.com/WeAreHausTech/haus-workflow/pull/121)               |
-| 2 — Catalog Phase0                 | merged  | [haus-workflow-catalog#23](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/23) |
-| 3 — Wave1 ECC agents               | merged  | [haus-workflow-catalog#24](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/24) |
-| 4 — Wave2 skills                   | merged  | [haus-workflow-catalog#25](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/25) |
-| 5a–5c — Wave3 skills.sh (bulk PR)  | merged  | [haus-workflow-catalog#26](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/26) |
-| 6 — Wave3b vendors                 | pending | —                                                                                          |
-| 7 — Wave4 llms + deprecations      | pending | —                                                                                          |
-| 8 — CLI fixtures + archetype tests | pending | —                                                                                          |
-| 9 — Release both repos             | pending | —                                                                                          |
+| Step                               | Status      | PR                                                                                         |
+| ---------------------------------- | ----------- | ------------------------------------------------------------------------------------------ |
+| 1 — CLI Phase0                     | merged      | [haus-workflow#121](https://github.com/WeAreHausTech/haus-workflow/pull/121)               |
+| 2 — Catalog Phase0                 | merged      | [haus-workflow-catalog#23](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/23) |
+| 3 — Wave1 ECC agents               | merged      | [haus-workflow-catalog#24](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/24) |
+| 4 — Wave2 skills                   | merged      | [haus-workflow-catalog#25](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/25) |
+| 5a–5c — Wave3 skills.sh (bulk PR)  | merged      | [haus-workflow-catalog#26](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/26) |
+| 6 — Wave3b vendors                 | in progress | —                                                                                          |
+| 7 — Wave4 llms + deprecations      | pending     | —                                                                                          |
+| 8 — CLI fixtures + archetype tests | pending     | —                                                                                          |
+| 9 — Release both repos             | pending     | —                                                                                          |
 
-**Next:** Wave3b vendors (Sentry, Apollo, Auth0, Better Auth, shadcn) — workflow + detected SDK only.
+**Next:** Open PR for Wave3b (Sentry + Apollo); Auth0/Better Auth/shadcn deferred.
+
+## Step 6 — Wave3b vendors (in progress)
+
+**Imported (4 skills, 102 → 106 items):**
+
+| Source                  | Skills                              |
+| ----------------------- | ----------------------------------- |
+| getsentry/sentry-for-ai | `sentry-workflow`, `sentry-php-sdk` |
+| apollographql/skills    | `apollo-server`, `graphql-schema`   |
+
+**Dropped (content policy — wizard/CLI `npx`/`pnpm dlx` in upstream, not sanitized):** `sentry-nextjs-sdk`, `sentry-react-sdk`, `sentry-nestjs-sdk`, `apollo-client`, `graphql-operations`.
+
+**Deprecations:** `haus.sentry-patterns` → Sentry upstream; `haus.nestjs-graphql-patterns` → Apollo GraphQL skills.
+
+**Deferred:**
+
+- **Auth0** (`auth0/agent-skills`) — Apache-2.0; catalog MIT-only gate
+- **Better Auth** (`better-auth/skills`) — no upstream LICENSE
+- **shadcn** (`shadcn-ui/ui`) — skill tree embeds hundreds of `npx shadcn@latest` lines; impractical to sanitize
+
+## Remaining scope
+
+- Wave4 llms.txt `references[]` + further router deprecations (`sanity-patterns`, `database-patterns`, `radix-shadcn-patterns` when shadcn lands)
+- CLI fixture sync + archetype golden tests + release
 
 ## Step 4 — Wave2 skills (merged #25)
 
@@ -54,9 +78,3 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 - Content policy: `vue-testing-best-practices`, all expo pack (5), `prisma-upgrade-v7`, `sanity-migration`, `monorepo-management` (disallowed `npx`)
 - Content policy: `redis-core` (`http://` in references), `iris-development` (forbidden `python` mention)
 - Dropped from PR: hyf0 vue pack (4 skills) — oversized reference trees per skill; defer to later wave or slimmer upstream pick
-
-## Remaining scope
-
-- Wave3b vendor repos (Sentry, Apollo, Auth0, Better Auth, shadcn) — import workflow + detected SDK only, not full trees
-- 18 llms.txt `references[]` + further router deprecations (`sanity-patterns`, `database-patterns`, `sentry-patterns` when upstream lands)
-- CLI fixture sync + archetype golden tests + release
