@@ -334,14 +334,14 @@
     },
     {
       "id": "haus.stripe-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/stripe-patterns",
       "title": "Haus Stripe patterns",
       "purpose": "Guide Stripe Elements, Checkout, webhook handling, and PCI-safe integration changes.",
       "whenToUse": "Use for `@stripe/stripe-js` / `@stripe/react-stripe-js` integrations, payment intents, webhooks, and Checkout.",
-      "whenNotToUse": "Do not use for non-Stripe payment providers (Qliro, Klarna, etc.).",
+      "whenNotToUse": "Deprecated — use haus.stripe-stripe-best-practices (official Stripe skill).",
       "references": ["https://docs.stripe.com/"],
       "tokenBudget": 1200,
       "tags": ["stripe", "payments", "tooling"],
@@ -360,7 +360,7 @@
       "ecosystem": "payments",
       "tokenEstimate": 2000,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "medium"
     },
     {
@@ -392,14 +392,14 @@
     },
     {
       "id": "haus.supabase-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/supabase-patterns",
       "title": "Haus Supabase patterns",
       "purpose": "Guide Supabase client wiring, Row-Level Security, edge functions, and auth integration.",
       "whenToUse": "Use for `@supabase/supabase-js` queries, RLS policies, edge functions, and Supabase Auth flows.",
-      "whenNotToUse": "Do not use for non-Supabase BaaS (Firebase, AWS Amplify) or self-hosted Postgres without Supabase.",
+      "whenNotToUse": "Deprecated — use haus.supabase-supabase (official Supabase skill).",
       "references": ["https://supabase.com/docs"],
       "tokenBudget": 1200,
       "tags": ["supabase", "database", "backend"],
@@ -418,7 +418,7 @@
       "ecosystem": "database",
       "tokenEstimate": 2000,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -550,14 +550,14 @@
     },
     {
       "id": "haus.laravel-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/laravel-patterns",
       "title": "Haus Laravel patterns",
       "purpose": "Guide Laravel domain, routing, policy, and persistence changes.",
       "whenToUse": "Use for Laravel controllers/services/models/jobs/policies and route changes.",
-      "whenNotToUse": "Do not use for Nova-only admin resource customization tasks.",
+      "whenNotToUse": "Deprecated — use haus.ecc-laravel-patterns.",
       "references": ["https://laravel.com/docs"],
       "tokenBudget": 1200,
       "tags": ["backend", "laravel", "php"],
@@ -573,7 +573,7 @@
       "ecosystem": "laravel",
       "tokenEstimate": 2800,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -853,14 +853,14 @@
     },
     {
       "id": "haus.tailwind-scss-patterns",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/tailwind-scss-patterns",
       "title": "Haus Tailwind SCSS patterns",
       "purpose": "Guide style-system-safe Tailwind and SCSS module changes.",
       "whenToUse": "Use for Tailwind token/utility and SCSS module behavior updates.",
-      "whenNotToUse": "Do not use for non-style backend/service changes.",
+      "whenNotToUse": "Deprecated — use haus.wshobson-tailwind-design-system.",
       "references": ["https://tailwindcss.com/docs"],
       "tokenBudget": 1200,
       "tags": ["tailwind", "scss", "react19"],
@@ -879,7 +879,7 @@
       "ecosystem": "tailwind",
       "tokenEstimate": 1800,
       "installMode": "copy-selected",
-      "reviewStatus": "approved",
+      "reviewStatus": "deprecated",
       "riskLevel": "low"
     },
     {
@@ -2630,6 +2630,366 @@
         },
         {
           "role": "dotnet-service"
+        }
+      ]
+    },
+    {
+      "id": "haus.stripe-stripe-best-practices",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/stripe/stripe-best-practices",
+      "title": "Stripe Stripe Best Practices",
+      "purpose": "Guides Stripe integration decisions — API selection (Checkout Sessions vs PaymentIntents), Connect platform setup (Accounts v2, controller properties), billing/subscriptions, Treasury financial accounts, integration surfaces (Checkout, Payment Element), migrating from deprecated Stripe APIs, and security best practices (API key management, restricted keys, webhooks, OAuth). Use when building, modifying, or reviewing any Stripe integration — including accepting payments, building marketplaces, integrating Stripe, processing payments, setting up subscriptions, creating connected accounts, or implementing secure key handling.",
+      "whenToUse": "Guides Stripe integration decisions — API selection (Checkout Sessions vs PaymentIntents), Connect platform setup (Accounts v2, controller properties), billing/subscriptions, Treasury financial accounts, integration surfaces (Checkout, Payment Element), migrating from deprecated Stripe APIs, and security best practices (API key management, restricted keys, webhooks, OAuth). Use when building, modifying, or reviewing any Stripe integration — including accepting payments, building marketplaces, integrating Stripe, processing payments, setting up subscriptions, creating connected accounts, or implementing secure key handling.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "stripe", "payments"],
+      "repoRoles": [],
+      "tokenEstimate": 7509,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "stripe-ai",
+      "originUrl": "https://github.com/stripe/ai/blob/7e7f72eb42e06f79e7bc75f86e9395f4c8232c00/skills/stripe-best-practices/SKILL.md",
+      "pinnedRef": "7e7f72eb42e06f79e7bc75f86e9395f4c8232c00",
+      "ecosystem": "stripe",
+      "requiresAny": [
+        {
+          "stack": "stripe"
+        },
+        {
+          "dependency": "@stripe/stripe-js"
+        }
+      ]
+    },
+    {
+      "id": "haus.stripe-upgrade-stripe",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/stripe/upgrade-stripe",
+      "title": "Stripe Upgrade Stripe",
+      "purpose": "Guide for upgrading Stripe API versions and SDKs",
+      "whenToUse": "Guide for upgrading Stripe API versions and SDKs",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "stripe", "payments"],
+      "repoRoles": [],
+      "tokenEstimate": 1405,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "stripe-ai",
+      "originUrl": "https://github.com/stripe/ai/blob/7e7f72eb42e06f79e7bc75f86e9395f4c8232c00/skills/upgrade-stripe/SKILL.md",
+      "pinnedRef": "7e7f72eb42e06f79e7bc75f86e9395f4c8232c00",
+      "ecosystem": "stripe",
+      "requiresAny": [
+        {
+          "stack": "stripe"
+        },
+        {
+          "dependency": "@stripe/stripe-js"
+        }
+      ]
+    },
+    {
+      "id": "haus.stripe-stripe-projects",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/stripe/stripe-projects",
+      "title": "Stripe Stripe Projects",
+      "purpose": "Use when the user wants to provision infrastructure or third-party services using Stripe Projects. Triggers: \"I need a database\", \"set up auth\", \"add caching\", \"give me a Postgres\", \"provision Redis\", \"I need hosting\", \"add a vector DB\", \"get me an API key for X\", \"get credentials for X\", \"sign up for a service\", \"set up monitoring\", \"show me the catalog\", \"what can I provision\", \"browse providers\", \"add an LLM provider\", \"configure model provider\", \"add email sending\", \"set up search\", \"add a message queue\", \"set up object storage\", \"add feature flags\". Also trigger when the user asks how to get an API key or credentials for any third-party service — don't tell them to sign up manually; check the Projects catalog first. Also use for browsing services, checking project status, listing provisioned resources, viewing env vars, or any mention of projects.dev or adding/provisioning/connecting a cloud service.",
+      "whenToUse": "Use when the user wants to provision infrastructure or third-party services using Stripe Projects. Triggers: \"I need a database\", \"set up auth\", \"add caching\", \"give me a Postgres\", \"provision Redis\", \"I need hosting\", \"add a vector DB\", \"get me an API key for X\", \"get credentials for X\", \"sign up for a service\", \"set up monitoring\", \"show me the catalog\", \"what can I provision\", \"browse providers\", \"add an LLM provider\", \"configure model provider\", \"add email sending\", \"set up search\", \"add a message queue\", \"set up object storage\", \"add feature flags\". Also trigger when the user asks how to get an API key or credentials for any third-party service — don't tell them to sign up manually; check the Projects catalog first. Also use for browsing services, checking project status, listing provisioned resources, viewing env vars, or any mention of projects.dev or adding/provisioning/connecting a cloud service.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "stripe", "payments"],
+      "repoRoles": [],
+      "tokenEstimate": 1452,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "stripe-ai",
+      "originUrl": "https://github.com/stripe/ai/blob/7e7f72eb42e06f79e7bc75f86e9395f4c8232c00/skills/stripe-projects/SKILL.md",
+      "pinnedRef": "7e7f72eb42e06f79e7bc75f86e9395f4c8232c00",
+      "ecosystem": "stripe",
+      "requiresAny": [
+        {
+          "stack": "stripe"
+        },
+        {
+          "dependency": "@stripe/stripe-js"
+        }
+      ]
+    },
+    {
+      "id": "haus.supabase-supabase",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/supabase/supabase",
+      "title": "Supabase Supabase",
+      "purpose": "Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-js, @supabase/ssr) in Next.js, React, SvelteKit, Astro, Remix; auth issues (login, logout, sessions, JWT, cookies, getSession, getUser, getClaims, RLS); Supabase CLI or MCP server; schema changes, migrations, security audits, Postgres extensions (pg_graphql, pg_cron, pg_vector).",
+      "whenToUse": "Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-js, @supabase/ssr) in Next.js, React, SvelteKit, Astro, Remix; auth issues (login, logout, sessions, JWT, cookies, getSession, getUser, getClaims, RLS); Supabase CLI or MCP server; schema changes, migrations, security audits, Postgres extensions (pg_graphql, pg_cron, pg_vector).",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "supabase", "backend"],
+      "repoRoles": [],
+      "tokenEstimate": 4012,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "supabase-agent-skills",
+      "originUrl": "https://github.com/supabase/agent-skills/blob/1356046015476711a769601079262b5635929427/skills/supabase/SKILL.md",
+      "pinnedRef": "1356046015476711a769601079262b5635929427",
+      "ecosystem": "supabase",
+      "requiresAny": [
+        {
+          "stack": "supabase"
+        },
+        {
+          "dependency": "@supabase/supabase-js"
+        }
+      ]
+    },
+    {
+      "id": "haus.redis-redis-connections",
+      "version": "1.0.2",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/redis/redis-connections",
+      "title": "Redis Redis Connections",
+      "purpose": "Redis client and connection guidance covering connection pooling, multiplexing, pipelining, client-side caching with RESP3, avoiding slow commands (KEYS, SMEMBERS, HGETALL), and tuning socket timeouts. Use when configuring a Redis client (redis-py, Jedis, Lettuce, NRedisStack), batching commands for throughput, eliminating per-request connection creation, iterating large keyspaces with SCAN, enabling client-side caching for read-heavy workloads, or setting connect and read timeouts.",
+      "whenToUse": "Redis client and connection guidance covering connection pooling, multiplexing, pipelining, client-side caching with RESP3, avoiding slow commands (KEYS, SMEMBERS, HGETALL), and tuning socket timeouts. Use when configuring a Redis client (redis-py, Jedis, Lettuce, NRedisStack), batching commands for throughput, eliminating per-request connection creation, iterating large keyspaces with SCAN, enabling client-side caching for read-heavy workloads, or setting connect and read timeouts.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "redis", "database"],
+      "repoRoles": [],
+      "tokenEstimate": 3462,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "redis-agent-skills-extra",
+      "originUrl": "https://github.com/redis/agent-skills/blob/5ca2e1a2d82a768221e8f71a02e3ca095a37d38e/skills/redis-connections/SKILL.md",
+      "pinnedRef": "5ca2e1a2d82a768221e8f71a02e3ca095a37d38e",
+      "ecosystem": "redis",
+      "requiresAny": [
+        {
+          "stack": "redis"
+        },
+        {
+          "dependency": "redis"
+        }
+      ]
+    },
+    {
+      "id": "haus.redis-redis-security",
+      "version": "1.0.2",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/redis/redis-security",
+      "title": "Redis Redis Security",
+      "purpose": "Redis security guidance covering authentication (requirepass and ACL users), TLS, ACL-based least-privilege access control, restricting network exposure via bind and protected-mode, firewall rules, and disabling dangerous commands. Use when deploying Redis to production, defining ACL users for an application, configuring TLS connections, locking down a Redis instance behind a firewall, or auditing a Redis deployment for security hardening.",
+      "whenToUse": "Redis security guidance covering authentication (requirepass and ACL users), TLS, ACL-based least-privilege access control, restricting network exposure via bind and protected-mode, firewall rules, and disabling dangerous commands. Use when deploying Redis to production, defining ACL users for an application, configuring TLS connections, locking down a Redis instance behind a firewall, or auditing a Redis deployment for security hardening.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "redis", "security"],
+      "repoRoles": [],
+      "tokenEstimate": 1887,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "redis-agent-skills-extra",
+      "originUrl": "https://github.com/redis/agent-skills/blob/5ca2e1a2d82a768221e8f71a02e3ca095a37d38e/skills/redis-security/SKILL.md",
+      "pinnedRef": "5ca2e1a2d82a768221e8f71a02e3ca095a37d38e",
+      "ecosystem": "redis",
+      "requiresAny": [
+        {
+          "stack": "redis"
+        },
+        {
+          "dependency": "redis"
+        }
+      ]
+    },
+    {
+      "id": "haus.redis-redis-observability",
+      "version": "1.0.2",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/redis/redis-observability",
+      "title": "Redis Redis Observability",
+      "purpose": "Redis observability guidance — which metrics to monitor (memory, connections, hit ratio, ops/sec, rejected connections), which built-in commands to reach for during incident triage (SLOWLOG, INFO, MEMORY DOCTOR, CLIENT LIST, FT.PROFILE), and when to use the Redis Insight GUI. Use when setting up monitoring or alerts for a Redis instance, diagnosing a performance regression, profiling a slow FT.SEARCH query, or wiring Redis metrics into Prometheus, Datadog, or similar.",
+      "whenToUse": "Redis observability guidance — which metrics to monitor (memory, connections, hit ratio, ops/sec, rejected connections), which built-in commands to reach for during incident triage (SLOWLOG, INFO, MEMORY DOCTOR, CLIENT LIST, FT.PROFILE), and when to use the Redis Insight GUI. Use when setting up monitoring or alerts for a Redis instance, diagnosing a performance regression, profiling a slow FT.SEARCH query, or wiring Redis metrics into Prometheus, Datadog, or similar.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "redis", "observability"],
+      "repoRoles": [],
+      "tokenEstimate": 1546,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "redis-agent-skills-extra",
+      "originUrl": "https://github.com/redis/agent-skills/blob/5ca2e1a2d82a768221e8f71a02e3ca095a37d38e/skills/redis-observability/SKILL.md",
+      "pinnedRef": "5ca2e1a2d82a768221e8f71a02e3ca095a37d38e",
+      "ecosystem": "redis",
+      "requiresAny": [
+        {
+          "stack": "redis"
+        },
+        {
+          "dependency": "redis"
+        }
+      ]
+    },
+    {
+      "id": "haus.sanity-content-modeling-best-practices",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/sanity/content-modeling-best-practices",
+      "title": "Sanity Content Modeling Best Practices",
+      "purpose": "Structured content modeling guidance for schema design, content architecture, content reuse, references versus embedded objects, separation of concerns, and taxonomies across Sanity and other headless CMSes. Use this skill when designing or refactoring content types, deciding field shapes, debating reusable versus nested content, planning omnichannel content models, or reviewing whether a schema is too page-shaped or presentation-driven.",
+      "whenToUse": "Structured content modeling guidance for schema design, content architecture, content reuse, references versus embedded objects, separation of concerns, and taxonomies across Sanity and other headless CMSes. Use this skill when designing or refactoring content types, deciding field shapes, debating reusable versus nested content, planning omnichannel content models, or reviewing whether a schema is too page-shaped or presentation-driven.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "sanity", "cms"],
+      "repoRoles": [],
+      "tokenEstimate": 3195,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "sanity-agent-toolkit-extra",
+      "originUrl": "https://github.com/sanity-io/agent-toolkit/blob/2d7b7c08a31a6e5b613e33a9edc76456e4d7c052/skills/content-modeling-best-practices/SKILL.md",
+      "pinnedRef": "2d7b7c08a31a6e5b613e33a9edc76456e4d7c052",
+      "ecosystem": "sanity",
+      "requiresAny": [
+        {
+          "stack": "sanity"
+        },
+        {
+          "dependency": "sanity"
+        }
+      ]
+    },
+    {
+      "id": "haus.sickn33-docker-expert",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/sickn33/docker-expert",
+      "title": "Sickn33 Docker Expert",
+      "purpose": "You are an advanced Docker containerization expert with comprehensive, practical knowledge of container optimization, security hardening, multi-stage builds, orchestration patterns, and production deployment strategies based on current industry best practices.",
+      "whenToUse": "You are an advanced Docker containerization expert with comprehensive, practical knowledge of container optimization, security hardening, multi-stage builds, orchestration patterns, and production deployment strategies based on current industry best practices.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "docker"],
+      "repoRoles": [],
+      "tokenEstimate": 3610,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "sickn33-antigravity-awesome-skills",
+      "originUrl": "https://github.com/sickn33/antigravity-awesome-skills/blob/6042393e48713b48952566cf2d4e3e28d4e50159/skills/docker-expert/SKILL.md",
+      "pinnedRef": "6042393e48713b48952566cf2d4e3e28d4e50159",
+      "ecosystem": "docker",
+      "requiresAny": [
+        {
+          "stack": "docker"
+        }
+      ]
+    },
+    {
+      "id": "haus.wshobson-tailwind-design-system",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/wshobson/tailwind-design-system",
+      "title": "Wshobson Tailwind Design System",
+      "purpose": "Build scalable design systems with Tailwind CSS v4, design tokens, component libraries, and responsive patterns. Use when creating component libraries, implementing design systems, or standardizing UI patterns.",
+      "whenToUse": "Build scalable design systems with Tailwind CSS v4, design tokens, component libraries, and responsive patterns. Use when creating component libraries, implementing design systems, or standardizing UI patterns.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "tailwind", "shadcn"],
+      "repoRoles": [],
+      "tokenEstimate": 6019,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "wshobson-agents",
+      "originUrl": "https://github.com/wshobson/agents/blob/cc37bfdd292ce520ba1c44df7a3a70d5f8137236/plugins/frontend-mobile-development/skills/tailwind-design-system/SKILL.md",
+      "pinnedRef": "cc37bfdd292ce520ba1c44df7a3a70d5f8137236",
+      "ecosystem": "tailwind",
+      "requiresAny": [
+        {
+          "stack": "tailwind"
+        },
+        {
+          "stack": "shadcn"
+        }
+      ]
+    },
+    {
+      "id": "haus.wshobson-postgresql-table-design",
+      "version": "1.0.1",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/wshobson/postgresql-table-design",
+      "title": "Wshobson Postgresql Table Design",
+      "purpose": "Use this skill when designing or reviewing a PostgreSQL-specific schema. Covers best-practices, data types, indexing, constraints, performance patterns, and advanced features",
+      "whenToUse": "Use this skill when designing or reviewing a PostgreSQL-specific schema. Covers best-practices, data types, indexing, constraints, performance patterns, and advanced features",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "postgresql", "database"],
+      "repoRoles": [],
+      "tokenEstimate": 4021,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "medium",
+      "originSourceId": "wshobson-agents",
+      "originUrl": "https://github.com/wshobson/agents/blob/cc37bfdd292ce520ba1c44df7a3a70d5f8137236/plugins/database-design/skills/postgresql/SKILL.md",
+      "pinnedRef": "cc37bfdd292ce520ba1c44df7a3a70d5f8137236",
+      "ecosystem": "postgresql",
+      "requiresAny": [
+        {
+          "stack": "postgresql"
+        },
+        {
+          "stack": "database"
         }
       ]
     }

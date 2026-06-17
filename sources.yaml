@@ -42,6 +42,89 @@ sources:
           upstreamPath: skills/laravel-plugin-discovery,
         }
       - { name: csharp-testing, type: skill, upstreamPath: skills/csharp-testing }
+  - id: stripe-ai
+    repo: https://github.com/stripe/ai
+    slug: stripe
+    license: MIT
+    licenseConfidence: medium
+    snapshotRef: 7e7f72eb42e06f79e7bc75f86e9395f4c8232c00
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - { name: stripe-best-practices, type: skill, upstreamPath: skills/stripe-best-practices }
+      - { name: upgrade-stripe, type: skill, upstreamPath: skills/upgrade-stripe }
+      - { name: stripe-projects, type: skill, upstreamPath: skills/stripe-projects }
+  - id: supabase-agent-skills
+    repo: https://github.com/supabase/agent-skills
+    slug: supabase
+    license: MIT
+    licenseConfidence: medium
+    snapshotRef: 1356046015476711a769601079262b5635929427
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - { name: supabase, type: skill, upstreamPath: skills/supabase }
+  - id: redis-agent-skills-extra
+    repo: https://github.com/redis/agent-skills
+    slug: redis
+    license: MIT
+    licenseConfidence: medium
+    snapshotRef: 5ca2e1a2d82a768221e8f71a02e3ca095a37d38e
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - { name: redis-connections, type: skill, upstreamPath: skills/redis-connections }
+      - { name: redis-security, type: skill, upstreamPath: skills/redis-security }
+      - { name: redis-observability, type: skill, upstreamPath: skills/redis-observability }
+  - id: sanity-agent-toolkit-extra
+    repo: https://github.com/sanity-io/agent-toolkit
+    slug: sanity
+    license: MIT
+    licenseConfidence: medium
+    snapshotRef: 2d7b7c08a31a6e5b613e33a9edc76456e4d7c052
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: content-modeling-best-practices,
+          type: skill,
+          upstreamPath: skills/content-modeling-best-practices,
+        }
+  - id: sickn33-antigravity-awesome-skills
+    repo: https://github.com/sickn33/antigravity-awesome-skills
+    slug: sickn33
+    license: MIT
+    licenseConfidence: medium
+    snapshotRef: 6042393e48713b48952566cf2d4e3e28d4e50159
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - { name: docker-expert, type: skill, upstreamPath: skills/docker-expert }
+  - id: wshobson-agents
+    repo: https://github.com/wshobson/agents
+    slug: wshobson
+    license: MIT
+    licenseConfidence: medium
+    snapshotRef: cc37bfdd292ce520ba1c44df7a3a70d5f8137236
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - {
+          name: tailwind-design-system,
+          type: skill,
+          upstreamPath: plugins/frontend-mobile-development/skills/tailwind-design-system,
+        }
+      - {
+          name: postgresql-table-design,
+          type: skill,
+          upstreamPath: plugins/database-design/skills/postgresql,
+        }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode
     slug: oh-my-claudecode

@@ -169,16 +169,18 @@ export function cloneUpstream(repoUrl) {
 }
 
 export function assertMitLicense(upstreamRoot) {
-  const licensePath = path.join(upstreamRoot, 'LICENSE')
-  if (!fs.existsSync(licensePath)) {
+  const licensePath = ['LICENSE', 'LICENSE.md']
+    .map((name) => path.join(upstreamRoot, name))
+    .find((candidate) => fs.existsSync(candidate))
+  if (!licensePath) {
     throw new Error('upstream LICENSE file missing')
   }
   const text = fs.readFileSync(licensePath, 'utf8')
   const hasSpdxMit = /SPDX-License-Identifier:\s*MIT\b/m.test(text)
-  const hasMitTitle = /^MIT License/m.test(text)
+  const hasMitTitle = /^(?:The )?MIT License\b/m.test(text)
   if (!hasSpdxMit && !hasMitTitle) {
     throw new Error(
-      'upstream license is not MIT (expected SPDX-License-Identifier: MIT or MIT License header)',
+      'upstream license is not MIT (expected SPDX-License-Identifier: MIT, MIT License header in LICENSE/LICENSE.md, or "The MIT License")',
     )
   }
 }
@@ -186,6 +188,13 @@ export function assertMitLicense(upstreamRoot) {
 // ---------------------------------------------------------------------------
 // File / directory utilities
 // ---------------------------------------------------------------------------
+
+/** Upstream metadata dirs we never ship into the catalog (IDE plugin manifests). */
+const SKIP_COPY_DIR_NAMES = new Set(['.cursor-plugin'])
+
+export function isSkippedSyncDirectory(name) {
+  return SKIP_COPY_DIR_NAMES.has(name)
+}
 
 function readFileOrEmpty(filePath) {
   return fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null
@@ -195,6 +204,7 @@ function listFilesRecursive(dir, base = dir) {
   const out = []
   if (!fs.existsSync(dir)) return out
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory() && isSkippedSyncDirectory(entry.name)) continue
     const full = path.join(dir, entry.name)
     if (entry.isDirectory()) {
       out.push(...listFilesRecursive(full, base))
@@ -289,6 +299,7 @@ function copyRecursive(src, dest) {
   if (stat.isDirectory()) {
     fs.mkdirSync(dest, { recursive: true })
     for (const name of fs.readdirSync(src)) {
+      if (isSkippedSyncDirectory(name)) continue
       copyRecursive(path.join(src, name), path.join(dest, name))
     }
   } else {

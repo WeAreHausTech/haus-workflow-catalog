@@ -2,3 +2,9 @@ title = "haus-workflow-catalog gitleaks config"
 
 [extend]
 useDefault = true
+
+# Historical wave3 commit imported then removed laravel-boost; gitleaks scans full history.
+[allowlist]
+paths = [
+  '''skills/laravel-boost/laravel-best-practices/rules/config\.md''',
+]

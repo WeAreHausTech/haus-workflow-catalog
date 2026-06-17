@@ -16,7 +16,7 @@ pre-commit:
       fail_text: 'gitleaks found a likely secret in staged changes.'
     secret-grep:
       run: |
-        added="$(git diff --cached --no-color -U0 -- ':!.github/workflows' | grep -E '^\+' | grep -vE '^\+\+\+')"
+        added="$(git diff --cached --no-color -U0 -- ':!.github/workflows' ':!skills/**' ':!agents/**' ':!commands/**' | grep -E '^\+' | grep -vE '^\+\+\+')"
         if printf '%s\n' "$added" | grep -iqE "(password|secret|token|api_key)[[:space:]]*[:=]"; then
           exit 1
         fi

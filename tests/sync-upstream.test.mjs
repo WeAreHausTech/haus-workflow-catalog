@@ -9,6 +9,7 @@ import {
   assertSnapshotRef,
   extractSourceBlock,
   inspectSharedSupport,
+  isSkippedSyncDirectory,
   parseAllSources,
   selectCatalogPath,
 } from '../scripts/sync-upstream.mjs'
@@ -30,6 +31,19 @@ test('assertMitLicense accepts MIT License title header', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'haus-lic-title-'))
   try {
     fs.writeFileSync(path.join(dir, 'LICENSE'), 'MIT License\n\nCopyright (c) Example\n')
+    assert.doesNotThrow(() => assertMitLicense(dir))
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true })
+  }
+})
+
+test('assertMitLicense accepts The MIT License title header and LICENSE.md', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'haus-lic-the-mit-'))
+  try {
+    fs.writeFileSync(
+      path.join(dir, 'LICENSE.md'),
+      'The MIT License (MIT)\n\nCopyright (c) Example\n',
+    )
     assert.doesNotThrow(() => assertMitLicense(dir))
   } finally {
     fs.rmSync(dir, { recursive: true, force: true })
@@ -117,4 +131,9 @@ test('parseAllSources normalizes select items with default type agent', () => {
   )
   assert.equal(sources[0].items[0].type, 'agent')
   assert.equal(sources[0].items[1].type, 'skill')
+})
+
+test('isSkippedSyncDirectory excludes IDE plugin metadata dirs from sync', () => {
+  assert.equal(isSkippedSyncDirectory('.cursor-plugin'), true)
+  assert.equal(isSkippedSyncDirectory('references'), false)
 })
