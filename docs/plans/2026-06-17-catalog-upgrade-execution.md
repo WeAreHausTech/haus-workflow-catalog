@@ -15,10 +15,10 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 | 5a–5c — Wave3 skills.sh (bulk PR)  | merged  | [haus-workflow-catalog#26](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/26) |
 | 6 — Wave3b vendors                 | merged  | [haus-workflow-catalog#27](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/27) |
 | 7 — Wave4 llms + deprecations      | merged  | [haus-workflow-catalog#28](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/28) |
-| 8 — CLI fixtures + archetype tests | pending | —                                                                                          |
+| 8 — CLI fixtures + archetype tests | merged  | [haus-workflow#122](https://github.com/WeAreHausTech/haus-workflow/pull/122)               |
 | 9 — Release both repos             | pending | —                                                                                          |
 
-**Next:** Step 8 — CLI fixture sync + archetype golden tests.
+**Next:** Step 9 — catalog `yarn release` → tag → CLI fixture sync from tag → CLI release if needed.
 
 ## Step 7 — Wave4 llms.txt + deprecations (merged #28)
 
@@ -28,9 +28,17 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 
 **Held:** `haus.radix-shadcn-patterns` deprecation until shadcn skill lands.
 
+## Step 8 — CLI fixtures + archetype tests (merged #122)
+
+Synced `library/catalog/manifest.json` + `validation-rules.json` (79 → 106 items). Added `tests/recommend-archetypes.test.js` + golden fixture covering 6 archetypes; 8 deprecated routers asserted in `skipped[]`.
+
+Post-merge catalog fix: canonical title casing (NestJS, PostgreSQL, GraphQL) — `cc96de2`.
+
 ## Remaining scope
 
-- CLI fixture sync + archetype golden tests + release
+- Catalog release (`yarn release`) → tag push
+- CLI fixture sync from release tag (`sync-catalog-from-release`) if drift
+- CLI release if needed
 
 ## Step 6 — Wave3b vendors (merged #27)
 
