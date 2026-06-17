@@ -14,12 +14,12 @@ import {
   auditMarkdownLines,
   extractFrontmatterValue,
 } from './forbidden-content.mjs'
+import { validateCuratedProvenance, validateReferences } from './manifest-item-fields.mjs'
 import {
   ALLOWED_NPX_PATTERN,
   ANY_NPX_PATTERN,
   auditDisallowedTags,
   FORBIDDEN_TAGS,
-  HTTP_URL_PATTERN,
   NPX_TSX_ONLY_EXEMPT_TYPES,
   PLACEHOLDER_PATTERN,
   REQUIRED_SKILL_FRONTMATTER,
@@ -86,6 +86,18 @@ function auditForbiddenStacks(items) {
   return failures
 }
 
+function auditCuratedRequiresAny(items) {
+  const failures = []
+  for (const item of items) {
+    if (item.source !== 'curated' || item.default === true) continue
+    const requiresAny = item.requiresAny
+    if (!Array.isArray(requiresAny) || requiresAny.length === 0) {
+      failures.push(`${item.id}: non-default curated item missing requiresAny`)
+    }
+  }
+  return failures
+}
+
 function auditManifestStructure(manifestVersion, items) {
   const failures = []
   const seenIds = new Map()
@@ -102,6 +114,13 @@ function auditManifestStructure(manifestVersion, items) {
       failures.push(`item[${i}]: missing id`)
       continue
     }
+
+    const provenanceError = validateCuratedProvenance(item)
+    if (provenanceError) failures.push(provenanceError)
+
+    const referencesError = validateReferences(item.id, item.references)
+    if (referencesError) failures.push(referencesError)
+
     if (!item.type) {
       failures.push(`${item.id}: missing type`)
       continue
@@ -140,22 +159,6 @@ function auditManifestStructure(manifestVersion, items) {
       const isCuratedApproved = item.source === 'curated' && item.reviewStatus === 'approved'
       if (!isHaus && !isCuratedApproved) {
         failures.push(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`)
-      }
-
-      const references = Array.isArray(item.references) ? item.references : []
-      for (const ref of references) {
-        if (typeof ref !== 'string') {
-          failures.push(`${item.id}: references[] entries must be strings`)
-          continue
-        }
-        if (/^https?:\/\//i.test(ref)) {
-          if (!ref.startsWith('https://')) {
-            failures.push(`${item.id}: reference must be https:// URL: ${ref}`)
-          }
-          if (HTTP_URL_PATTERN.test(ref)) {
-            failures.push(`${item.id}: reference uses insecure http:// URL: ${ref}`)
-          }
-        }
       }
     }
   }
@@ -316,6 +319,7 @@ export function validateCatalog(root, manifest) {
 
   failures.push(
     ...auditManifestStructure(data.version, items),
+    ...auditCuratedRequiresAny(items),
     ...auditForbiddenStacks(items),
     ...auditShippedFiles(root, items),
     ...auditMarkdownContent(root),

@@ -10,6 +10,7 @@ import {
   extractSourceBlock,
   inspectSharedSupport,
   parseAllSources,
+  selectCatalogPath,
 } from '../scripts/sync-upstream.mjs'
 
 test('assertMitLicense accepts SPDX MIT license', () => {
@@ -78,7 +79,7 @@ test('inspectSharedSupport detects drift in skills/shared support files', () => 
   fs.writeFileSync(path.join(upstreamShared, 'task-format-reference.md'), 'new\n')
 
   try {
-    const result = inspectSharedSupport(upstream, localRoot)
+    const result = inspectSharedSupport(upstream, 'superpowers', localRoot)
     assert.equal(result?.removed, false)
     assert.equal(result?.cmp.equal, false)
     assert.ok(result.cmp.files >= 1)
@@ -96,4 +97,24 @@ test('assertMitLicense rejects ambiguous non-MIT license text', () => {
   } finally {
     fs.rmSync(dir, { recursive: true, force: true })
   }
+})
+
+test('selectCatalogPath maps skill and agent upstream paths to catalog layout', () => {
+  assert.equal(
+    selectCatalogPath('ecc', 'frontend-patterns', 'skill'),
+    'skills/ecc/frontend-patterns',
+  )
+  assert.equal(selectCatalogPath('ecc', 'react-reviewer', 'agent'), 'agents/ecc/react-reviewer.md')
+  assert.equal(
+    selectCatalogPath('superpowers', 'brainstorm', 'command'),
+    'commands/superpowers/brainstorm.md',
+  )
+})
+
+test('parseAllSources normalizes select items with default type agent', () => {
+  const sources = parseAllSources(
+    'sources:\n  - id: x\n    repo: https://x/a\n    slug: ecc\n    mode: select\n    items:\n      - { name: a, upstreamPath: agents/a.md }\n      - { name: b, type: skill, upstreamPath: skills/b/SKILL.md }\n',
+  )
+  assert.equal(sources[0].items[0].type, 'agent')
+  assert.equal(sources[0].items[1].type, 'skill')
 })
