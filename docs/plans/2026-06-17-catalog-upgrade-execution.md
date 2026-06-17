@@ -6,21 +6,21 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 
 ## Summary
 
-| Step                               | Status      | PR                                                                                         |
-| ---------------------------------- | ----------- | ------------------------------------------------------------------------------------------ |
-| 1 — CLI Phase0                     | merged      | [haus-workflow#121](https://github.com/WeAreHausTech/haus-workflow/pull/121)               |
-| 2 — Catalog Phase0                 | merged      | [haus-workflow-catalog#23](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/23) |
-| 3 — Wave1 ECC agents               | merged      | [haus-workflow-catalog#24](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/24) |
-| 4 — Wave2 skills                   | merged      | [haus-workflow-catalog#25](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/25) |
-| 5a–5c — Wave3 skills.sh (bulk PR)  | merged      | [haus-workflow-catalog#26](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/26) |
-| 6 — Wave3b vendors                 | merged      | [haus-workflow-catalog#27](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/27) |
-| 7 — Wave4 llms + deprecations      | in progress | —                                                                                          |
-| 8 — CLI fixtures + archetype tests | pending     | —                                                                                          |
-| 9 — Release both repos             | pending     | —                                                                                          |
+| Step                               | Status  | PR                                                                                         |
+| ---------------------------------- | ------- | ------------------------------------------------------------------------------------------ |
+| 1 — CLI Phase0                     | merged  | [haus-workflow#121](https://github.com/WeAreHausTech/haus-workflow/pull/121)               |
+| 2 — Catalog Phase0                 | merged  | [haus-workflow-catalog#23](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/23) |
+| 3 — Wave1 ECC agents               | merged  | [haus-workflow-catalog#24](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/24) |
+| 4 — Wave2 skills                   | merged  | [haus-workflow-catalog#25](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/25) |
+| 5a–5c — Wave3 skills.sh (bulk PR)  | merged  | [haus-workflow-catalog#26](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/26) |
+| 6 — Wave3b vendors                 | merged  | [haus-workflow-catalog#27](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/27) |
+| 7 — Wave4 llms + deprecations      | merged  | [haus-workflow-catalog#28](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/28) |
+| 8 — CLI fixtures + archetype tests | pending | —                                                                                          |
+| 9 — Release both repos             | pending | —                                                                                          |
 
-**Next:** Merge/land Wave4 PR; then CLI fixture sync (step 8).
+**Next:** Step 8 — CLI fixture sync + archetype golden tests.
 
-## Step 7 — Wave4 llms.txt + deprecations (in progress)
+## Step 7 — Wave4 llms.txt + deprecations (merged #28)
 
 **llms.txt `references[]`** on 18 vendor feeds (manifest-only): nextjs, react, vite, vue, prisma, nx, turbo, tanstack, vitest, storybook, bullmq, i18next, strapi, sanity, vendure (existing), elasticsearch, nova, shadcn. Also `haus.sanity-content-modeling-best-practices`.
 
