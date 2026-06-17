@@ -142,7 +142,8 @@ function auditManifestStructure(manifestVersion, items) {
       item.type === 'skill' ||
       item.type === 'agent' ||
       item.type === 'template' ||
-      item.type === 'command'
+      item.type === 'command' ||
+      item.type === 'config'
     ) {
       if (!item.path) {
         failures.push(`${item.id}: missing path`)
@@ -227,6 +228,13 @@ function auditShippedFiles(root, items) {
       const rel = path.relative(root, absPath)
       failures.push(...checkRequiredFrontmatter(text, `${item.id}: ${rel}`))
       failures.push(...auditTemplateContent(root, absPath, item.id))
+    } else if (item.type === 'config') {
+      // Config items ship a file (eslint.config.mjs) or a directory of files
+      // (configs/prettier/). Verify the path exists; they are not loaded into
+      // agent context, so no frontmatter/forbidden-tag audit applies.
+      if (!fs.existsSync(absPath)) {
+        failures.push(`${item.id}: missing config path ${item.path}`)
+      }
     }
   }
   return failures

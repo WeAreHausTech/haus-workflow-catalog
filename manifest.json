@@ -3139,7 +3139,7 @@
       "version": "1.0.0",
       "source": "haus",
       "type": "config",
-      "path": "configs/eslint/eslint.config.js",
+      "path": "configs/eslint/eslint.config.mjs",
       "title": "Haus ESLint config",
       "purpose": "ESLint 9.x flat config for Haus Tech TypeScript/React projects.",
       "whenToUse": "Scaffold into a new project to get the standard Haus ESLint setup. Run `haus scaffold haus.eslint-config`.",
