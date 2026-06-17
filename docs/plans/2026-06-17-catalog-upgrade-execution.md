@@ -30,17 +30,18 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 
 **Strategy:** merge planned 5a + 5b + partial 5c into one PR to reduce review churn.
 
-**Imported (14 skills, 91 → 105 items):**
+**Imported (13 skills, 91 → 104 items):**
 
-| Source        | Skills                                                                         |
-| ------------- | ------------------------------------------------------------------------------ |
-| stripe        | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects`                   |
-| supabase      | `supabase`, `supabase-postgres-best-practices`                                 |
-| redis         | `redis-connections`, `redis-security`, `redis-observability`                   |
-| laravel-boost | `laravel-best-practices`                                                       |
-| sanity        | `content-modeling-best-practices`                                              |
-| sickn33       | `docker-expert`                                                                |
-| wshobson      | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns` |
+| Source   | Skills                                                                         |
+| -------- | ------------------------------------------------------------------------------ |
+| stripe   | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects`                   |
+| supabase | `supabase`, `supabase-postgres-best-practices`                                 |
+| redis    | `redis-connections`, `redis-security`, `redis-observability`                   |
+| sanity   | `content-modeling-best-practices`                                              |
+| sickn33  | `docker-expert`                                                                |
+| wshobson | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns` |
+
+**Dropped from PR:** hyf0 vue pack (oversized reference trees), jezweb wordpress-elementor (redundant), `laravel-boost` (overlaps ECC `laravel-patterns` + Haus `laravel-patterns`).
 
 **Tooling:** `assertMitLicense` now accepts `The MIT License` headers and `LICENSE.md`.
 

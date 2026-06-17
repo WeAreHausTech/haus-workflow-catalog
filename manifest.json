@@ -2898,39 +2898,6 @@
       ]
     },
     {
-      "id": "haus.laravel-boost-laravel-best-practices",
-      "version": "1.0.1",
-      "source": "curated",
-      "type": "skill",
-      "path": "skills/laravel-boost/laravel-best-practices",
-      "title": "Laravel Boost Laravel Best Practices",
-      "purpose": "Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, form requests, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns.",
-      "whenToUse": "Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, form requests, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns.",
-      "whenNotToUse": "Do not use when a more specific skill or command applies.",
-      "tags": ["workflow", "laravel"],
-      "repoRoles": [],
-      "tokenEstimate": 15739,
-      "installMode": "copy-selected",
-      "default": false,
-      "reviewStatus": "approved",
-      "riskLevel": "low",
-      "useMode": "copy",
-      "license": "MIT",
-      "licenseConfidence": "medium",
-      "originSourceId": "laravel-boost",
-      "originUrl": "https://github.com/laravel/boost/blob/182d43ac45d33b7d3175b12d0582445d03c66c37/.ai/laravel/skill/laravel-best-practices/SKILL.md",
-      "pinnedRef": "182d43ac45d33b7d3175b12d0582445d03c66c37",
-      "ecosystem": "laravel",
-      "requiresAny": [
-        {
-          "stack": "laravel"
-        },
-        {
-          "dependency": "laravel/framework"
-        }
-      ]
-    },
-    {
       "id": "haus.sanity-content-modeling-best-practices",
       "version": "1.0.0",
       "source": "curated",

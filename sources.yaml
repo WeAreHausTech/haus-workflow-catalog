@@ -84,21 +84,6 @@ sources:
       - { name: redis-connections, type: skill, upstreamPath: skills/redis-connections }
       - { name: redis-security, type: skill, upstreamPath: skills/redis-security }
       - { name: redis-observability, type: skill, upstreamPath: skills/redis-observability }
-  - id: laravel-boost
-    repo: https://github.com/laravel/boost
-    slug: laravel-boost
-    license: MIT
-    licenseConfidence: medium
-    snapshotRef: 182d43ac45d33b7d3175b12d0582445d03c66c37
-    retrieved: 2026-06-17
-    useMode: copy
-    mode: select
-    items:
-      - {
-          name: laravel-best-practices,
-          type: skill,
-          upstreamPath: .ai/laravel/skill/laravel-best-practices,
-        }
   - id: sanity-agent-toolkit-extra
     repo: https://github.com/sanity-io/agent-toolkit
     slug: sanity
