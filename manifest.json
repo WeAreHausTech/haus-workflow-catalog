@@ -2436,42 +2436,6 @@
       ]
     },
     {
-      "id": "haus.ecc-react-testing",
-      "version": "1.0.0",
-      "source": "curated",
-      "type": "skill",
-      "path": "skills/ecc/react-testing",
-      "title": "Ecc React Testing",
-      "purpose": "React component testing with React Testing Library, Vitest/Jest, MSW for network mocking, accessibility assertions with axe, and the decision boundary between component tests and Playwright/Cypress end-to-end runs. Use when writing or fixing tests for React components, hooks, or pages.",
-      "whenToUse": "React component testing with React Testing Library, Vitest/Jest, MSW for network mocking, accessibility assertions with axe, and the decision boundary between component tests and Playwright/Cypress end-to-end runs. Use when writing or fixing tests for React components, hooks, or pages.",
-      "whenNotToUse": "Do not use when a more specific skill or command applies.",
-      "tags": ["workflow", "testing"],
-      "repoRoles": [],
-      "tokenEstimate": 3292,
-      "installMode": "copy-selected",
-      "default": false,
-      "reviewStatus": "approved",
-      "riskLevel": "low",
-      "useMode": "copy",
-      "license": "MIT",
-      "licenseConfidence": "high",
-      "originSourceId": "ecc",
-      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/react-testing/SKILL.md",
-      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
-      "ecosystem": "testing",
-      "requiresAny": [
-        {
-          "stack": "react19"
-        },
-        {
-          "dependency": "@testing-library/react"
-        },
-        {
-          "dependency": "vitest"
-        }
-      ]
-    },
-    {
       "id": "haus.ecc-vite-patterns",
       "version": "1.0.0",
       "source": "curated",
