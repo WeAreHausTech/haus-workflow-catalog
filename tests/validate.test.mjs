@@ -11,6 +11,31 @@ import {
   validateItemSchema,
 } from '../scripts/validate.mjs'
 
+const REPO_ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
+
+function configManifest(overrides = {}) {
+  return {
+    version: '1.0.0',
+    items: [
+      {
+        id: 'haus.eslint-config',
+        type: 'config',
+        source: 'haus',
+        version: '1.0.0',
+        path: 'configs/eslint/eslint.config.mjs',
+        title: 'Haus ESLint config',
+        tags: [],
+        repoRoles: [],
+        tokenEstimate: 0,
+        ...overrides,
+      },
+    ],
+  }
+}
+
+const configFailures = (manifest) =>
+  validateCatalog(REPO_ROOT, manifest).failures.filter((f) => f.includes('haus.eslint-config'))
+
 test('rejects a skill missing description frontmatter', () => {
   const missing = missingSkillFrontmatterKeys('---\ntitle: x\n---\nbody\n')
   assert.ok(missing.includes('description'))
@@ -102,4 +127,23 @@ test('rejects non-default curated item without requiresAny', () => {
   })
   assert.equal(result.ok, false)
   assert.ok(result.failures.some((f) => f.includes('requiresAny')))
+})
+
+test('accepts a config item whose file exists', () => {
+  assert.deepEqual(configFailures(configManifest()), [])
+})
+
+test('rejects a config item whose path is missing on disk', () => {
+  const failures = configFailures(configManifest({ path: 'configs/eslint/does-not-exist.mjs' }))
+  assert.ok(failures.some((f) => f.includes('missing config path')))
+})
+
+test('rejects a config item not under configs/', () => {
+  const failures = configFailures(configManifest({ path: 'eslint.config.mjs' }))
+  assert.ok(failures.some((f) => f.includes('must live under configs/')))
+})
+
+test('rejects a config item with non-zero tokenEstimate', () => {
+  const failures = configFailures(configManifest({ tokenEstimate: 42 }))
+  assert.ok(failures.some((f) => f.includes('tokenEstimate: 0')))
 })

@@ -162,6 +162,20 @@ function auditManifestStructure(manifestVersion, items) {
         failures.push(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`)
       }
     }
+
+    // Config items skip content audits (they are tooling files, not agent context),
+    // so enforce their structural contract explicitly: under configs/ and weightless.
+    if (item.type === 'config') {
+      const norm = (item.path ?? '').replace(/\\/g, '/')
+      if (!norm.startsWith('configs/')) {
+        failures.push(`${item.id}: config items must live under configs/ (got "${item.path}")`)
+      }
+      if (item.tokenEstimate !== 0) {
+        failures.push(
+          `${item.id}: config items must set tokenEstimate: 0 (got ${item.tokenEstimate})`,
+        )
+      }
+    }
   }
   return failures
 }
