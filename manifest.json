@@ -2389,6 +2389,12 @@
       "requiresAny": [
         {
           "stack": "typescript5"
+        },
+        {
+          "stack": "typescript"
+        },
+        {
+          "dependency": "typescript"
         }
       ],
       "whenNotToUse": "Do not use when a more specific skill or command applies."
