@@ -24,7 +24,7 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 
 **llms.txt `references[]`** on 18 vendor feeds (manifest-only): nextjs, react, vite, vue, prisma, nx, turbo, tanstack, vitest, storybook, bullmq, i18next, strapi, sanity, vendure (existing), elasticsearch, nova, shadcn. Also `haus.sanity-content-modeling-best-practices`.
 
-**Deprecations:** `haus.sanity-patterns` → `haus.sanity-content-modeling-best-practices` + docs.sanity.io llms; `haus.database-patterns` → `haus.wshobson-postgresql-table-design`, `haus.redis-redis-*`, elastic llms.
+**Deprecations:** `haus.sanity-patterns` → `haus.sanity-content-modeling-best-practices` + https://docs.sanity.io/llms.txt; `haus.database-patterns` → `haus.wshobson-postgresql-table-design`, `haus.redis-redis-*`, https://www.elastic.co/docs/llms.txt.
 
 **Held:** `haus.radix-shadcn-patterns` deprecation until shadcn skill lands.
 
