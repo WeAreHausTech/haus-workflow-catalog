@@ -42,28 +42,6 @@ sources:
           upstreamPath: skills/laravel-plugin-discovery,
         }
       - { name: csharp-testing, type: skill, upstreamPath: skills/csharp-testing }
-  - id: hyf0-vue-skills
-    repo: https://github.com/hyf0/vue-skills
-    slug: hyf0
-    license: MIT
-    licenseConfidence: medium
-    snapshotRef: c9d355ff23f654309dd02006be671859df0a134c
-    retrieved: 2026-06-17
-    useMode: copy
-    mode: select
-    items:
-      - { name: vue-best-practices, type: skill, upstreamPath: skills/vue-best-practices }
-      - { name: vue-debug-guides, type: skill, upstreamPath: skills/vue-debug-guides }
-      - {
-          name: vue-pinia-best-practices,
-          type: skill,
-          upstreamPath: skills/vue-pinia-best-practices,
-        }
-      - {
-          name: vue-router-best-practices,
-          type: skill,
-          upstreamPath: skills/vue-router-best-practices,
-        }
   - id: stripe-ai
     repo: https://github.com/stripe/ai
     slug: stripe

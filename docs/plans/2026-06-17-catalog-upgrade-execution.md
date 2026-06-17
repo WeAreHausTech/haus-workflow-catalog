@@ -30,19 +30,18 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 
 **Strategy:** merge planned 5a + 5b + partial 5c into one PR to reduce review churn.
 
-**Imported (19 skills, 91 → 110 items):**
+**Imported (15 skills, 91 → 106 items):**
 
-| Source        | Skills                                                                                            |
-| ------------- | ------------------------------------------------------------------------------------------------- |
-| hyf0          | `vue-best-practices`, `vue-debug-guides`, `vue-pinia-best-practices`, `vue-router-best-practices` |
-| stripe        | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects`                                      |
-| supabase      | `supabase`, `supabase-postgres-best-practices`                                                    |
-| redis         | `redis-connections`, `redis-security`, `redis-observability`                                      |
-| laravel-boost | `laravel-best-practices`                                                                          |
-| sanity        | `content-modeling-best-practices`                                                                 |
-| sickn33       | `docker-expert`                                                                                   |
-| wshobson      | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns`                    |
-| jezweb        | `wordpress-elementor`                                                                             |
+| Source        | Skills                                                                         |
+| ------------- | ------------------------------------------------------------------------------ |
+| stripe        | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects`                   |
+| supabase      | `supabase`, `supabase-postgres-best-practices`                                 |
+| redis         | `redis-connections`, `redis-security`, `redis-observability`                   |
+| laravel-boost | `laravel-best-practices`                                                       |
+| sanity        | `content-modeling-best-practices`                                              |
+| sickn33       | `docker-expert`                                                                |
+| wshobson      | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns` |
+| jezweb        | `wordpress-elementor`                                                          |
 
 **Tooling:** `assertMitLicense` now accepts `The MIT License` headers and `LICENSE.md`.
 
@@ -52,6 +51,7 @@ Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-li
 - License gate: `wordpress/agent-skills` (GPL), `currents-playwright-best-practices` (MIT body without MIT title)
 - Content policy: `vue-testing-best-practices`, all expo pack (5), `prisma-upgrade-v7`, `sanity-migration`, `monorepo-management` (disallowed `npx`)
 - Content policy: `redis-core` (`http://` in references), `iris-development` (forbidden `python` mention)
+- Dropped from PR: hyf0 vue pack (4 skills) — oversized reference trees per skill; defer to later wave or slimmer upstream pick
 
 ## Remaining scope
 
