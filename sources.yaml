@@ -125,6 +125,30 @@ sources:
           type: skill,
           upstreamPath: plugins/database-design/skills/postgresql,
         }
+  - id: getsentry-sentry-for-ai
+    repo: https://github.com/getsentry/sentry-for-ai
+    slug: sentry
+    license: MIT
+    licenseConfidence: high
+    snapshotRef: 34da65c94c93aed40a20ae85d9e1d1935591ad39
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - { name: sentry-workflow, type: skill, upstreamPath: skills/sentry-workflow }
+      - { name: sentry-php-sdk, type: skill, upstreamPath: skills/sentry-php-sdk }
+  - id: apollographql-skills
+    repo: https://github.com/apollographql/skills
+    slug: apollo
+    license: MIT
+    licenseConfidence: high
+    snapshotRef: 605089108a198e412f7f0c1926c91eb94a6d1727
+    retrieved: 2026-06-17
+    useMode: copy
+    mode: select
+    items:
+      - { name: apollo-server, type: skill, upstreamPath: skills/apollo-server }
+      - { name: graphql-schema, type: skill, upstreamPath: skills/graphql-schema }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode
     slug: oh-my-claudecode
