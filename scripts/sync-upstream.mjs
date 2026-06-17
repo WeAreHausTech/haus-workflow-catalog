@@ -180,7 +180,7 @@ export function assertMitLicense(upstreamRoot) {
   const hasMitTitle = /^(?:The )?MIT License\b/m.test(text)
   if (!hasSpdxMit && !hasMitTitle) {
     throw new Error(
-      'upstream license is not MIT (expected SPDX-License-Identifier: MIT or MIT License header)',
+      'upstream license is not MIT (expected SPDX-License-Identifier: MIT, MIT License header in LICENSE/LICENSE.md, or "The MIT License")',
     )
   }
 }
