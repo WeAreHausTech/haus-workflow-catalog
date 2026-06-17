@@ -189,6 +189,13 @@ export function assertMitLicense(upstreamRoot) {
 // File / directory utilities
 // ---------------------------------------------------------------------------
 
+/** Upstream metadata dirs we never ship into the catalog (IDE plugin manifests). */
+const SKIP_COPY_DIR_NAMES = new Set(['.cursor-plugin'])
+
+export function isSkippedSyncDirectory(name) {
+  return SKIP_COPY_DIR_NAMES.has(name)
+}
+
 function readFileOrEmpty(filePath) {
   return fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null
 }
@@ -197,6 +204,7 @@ function listFilesRecursive(dir, base = dir) {
   const out = []
   if (!fs.existsSync(dir)) return out
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory() && isSkippedSyncDirectory(entry.name)) continue
     const full = path.join(dir, entry.name)
     if (entry.isDirectory()) {
       out.push(...listFilesRecursive(full, base))
@@ -291,6 +299,7 @@ function copyRecursive(src, dest) {
   if (stat.isDirectory()) {
     fs.mkdirSync(dest, { recursive: true })
     for (const name of fs.readdirSync(src)) {
+      if (isSkippedSyncDirectory(name)) continue
       copyRecursive(path.join(src, name), path.join(dest, name))
     }
   } else {

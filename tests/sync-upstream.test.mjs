@@ -9,6 +9,7 @@ import {
   assertSnapshotRef,
   extractSourceBlock,
   inspectSharedSupport,
+  isSkippedSyncDirectory,
   parseAllSources,
   selectCatalogPath,
 } from '../scripts/sync-upstream.mjs'
@@ -130,4 +131,9 @@ test('parseAllSources normalizes select items with default type agent', () => {
   )
   assert.equal(sources[0].items[0].type, 'agent')
   assert.equal(sources[0].items[1].type, 'skill')
+})
+
+test('isSkippedSyncDirectory excludes IDE plugin metadata dirs from sync', () => {
+  assert.equal(isSkippedSyncDirectory('.cursor-plugin'), true)
+  assert.equal(isSkippedSyncDirectory('references'), false)
 })

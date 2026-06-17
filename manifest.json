@@ -2800,7 +2800,7 @@
     },
     {
       "id": "haus.redis-redis-connections",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/redis/redis-connections",
@@ -2833,7 +2833,7 @@
     },
     {
       "id": "haus.redis-redis-security",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/redis/redis-security",
@@ -2866,7 +2866,7 @@
     },
     {
       "id": "haus.redis-redis-observability",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/redis/redis-observability",
