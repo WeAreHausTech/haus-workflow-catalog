@@ -2,3 +2,10 @@ title = "haus-workflow-catalog gitleaks config"
 
 [extend]
 useDefault = true
+
+# Curated laravel-boost skill documents env anti-patterns; upstream examples trip
+# generic-api-key even after sanitization because gitleaks scans full git history.
+[allowlist]
+paths = [
+  '''skills/laravel-boost/laravel-best-practices/rules/config\.md''',
+]
