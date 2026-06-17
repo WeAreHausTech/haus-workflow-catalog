@@ -787,9 +787,18 @@ function selectManifestId(slug, name) {
   return `haus.${slug}-${name}`
 }
 
-function selectOriginUrl(repo, sha, upstreamPath) {
+function selectUpstreamContentPath(upstreamRoot, upstreamPath, type) {
+  const upstreamAbs = path.join(upstreamRoot, upstreamPath)
+  return type === 'skill' ? path.join(upstreamAbs, 'SKILL.md') : upstreamAbs
+}
+
+function selectOriginPath(upstreamPath, type) {
+  return type === 'skill' ? `${upstreamPath.replace(/\/+$/, '')}/SKILL.md` : upstreamPath
+}
+
+function selectOriginUrl(repo, sha, upstreamPath, type) {
   const base = repo.replace(/\.git$/, '')
-  return `${base}/blob/${sha}/${upstreamPath}`
+  return `${base}/blob/${sha}/${selectOriginPath(upstreamPath, type)}`
 }
 
 function findSelectManifestItem(manifest, slug, name, type) {
@@ -829,7 +838,7 @@ function analyzeSelectDrift(manifest, upstreamRoot, source) {
     }
     const manifestItem = findSelectManifestItem(manifest, slug, name, type)
     if (manifestItem) {
-      const desc = parseDescription(upstreamAbs)
+      const desc = parseDescription(selectUpstreamContentPath(upstreamRoot, upstreamPath, type))
       if (desc && (manifestItem.purpose !== desc || manifestItem.whenToUse !== desc)) {
         descriptionChanges.push({ name, type, upstreamPath, description: desc, item: manifestItem })
       }
@@ -878,10 +887,12 @@ function applySelectSync(manifest, upstreamRoot, source, headSha, report) {
     }
     const newVersion = patchBump(item.version)
     item.version = newVersion
-    item.originUrl = selectOriginUrl(source.repo, headSha, upstreamPath)
+    item.originUrl = selectOriginUrl(source.repo, headSha, upstreamPath, type)
     item.pinnedRef = headSha
-    item.tokenEstimate = Math.ceil(fs.statSync(dest).size / 4)
-    const desc = parseDescription(dest)
+    item.tokenEstimate = Math.ceil(
+      fs.statSync(selectUpstreamContentPath(upstreamRoot, upstreamPath, type)).size / 4,
+    )
+    const desc = parseDescription(selectUpstreamContentPath(upstreamRoot, upstreamPath, type))
     let descriptionUpdated = false
     if (desc && (item.purpose !== desc || item.whenToUse !== desc)) {
       item.purpose = desc
@@ -897,7 +908,7 @@ function applySelectSync(manifest, upstreamRoot, source, headSha, report) {
     const item = change.item
     item.purpose = change.description
     item.whenToUse = change.description
-    item.originUrl = selectOriginUrl(source.repo, headSha, change.upstreamPath)
+    item.originUrl = selectOriginUrl(source.repo, headSha, change.upstreamPath, change.type)
     item.pinnedRef = headSha
     actions.updated.push({
       name: change.name,

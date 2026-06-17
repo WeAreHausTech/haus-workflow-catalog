@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import {
   findForbiddenTag,
@@ -75,7 +76,7 @@ test('rejects curated item missing provenance fields', () => {
 })
 
 test('rejects non-default curated item without requiresAny', () => {
-  const root = path.join(import.meta.dirname, '..')
+  const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
   const result = validateCatalog(root, {
     version: '1.0.0',
     items: [
