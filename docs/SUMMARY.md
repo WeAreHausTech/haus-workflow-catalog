@@ -16,9 +16,10 @@ Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templat
 
 ## Development workflow
 
-| File                                               | Description                                                      |
-| -------------------------------------------------- | ---------------------------------------------------------------- |
-| [development-workflow.md](development-workflow.md) | Change routing, quality checks, upstream sync, workflow-doc sync |
+| File                                                                                           | Description                                                      |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [development-workflow.md](development-workflow.md)                                             | Change routing, quality checks, upstream sync, workflow-doc sync |
+| [plans/2026-06-17-catalog-upgrade-execution.md](plans/2026-06-17-catalog-upgrade-execution.md) | Multi-wave catalog upgrade progress log (living)                 |
 
 ## Deployment
 
