@@ -13,8 +13,8 @@ sources:
     slug: ecc
     license: MIT
     licenseConfidence: high
-    snapshotRef: 5b173d2e6c11b976a0f13b2f59125e08956c1d47
-    retrieved: 2026-06-15
+    snapshotRef: ec92b528471df708c2384ebbcc82b390b60f535a
+    retrieved: 2026-06-17
     useMode: copy
     mode: select
     items:
@@ -26,6 +26,11 @@ sources:
       - { name: e2e-runner, type: agent, upstreamPath: agents/e2e-runner.md }
       - { name: performance-optimizer, type: agent, upstreamPath: agents/performance-optimizer.md }
       - { name: refactor-cleaner, type: agent, upstreamPath: .kiro/agents/refactor-cleaner.md }
+      - { name: typescript-reviewer, type: agent, upstreamPath: agents/typescript-reviewer.md }
+      - { name: vue-reviewer, type: agent, upstreamPath: agents/vue-reviewer.md }
+      - { name: security-reviewer, type: agent, upstreamPath: agents/security-reviewer.md }
+      - { name: a11y-architect, type: agent, upstreamPath: agents/a11y-architect.md }
+      - { name: build-error-resolver, type: agent, upstreamPath: agents/build-error-resolver.md }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode
     slug: oh-my-claudecode

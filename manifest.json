@@ -2230,6 +2230,174 @@
       "pinnedRef": "50f6ff05eb5d9ebed66f05d8c4580c0b119f37af",
       "ecosystem": "oh-my-claudecode",
       "default": true
+    },
+    {
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "agent",
+      "repoRoles": [],
+      "installMode": "copy-selected",
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc-affaanm",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "default": false,
+      "id": "haus.ecc-typescript-reviewer",
+      "path": "agents/ecc/typescript-reviewer.md",
+      "title": "TypeScript Reviewer",
+      "purpose": "Expert TypeScript/JavaScript code reviewer specializing in type safety, async correctness, Node/web security, and idiomatic patterns. Use for all TypeScript and JavaScript code changes. MUST BE USED for TypeScript/JavaScript projects.",
+      "whenToUse": "Expert TypeScript/JavaScript code reviewer specializing in type safety, async correctness, Node/web security, and idiomatic patterns. Use for all TypeScript and JavaScript code changes. MUST BE USED for TypeScript/JavaScript projects.",
+      "tags": ["agent", "review", "typescript5"],
+      "tokenEstimate": 2270,
+      "ecosystem": "typescript",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/agents/typescript-reviewer.md",
+      "requiresAny": [
+        {
+          "stack": "typescript5"
+        },
+        {
+          "dependency": "typescript"
+        }
+      ],
+      "whenNotToUse": "Do not use when a more specific skill or command applies."
+    },
+    {
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "agent",
+      "repoRoles": [],
+      "installMode": "copy-selected",
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc-affaanm",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "default": false,
+      "id": "haus.ecc-vue-reviewer",
+      "path": "agents/ecc/vue-reviewer.md",
+      "title": "Vue Reviewer",
+      "purpose": "Expert Vue.js code reviewer specializing in Composition API correctness, reactivity pitfalls, component architecture, template security, and Vue-specific performance. Use for any change touching .vue, .ts/.js files with Vue imports, or Vue ecosystem code (Pinia, Vue Router, Nuxt). MUST BE USED for Vue projects.",
+      "whenToUse": "Expert Vue.js code reviewer specializing in Composition API correctness, reactivity pitfalls, component architecture, template security, and Vue-specific performance. Use for any change touching .vue, .ts/.js files with Vue imports, or Vue ecosystem code (Pinia, Vue Router, Nuxt). MUST BE USED for Vue projects.",
+      "tags": ["agent", "review", "vue"],
+      "tokenEstimate": 3833,
+      "ecosystem": "vue",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/agents/vue-reviewer.md",
+      "requiresAny": [
+        {
+          "stack": "vue"
+        },
+        {
+          "dependency": "vue"
+        }
+      ],
+      "whenNotToUse": "Do not use when a more specific skill or command applies."
+    },
+    {
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "agent",
+      "repoRoles": [],
+      "installMode": "copy-selected",
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc-affaanm",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "default": false,
+      "id": "haus.ecc-security-reviewer",
+      "path": "agents/ecc/security-reviewer.md",
+      "title": "Security Reviewer",
+      "purpose": "Security vulnerability detection and remediation specialist. Use PROACTIVELY after writing code that handles user input, authentication, API endpoints, or sensitive data. Flags secrets, SSRF, injection, unsafe crypto, and OWASP Top 10 vulnerabilities.",
+      "whenToUse": "Security vulnerability detection and remediation specialist. Use PROACTIVELY after writing code that handles user input, authentication, API endpoints, or sensitive data. Flags secrets, SSRF, injection, unsafe crypto, and OWASP Top 10 vulnerabilities.",
+      "tags": ["agent", "review", "security"],
+      "tokenEstimate": 1369,
+      "ecosystem": "security",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/agents/security-reviewer.md",
+      "requiresAny": [
+        {
+          "stack": "security"
+        },
+        {
+          "role": "nestjs-api"
+        }
+      ],
+      "whenNotToUse": "Do not use when a more specific skill or command applies."
+    },
+    {
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "agent",
+      "repoRoles": [],
+      "installMode": "copy-selected",
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc-affaanm",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "default": false,
+      "id": "haus.ecc-a11y-architect",
+      "path": "agents/ecc/a11y-architect.md",
+      "title": "A11y Architect",
+      "purpose": "Accessibility Architect specializing in WCAG 2.2 compliance for Web and Native platforms. Use PROACTIVELY when designing UI components, establishing design systems, or auditing code for inclusive user experiences.",
+      "whenToUse": "Accessibility Architect specializing in WCAG 2.2 compliance for Web and Native platforms. Use PROACTIVELY when designing UI components, establishing design systems, or auditing code for inclusive user experiences.",
+      "tags": ["agent", "review", "shadcn", "radix"],
+      "tokenEstimate": 1838,
+      "ecosystem": "react",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/agents/a11y-architect.md",
+      "requiresAny": [
+        {
+          "stack": "shadcn"
+        },
+        {
+          "stack": "radix"
+        }
+      ],
+      "whenNotToUse": "Do not use when a more specific skill or command applies."
+    },
+    {
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "agent",
+      "repoRoles": [],
+      "installMode": "copy-selected",
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc-affaanm",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "default": false,
+      "id": "haus.ecc-build-error-resolver",
+      "path": "agents/ecc/build-error-resolver.md",
+      "title": "Build Error Resolver",
+      "purpose": "Build and TypeScript error resolution specialist. Use PROACTIVELY when build fails or type errors occur. Fixes build/type errors only with minimal diffs, no architectural edits. Focuses on getting the build green quickly.",
+      "whenToUse": "Build and TypeScript error resolution specialist. Use PROACTIVELY when build fails or type errors occur. Fixes build/type errors only with minimal diffs, no architectural edits. Focuses on getting the build green quickly.",
+      "tags": ["agent", "review", "typescript5"],
+      "tokenEstimate": 1191,
+      "ecosystem": "typescript",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/agents/build-error-resolver.md",
+      "requiresAny": [
+        {
+          "stack": "typescript5"
+        },
+        {
+          "stack": "typescript"
+        },
+        {
+          "dependency": "typescript"
+        }
+      ],
+      "whenNotToUse": "Do not use when a more specific skill or command applies."
     }
   ]
 }
