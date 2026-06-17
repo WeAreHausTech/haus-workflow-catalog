@@ -31,6 +31,17 @@ sources:
       - { name: security-reviewer, type: agent, upstreamPath: agents/security-reviewer.md }
       - { name: a11y-architect, type: agent, upstreamPath: agents/a11y-architect.md }
       - { name: build-error-resolver, type: agent, upstreamPath: agents/build-error-resolver.md }
+      - { name: frontend-patterns, type: skill, upstreamPath: skills/frontend-patterns }
+      - { name: vite-patterns, type: skill, upstreamPath: skills/vite-patterns }
+      - { name: nestjs-patterns, type: skill, upstreamPath: skills/nestjs-patterns }
+      - { name: laravel-patterns, type: skill, upstreamPath: skills/laravel-patterns }
+      - { name: laravel-verification, type: skill, upstreamPath: skills/laravel-verification }
+      - {
+          name: laravel-plugin-discovery,
+          type: skill,
+          upstreamPath: skills/laravel-plugin-discovery,
+        }
+      - { name: csharp-testing, type: skill, upstreamPath: skills/csharp-testing }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode
     slug: oh-my-claudecode

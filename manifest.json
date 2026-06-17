@@ -2398,6 +2398,240 @@
         }
       ],
       "whenNotToUse": "Do not use when a more specific skill or command applies."
+    },
+    {
+      "id": "haus.ecc-frontend-patterns",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/frontend-patterns",
+      "title": "Ecc Frontend Patterns",
+      "purpose": "Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.",
+      "whenToUse": "Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "frontend"],
+      "repoRoles": [],
+      "tokenEstimate": 3836,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/frontend-patterns/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "react",
+      "requiresAny": [
+        {
+          "stack": "nextjs"
+        },
+        {
+          "stack": "react19"
+        },
+        {
+          "dependency": "react"
+        }
+      ]
+    },
+    {
+      "id": "haus.ecc-vite-patterns",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/vite-patterns",
+      "title": "Ecc Vite Patterns",
+      "purpose": "Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.",
+      "whenToUse": "Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "frontend"],
+      "repoRoles": [],
+      "tokenEstimate": 4279,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/vite-patterns/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "vite",
+      "requiresAny": [
+        {
+          "stack": "vite8"
+        },
+        {
+          "dependency": "vite"
+        }
+      ]
+    },
+    {
+      "id": "haus.ecc-nestjs-patterns",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/nestjs-patterns",
+      "title": "Ecc Nestjs Patterns",
+      "purpose": "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.",
+      "whenToUse": "NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "backend"],
+      "repoRoles": [],
+      "tokenEstimate": 1605,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/nestjs-patterns/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "nestjs",
+      "requiresAny": [
+        {
+          "stack": "nestjs"
+        },
+        {
+          "dependency": "@nestjs/core"
+        }
+      ]
+    },
+    {
+      "id": "haus.ecc-laravel-patterns",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/laravel-patterns",
+      "title": "Ecc Laravel Patterns",
+      "purpose": "Laravel architecture patterns, routing/controllers, Eloquent ORM, service layers, queues, events, caching, and API resources for production apps.",
+      "whenToUse": "Laravel architecture patterns, routing/controllers, Eloquent ORM, service layers, queues, events, caching, and API resources for production apps.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "laravel"],
+      "repoRoles": [],
+      "tokenEstimate": 2638,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/laravel-patterns/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "laravel",
+      "requiresAny": [
+        {
+          "stack": "laravel"
+        },
+        {
+          "dependency": "laravel/framework"
+        }
+      ]
+    },
+    {
+      "id": "haus.ecc-laravel-verification",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/laravel-verification",
+      "title": "Ecc Laravel Verification",
+      "purpose": "Verification loop for Laravel projects: env checks, linting, static analysis, tests with coverage, security scans, and deployment readiness.",
+      "whenToUse": "Verification loop for Laravel projects: env checks, linting, static analysis, tests with coverage, security scans, and deployment readiness.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "laravel"],
+      "repoRoles": [],
+      "tokenEstimate": 1066,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/laravel-verification/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "laravel",
+      "requiresAny": [
+        {
+          "stack": "laravel"
+        },
+        {
+          "dependency": "laravel/framework"
+        }
+      ]
+    },
+    {
+      "id": "haus.ecc-laravel-plugin-discovery",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/laravel-plugin-discovery",
+      "title": "Ecc Laravel Plugin Discovery",
+      "purpose": "Discover and evaluate Laravel packages via LaraPlugins.io MCP. Use when the user wants to find plugins, check package health, or assess Laravel/PHP compatibility.",
+      "whenToUse": "Discover and evaluate Laravel packages via LaraPlugins.io MCP. Use when the user wants to find plugins, check package health, or assess Laravel/PHP compatibility.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "laravel"],
+      "repoRoles": [],
+      "tokenEstimate": 1599,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/laravel-plugin-discovery/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "laravel",
+      "requiresAny": [
+        {
+          "stack": "laravel"
+        },
+        {
+          "dependency": "laravel/framework"
+        }
+      ]
+    },
+    {
+      "id": "haus.ecc-csharp-testing",
+      "version": "1.0.0",
+      "source": "curated",
+      "type": "skill",
+      "path": "skills/ecc/csharp-testing",
+      "title": "Ecc Csharp Testing",
+      "purpose": "C# and .NET testing patterns with xUnit, FluentAssertions, mocking, integration tests, and test organization best practices.",
+      "whenToUse": "C# and .NET testing patterns with xUnit, FluentAssertions, mocking, integration tests, and test organization best practices.",
+      "whenNotToUse": "Do not use when a more specific skill or command applies.",
+      "tags": ["workflow", "testing"],
+      "repoRoles": [],
+      "tokenEstimate": 2158,
+      "installMode": "copy-selected",
+      "default": false,
+      "reviewStatus": "approved",
+      "riskLevel": "low",
+      "useMode": "copy",
+      "license": "MIT",
+      "licenseConfidence": "high",
+      "originSourceId": "ecc",
+      "originUrl": "https://github.com/affaan-m/ECC/blob/ec92b528471df708c2384ebbcc82b390b60f535a/skills/csharp-testing/SKILL.md",
+      "pinnedRef": "ec92b528471df708c2384ebbcc82b390b60f535a",
+      "ecosystem": "dotnet",
+      "requiresAny": [
+        {
+          "stack": "dotnet"
+        },
+        {
+          "role": "dotnet-service"
+        }
+      ]
     }
   ]
 }
