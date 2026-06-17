@@ -36,6 +36,19 @@ test('assertMitLicense accepts MIT License title header', () => {
   }
 })
 
+test('assertMitLicense accepts The MIT License title header and LICENSE.md', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'haus-lic-the-mit-'))
+  try {
+    fs.writeFileSync(
+      path.join(dir, 'LICENSE.md'),
+      'The MIT License (MIT)\n\nCopyright (c) Example\n',
+    )
+    assert.doesNotThrow(() => assertMitLicense(dir))
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true })
+  }
+})
+
 test('assertSnapshotRef rejects non-SHA refs', () => {
   assert.throws(() => assertSnapshotRef('main'), /40-character git commit SHA/)
   assert.throws(() => assertSnapshotRef('bd000c6; rm -rf /'), /40-character git commit SHA/)

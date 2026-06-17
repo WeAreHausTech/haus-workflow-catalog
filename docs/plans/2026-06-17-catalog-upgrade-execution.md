@@ -11,64 +11,50 @@ Living status for the multi-wave catalog upgrade. Full plan: Cursor plan `catalo
 | 1 — CLI Phase0                     | merged      | [haus-workflow#121](https://github.com/WeAreHausTech/haus-workflow/pull/121)               |
 | 2 — Catalog Phase0                 | merged      | [haus-workflow-catalog#23](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/23) |
 | 3 — Wave1 ECC agents               | merged      | [haus-workflow-catalog#24](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/24) |
-| 4 — Wave2 skills                   | in progress | `feat/wave2-ecc-jeffallan-skills`                                                          |
-| 5a–5c — Wave3a batches             | pending     | —                                                                                          |
+| 4 — Wave2 skills                   | merged      | [haus-workflow-catalog#25](https://github.com/WeAreHausTech/haus-workflow-catalog/pull/25) |
+| 5a–5c — Wave3 skills.sh (bulk PR)  | in progress | `feat/wave3a-frontend-vendor`                                                              |
 | 6 — Wave3b vendors                 | pending     | —                                                                                          |
 | 7 — Wave4 llms + deprecations      | pending     | —                                                                                          |
 | 8 — CLI fixtures + archetype tests | pending     | —                                                                                          |
 | 9 — Release both repos             | pending     | —                                                                                          |
 
-**Next:** open Step4 PR, merge, then start Step5a (`feat/wave3a-frontend-vendor`).
+**Next:** open consolidated Wave3 PR (`feat/wave3a-frontend-vendor`), merge, then Wave3b vendors.
 
-## Step 1 — CLI Phase0 (merged)
+## Step 4 — Wave2 skills (merged #25)
 
-- Deprecated items skipped in recommend + apply
-- Shared `manifest-item-fields.ts` for provenance/reference validation
-- Tests: deprecated gate, provenance negatives, lockfile roundtrip
+Merged strict-gate subset: 7 ECC skills.
 
-## Step 2 — Catalog Phase0 (merged)
+Deferred: policy blockers (`npx`, forbidden stacks, `secret-grep`, dead cross-links).
 
-- `sync-upstream.mjs` generalized (slug-aware mirror; typed select for skill/agent/command)
-- Curated provenance required in schema + `manifest-item-fields.mjs`
-- `requiresAny` gate for non-default curated items
-- llms.txt policy: `references[]` only, never synced files
+## Step 5 — Wave3 skills.sh consolidated import (in progress)
 
-## Step 3 — Wave1 ECC agents (merged #24)
+**Strategy:** merge planned 5a + 5b + partial 5c into one PR to reduce review churn.
 
-Imported 5 agents under `agents/ecc/`:
+**Imported (19 skills, 91 → 110 items):**
 
-| ID                              | requiresAny                             |
-| ------------------------------- | --------------------------------------- |
-| `haus.ecc-typescript-reviewer`  | `typescript5`, `dependency: typescript` |
-| `haus.ecc-vue-reviewer`         | `vue`                                   |
-| `haus.ecc-security-reviewer`    | `security`, `role: nestjs-api`          |
-| `haus.ecc-a11y-architect`       | `shadcn`, `radix`                       |
-| `haus.ecc-build-error-resolver` | `typescript5`                           |
+| Source        | Skills                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------- |
+| hyf0          | `vue-best-practices`, `vue-debug-guides`, `vue-pinia-best-practices`, `vue-router-best-practices` |
+| stripe        | `stripe-best-practices`, `upgrade-stripe`, `stripe-projects`                                      |
+| supabase      | `supabase`, `supabase-postgres-best-practices`                                                    |
+| redis         | `redis-connections`, `redis-security`, `redis-observability`                                      |
+| laravel-boost | `laravel-best-practices`                                                                          |
+| sanity        | `content-modeling-best-practices`                                                                 |
+| sickn33       | `docker-expert`                                                                                   |
+| wshobson      | `tailwind-design-system`, `postgresql-table-design`, `dotnet-backend-patterns`                    |
+| jezweb        | `wordpress-elementor`                                                                             |
 
-- `ecc-affaanm` snapshotRef: `ec92b528471df708c2384ebbcc82b390b60f535a`
-- Catalog items: 79 → 84
+**Tooling:** `assertMitLicense` now accepts `The MIT License` headers and `LICENSE.md`.
 
-## Step 4 — Wave2 skills (strict-gate subset)
+**Deferred (strict gates):**
 
-Planned: 16 ECC + 2 Jeffallan skills.  
-Imported now (policy-clean subset): 8 skills.
+- License gate: `vercel-agent-skills`, `vercel-nextjs-skills`, `deckardger-tanstack-agent-skills` (no upstream `LICENSE`/`LICENSE.md`)
+- License gate: `wordpress/agent-skills` (GPL), `currents-playwright-best-practices` (MIT body without MIT title)
+- Content policy: `vue-testing-best-practices`, all expo pack (5), `prisma-upgrade-v7`, `sanity-migration`, `monorepo-management` (disallowed `npx`)
+- Content policy: `redis-core` (`http://` in references), `iris-development` (forbidden `python` mention)
 
-Imported:
+## Remaining scope
 
-- ECC: `frontend-patterns`, `react-testing`, `vite-patterns`, `nestjs-patterns`, `laravel-patterns`, `laravel-verification`, `laravel-plugin-discovery`, `csharp-testing`
-
-Deferred (blocked by current validation policy):
-
-- `frontend-a11y`, `backend-patterns`, `laravel-security`, `mysql-patterns` (blocked by `secret-grep` token/password heuristic in staged lines)
-- `prisma-patterns`, `database-migrations`, `kubernetes-patterns`, `laravel-tdd` (forbidden stack or disallowed `npx` in shipped markdown)
-- `typescript-pro`, `php-pro` (disallowed `npx`/`http://` in shipped markdown)
-
-Decision in effect: keep strict validator gates, defer blocked skills for later policy/curation pass.
-
-## Remaining scope (not started)
-
-- 16 ECC + 2 Jeffallan skills (Wave 2)
-- skills.sh shortlist in 3 batches (Wave 3a)
-- Vendor repos: Sentry, Apollo, Auth0, Better Auth, shadcn (Wave 3b)
+- Wave3b vendor repos (Sentry, Apollo, Auth0, Better Auth, shadcn)
 - 18 llms.txt `references[]` + haus router deprecations (Wave 4)
 - CLI fixture sync + archetype golden tests + release

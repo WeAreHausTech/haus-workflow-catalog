@@ -169,13 +169,15 @@ export function cloneUpstream(repoUrl) {
 }
 
 export function assertMitLicense(upstreamRoot) {
-  const licensePath = path.join(upstreamRoot, 'LICENSE')
-  if (!fs.existsSync(licensePath)) {
+  const licensePath = ['LICENSE', 'LICENSE.md']
+    .map((name) => path.join(upstreamRoot, name))
+    .find((candidate) => fs.existsSync(candidate))
+  if (!licensePath) {
     throw new Error('upstream LICENSE file missing')
   }
   const text = fs.readFileSync(licensePath, 'utf8')
   const hasSpdxMit = /SPDX-License-Identifier:\s*MIT\b/m.test(text)
-  const hasMitTitle = /^MIT License/m.test(text)
+  const hasMitTitle = /^(?:The )?MIT License\b/m.test(text)
   if (!hasSpdxMit && !hasMitTitle) {
     throw new Error(
       'upstream license is not MIT (expected SPDX-License-Identifier: MIT or MIT License header)',
