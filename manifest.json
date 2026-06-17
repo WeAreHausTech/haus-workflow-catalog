@@ -2247,7 +2247,7 @@
       "default": false,
       "id": "haus.ecc-typescript-reviewer",
       "path": "agents/ecc/typescript-reviewer.md",
-      "title": "Typescript Reviewer",
+      "title": "TypeScript Reviewer",
       "purpose": "Expert TypeScript/JavaScript code reviewer specializing in type safety, async correctness, Node/web security, and idiomatic patterns. Use for all TypeScript and JavaScript code changes. MUST BE USED for TypeScript/JavaScript projects.",
       "whenToUse": "Expert TypeScript/JavaScript code reviewer specializing in type safety, async correctness, Node/web security, and idiomatic patterns. Use for all TypeScript and JavaScript code changes. MUST BE USED for TypeScript/JavaScript projects.",
       "tags": ["agent", "review", "typescript5"],
