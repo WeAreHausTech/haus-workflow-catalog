@@ -50,7 +50,28 @@ sources:
     useMode: copy
     mode: select
     items:
+      - {
+          name: stripe-best-practices,
+          type: skill,
+          upstreamPath: skills/stripe-best-practices/SKILL.md,
+        }
+      - { name: upgrade-stripe, type: skill, upstreamPath: skills/upgrade-stripe/SKILL.md }
       - { name: stripe-projects, type: skill, upstreamPath: skills/stripe-projects/SKILL.md }
+
+  - id: supabase-agent-skills
+    repo: https://github.com/supabase/agent-skills
+    license: MIT
+    licenseConfidence: medium
+    retrieved: 2026-06-16
+    useMode: copy
+    mode: select
+    items:
+      - { name: supabase, type: skill, upstreamPath: skills/supabase/SKILL.md }
+      - {
+          name: supabase-postgres-best-practices,
+          type: skill,
+          upstreamPath: skills/supabase-postgres-best-practices/SKILL.md,
+        }
 
   - id: anthropics-skills
     repo: https://github.com/anthropics/skills
