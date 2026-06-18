@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.9.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.9.0...v2.9.1) (2026-06-18)
+
+### Changed
+
+- remove 8 deprecated haus stack-pattern skills (P1) ([b9e41e4](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/b9e41e4c268e4aac1640f1ffcbc6e612916cec1e))
+
 ## [2.9.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.8.0...v2.9.0) (2026-06-17)
 
 ### Added
