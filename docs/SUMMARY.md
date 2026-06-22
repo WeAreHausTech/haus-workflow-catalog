@@ -9,6 +9,7 @@ Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templat
 - Route by task (load one primary topic, not every file):
   - **Make a code change / add an item** → Development workflow
   - **Release / deploy** → Deployment
+  - **Security / content policy** → [security.md](security.md)
   - **Understand a past decision** → ADRs in `docs/adr/`
   - **Fix a recurring failure** → `docs/runbook.md`
 - Prefer path references over duplicating source; read code for implementation detail.
@@ -37,6 +38,12 @@ Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templat
 | [adr/0003-npx-tsx-exemption-for-agents.md](adr/0003-npx-tsx-exemption-for-agents.md)                     | npx tsx exemption by agent type (superseded)    |
 | [adr/0004-remove-catalog-item-type-rule.md](adr/0004-remove-catalog-item-type-rule.md)                   | Remove unused `rule` catalog item type          |
 | [adr/0005-npx-tsx-exemption-for-curated-skills.md](adr/0005-npx-tsx-exemption-for-curated-skills.md)     | npx tsx exemption for curated content (current) |
+
+## Security
+
+| File                       | Description                                                   |
+| -------------------------- | ------------------------------------------------------------- |
+| [security.md](security.md) | Content supply-chain policy, validation rules, upstream trust |
 
 ## Runbook
 
