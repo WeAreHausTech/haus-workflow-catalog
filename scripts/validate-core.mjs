@@ -292,7 +292,7 @@ function auditMarkdownContent(root, items) {
           { checkPlaceholder: false, checkNonTsxNpx },
         ),
       )
-      if (!rel.includes('/references/')) failures.push(...auditForbiddenTagsInText(text, rel))
+      if (!norm.includes('/references/')) failures.push(...auditForbiddenTagsInText(text, rel))
     })
   }
   return failures
