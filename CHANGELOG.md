@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.13.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.12.2...v2.13.0) (2026-06-22)
+
+### Added
+
+- add opt-in tier metadata to role-gated catalog items ([#33](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/33)) ([16bb2c8](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/16bb2c8a9c552815dd4eb33067700432202cd2d5))
+
 ## [2.12.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.12.1...v2.12.2) (2026-06-22)
 
 ### Changed
