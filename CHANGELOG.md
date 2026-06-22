@@ -9,6 +9,16 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.11.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.10.0...v2.11.0) (2026-06-22)
+
+### Added
+
+- sync upstream testing complements and Sentry/Apollo stack skills ([#31](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/31)) ([9a2f4ef](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/9a2f4ef5f20eab4f191dd471c7f8080e1307e637))
+
+### Fixed
+
+- resolve manifest source by path ancestor walk ([7f6da16](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/7f6da161a81f1c3891d448e88ee58b5c146f0b78)), closes [#132](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/132)
+
 ## [2.10.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.9.2...v2.10.0) (2026-06-22)
 
 ### Added
