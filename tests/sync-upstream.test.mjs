@@ -113,6 +113,13 @@ test('assertMitLicense rejects ambiguous non-MIT license text', () => {
   }
 })
 
+test('parseAllSources reads excludeCommands for mirror sources', () => {
+  const sources = parseAllSources(
+    'sources:\n  - id: sp\n    repo: https://x/a\n    slug: superpowers\n    mode: mirror\n    excludeCommands: true\n',
+  )
+  assert.equal(sources[0].excludeCommands, true)
+})
+
 test('selectCatalogPath maps skill and agent upstream paths to catalog layout', () => {
   assert.equal(
     selectCatalogPath('ecc', 'frontend-patterns', 'skill'),

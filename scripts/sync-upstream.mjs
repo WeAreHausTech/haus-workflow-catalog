@@ -79,6 +79,7 @@ export function parseAllSources(content) {
       retrieved: s.retrieved,
       useMode: s.useMode || 'copy',
       mode,
+      excludeCommands: s.excludeCommands === true,
       items: Array.isArray(s.items)
         ? s.items.map((item) => ({
             name: item.name,
@@ -484,7 +485,7 @@ function analyzeDrift(manifest, upstreamRoot, source) {
   )
 
   const upSkills = upstreamSkillNames(upstreamRoot)
-  const upCommands = upstreamCommandNames(upstreamRoot)
+  const upCommands = source.excludeCommands ? [] : upstreamCommandNames(upstreamRoot)
   const upSkillSet = new Set(upSkills)
   const upCommandSet = new Set(upCommands)
 
