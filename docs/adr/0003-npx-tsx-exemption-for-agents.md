@@ -1,14 +1,17 @@
 # ADR-0003: `npx tsx`-only rule exempts agent content
 
-- **Status:** Accepted | **Date:** 2026-06-15
+- **Status:** Superseded by [ADR-0005](0005-npx-tsx-exemption-for-curated-skills.md) | **Date:** 2026-06-15 | **Superseded:** 2026-06-22
 
-## Context
+> **Historical record only.** The type-based waiver (`npxTsxOnlyExemptTypes: ["agent"]`) was
+> shipped in June 2026 and **removed** the same month. Current policy is **source-based** —
+> see ADR-0005. Do not reintroduce `npxTsxOnlyExemptTypes` without a new ADR.
+
+## Context (June 2026)
 
 The catalog's safety rules (ADR-0001) include an `npx tsx`-only allowlist: shipped markdown may
 not contain any `npx` invocation other than `npx tsx`. It is enforced repo-wide by
-`validate.mjs` (`checkShippedMarkdown`) and, critically, **at install time by the CLI**
-(`ingest-catalog.ts` → `remote-catalog.ts`), reading the synced `validation-rules.json` fixture
-(ADR-0001 single-source).
+`validate.mjs` and, at install time, by the CLI (`ingest-catalog.ts` → `remote-catalog.ts`),
+reading the synced `validation-rules.json` fixture (ADR-0001 single-source).
 
 The rule's intent is to stop the catalog from shipping **executable installers** (templates,
 commands the CLI runs) that auto-fetch arbitrary npx packages. The genuinely dangerous patterns
@@ -17,58 +20,31 @@ execution of an arbitrary package.
 
 The curated agents added in ADR-0002 are **AI-instruction prose**, not installers. They
 legitimately name tools for the agent to run — `npx playwright`, `npx eslint`, `npx knip`,
-`npx lighthouse`. Under the blanket rule, 5 of the 11 agents fail catalog validation **and are
-silently skipped by `haus setup`** (rejected at ingest, never written). None of them contain a
+`npx lighthouse`. Under the blanket rule, several agents failed catalog validation **and were
+silently skipped by `haus setup`** (rejected at ingest, never written). None contained a
 risky-install pattern. Editing the verbatim files to remove the npx lines would break the
 byte-identical upstream sync (permanent drift) and change upstream meaning.
 
-## Decision
+## Decision (historical — superseded)
 
-1. **Scope the `npx tsx`-only rule by item type via a typed field** in `validation-rules.json`:
-   `npxTsxOnlyExemptTypes: ["agent"]` (single source, both repos read it).
+At the time, we chose to scope the waiver by **item type**:
 
-2. **Risky-install patterns are NEVER exempt.** `npx -y` / `--yes` / `dlx` stay blocked for
-   every type, agents included. Only the broader "any non-`tsx` npx" check is waived, and only
-   for exempt types.
+1. Add `npxTsxOnlyExemptTypes: ["agent"]` to `validation-rules.json`.
+2. Keep risky-install patterns blocked for every type, agents included.
+3. Teach catalog + CLI validators to skip the non-`tsx` npx check when the item type (or
+   shipped directory type) was in that list.
 
-3. **Catalog enforcement** — `auditMarkdownLines` gains a `checkNonTsxNpx` flag (risky-install
-   and placeholder checks unchanged); `checkShippedMarkdown` maps each shipped dir to its item
-   type and disables the non-tsx-npx check for exempt types. The per-item agent audit already
-   never ran the npx check.
+That unblocked curated agents but also would have exempted any future `source: haus` agent —
+broader than needed once verbatim ECC **skills** needed the same treatment.
 
-4. **CLI enforcement** — `validateCatalogItem` (and the `validate-catalog` command's
-   `auditMarkdownContent`) honor `npxTsxOnlyExemptTypes` against the item/file type, reading the
-   field from the synced `validation-rules.json` fixture.
+## Why superseded
 
-## Landing sequence (cross-repo)
+ADR-0005 replaced the type gate with `npxTsxOnlyExemptSources: ["curated"]`. All shipped agents
+today are curated and remain covered; haus-first-party agents stay strict. The field
+`npxTsxOnlyExemptTypes` was removed from `validation-rules.json`.
 
-`validation-rules.json` is the single source (ADR-0001) but the **logic** that reads the new
-field lives in both validators, so both repos must change:
+## Alternatives considered (historical)
 
-1. **CLI PR** — teach `ingest-catalog.ts` / `validate-catalog.ts` to read
-   `npxTsxOnlyExemptTypes` and skip the non-tsx-npx check for exempt item types; update the
-   bundled `library/catalog/validation-rules.json` fixture. Merge → npm release.
-2. **Catalog PR** — `validation-rules.json` field, `validate.mjs` + `forbidden-content.mjs`
-   logic, the agents themselves, tests. Merge.
-3. **Fixture sync** — catalog merge dispatches `sync-catalog-fixture`; fixture already
-   identical → no-op.
-
-Until the CLI PR releases, `haus setup` on the released CLI will skip the 5 npx-containing
-agents (rejected at ingest) while installing the other 6 and all skills/commands. Catalog CI
-(`yarn validate`) goes green immediately on the catalog PR.
-
-## Consequences
-
-- All 11 agents validate and install. Risky auto-install remains blocked everywhere.
-- The waiver is data-driven and narrow (`["agent"]`); a regression test asserts it stays
-  exactly `["agent"]` so it cannot silently broaden.
-- Catalog and CLI validators must read the same field — covered by the fixture-sync contract.
-
-## Alternatives considered
-
-- **Ship only the 6 clean agents** — rejected: drops the React reviewer, build resolver, e2e
-  runner, perf optimizer, and refactor cleaner (the highest-value reviewers).
-- **Hand-edit the 5 files to drop npx** — rejected: breaks verbatim sync (permanent drift),
-  alters upstream guidance.
-- **Hardcode `type === 'agent'` in both validators** — rejected: rule logic would live in code,
-  not the synced single source; the typed field keeps both repos in lockstep.
+- **Ship only agents without npx references** — rejected: dropped high-value reviewers.
+- **Hand-edit files to drop npx** — rejected: breaks verbatim sync.
+- **Hardcode `type === 'agent'` in validators** — rejected: rule logic belongs in the synced JSON.

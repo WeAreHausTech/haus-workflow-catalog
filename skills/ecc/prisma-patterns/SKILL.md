@@ -13,7 +13,7 @@ Tested against Prisma 5.x and 6.x. Some behaviors differ from Prisma 4.
 Check the Prisma version before applying version-specific patterns:
 
 ```bash
-yarn prisma --version
+npx prisma --version
 ```
 
 Prisma 5 introduced `relationJoins`, which can load relations via JOIN rather than separate queries depending on query strategy and configuration. The `omit` field modifier and `prisma.$extends` Client Extensions API were also added. Note: `relationJoins` can cause row explosion on large 1:N relations or deep nested `include` — benchmark both approaches when relations may return many rows per parent.
@@ -273,13 +273,13 @@ await prisma.$transaction(async (tx) => { ... }, { timeout: 30_000 });
 
 ```bash
 # NEVER on shared dev, staging, or production
-yarn prisma migrate dev --name add_column
+npx prisma migrate dev --name add_column
 
 # Safe everywhere except local solo dev
-yarn prisma migrate deploy
+npx prisma migrate deploy
 
 # Check drift without applying
-yarn prisma migrate diff \
+npx prisma migrate diff \
   --from-migrations ./prisma/migrations \
   --to-schema-datamodel ./prisma/schema.prisma \
   --shadow-database-url "$SHADOW_DATABASE_URL"
@@ -295,8 +295,8 @@ Adding `NOT NULL` to an existing column or renaming a column in one migration wi
 
 ```bash
 # Step 1: create migration locally, then deploy
-yarn prisma migrate dev --name add_new_column   # local only
-yarn prisma migrate deploy                       # staging / production
+npx prisma migrate dev --name add_new_column   # local only
+npx prisma migrate deploy                       # staging / production
 ```
 
 ```ts
@@ -306,8 +306,8 @@ await prisma.user.updateMany({ data: { newColumn: derivedValue } });
 
 ```bash
 # Step 3: create the NOT NULL constraint migration locally, then deploy
-yarn prisma migrate dev --name make_new_column_required  # local only
-yarn prisma migrate deploy                               # staging / production
+npx prisma migrate dev --name make_new_column_required  # local only
+npx prisma migrate deploy                               # staging / production
 ```
 
 ### `@updatedAt` does not fire on `updateMany`

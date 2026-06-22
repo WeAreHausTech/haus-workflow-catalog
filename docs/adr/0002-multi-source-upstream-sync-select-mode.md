@@ -51,7 +51,8 @@ nested `items:` list of multi-key flow maps.
 ## Landing sequence (cross-repo)
 
 Agents install through the CLI's existing type-agnostic path — no CLI change is required for
-the sync architecture itself. (The separate npx-rule change is ADR-0003.)
+the sync architecture itself. (Non-`tsx` `npx` enforcement for those agents: ADR-0003, now
+[ADR-0005](0005-npx-tsx-exemption-for-curated-skills.md).)
 
 1. **Catalog PR** — `sources.yaml`, refactored `sync-upstream.mjs`, 11 agent files + manifest
    entries, docs. Merge → `haus validate-catalog` CI green.
