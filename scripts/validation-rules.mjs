@@ -40,7 +40,7 @@ export const ANY_NPX_PATTERN = toRegExp(RULES.anyNpxPattern)
  */
 export const NPX_TSX_ONLY_EXEMPT_SOURCES = RULES.npxTsxOnlyExemptSources ?? []
 
-/** Whether the non-`tsx` npx ban applies to this item (source-scoped per ADR-0005). */
+/** Whether this item is exempt from the non-`tsx` npx ban (source-scoped per ADR-0005). */
 export function isNpxTsxOnlyExempt(_itemType, itemSource) {
   return Boolean(itemSource && NPX_TSX_ONLY_EXEMPT_SOURCES.includes(itemSource))
 }
