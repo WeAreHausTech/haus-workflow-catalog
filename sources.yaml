@@ -31,7 +31,6 @@ sources:
       - { name: vue-reviewer, type: agent, upstreamPath: agents/vue-reviewer.md }
       - { name: security-reviewer, type: agent, upstreamPath: agents/security-reviewer.md }
       - { name: a11y-architect, type: agent, upstreamPath: agents/a11y-architect.md }
-      - { name: build-error-resolver, type: agent, upstreamPath: agents/build-error-resolver.md }
       - { name: frontend-patterns, type: skill, upstreamPath: skills/frontend-patterns }
       - { name: vite-patterns, type: skill, upstreamPath: skills/vite-patterns }
       - { name: nestjs-patterns, type: skill, upstreamPath: skills/nestjs-patterns }
