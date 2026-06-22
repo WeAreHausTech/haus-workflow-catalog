@@ -156,8 +156,8 @@ test('conditional skip', async ({ page }) => {
 ### Identify Flakiness
 
 ```bash
-yarn playwright test tests/search.spec.ts --repeat-each=10
-yarn playwright test tests/search.spec.ts --retries=3
+npx playwright test tests/search.spec.ts --repeat-each=10
+npx playwright test tests/search.spec.ts --retries=3
 ```
 
 ### Common Causes & Fixes
@@ -239,8 +239,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: yarn playwright install --with-deps
-      - run: yarn playwright test
+      - run: npx playwright install --with-deps
+      - run: npx playwright test
         env:
           BASE_URL: ${{ vars.STAGING_URL }}
       - uses: actions/upload-artifact@v4
