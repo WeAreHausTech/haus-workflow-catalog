@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.12.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.12.1...v2.12.2) (2026-06-22)
+
+### Changed
+
+- remove build-error-resolver agent ([cbdb582](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/cbdb58295647bf949eca700dc341c971eac95e83))
+
 ## [2.12.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.12.0...v2.12.1) (2026-06-22)
 
 ### Changed
