@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.9.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.9.1...v2.9.2) (2026-06-22)
+
+### Changed
+
+- drop redundant haus frontend/vite/shadcn routers (P2a) ([1125837](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/11258379e5089c4810656938052ca9ff0e9076be))
+
 ## [2.9.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.9.0...v2.9.1) (2026-06-18)
 
 ### Changed
