@@ -35,12 +35,39 @@ export const ALLOWED_NPX_PATTERN = toRegExp(RULES.allowedNpxPattern)
 export const ANY_NPX_PATTERN = toRegExp(RULES.anyNpxPattern)
 
 /**
- * Item types exempt from the "only npx tsx" rule. Agent definitions are AI-instruction
- * prose that legitimately references tools to run (e.g. `npx playwright`, `npx eslint`),
- * not catalog-executed installers — so the non-tsx npx ban does not apply to them.
- * The risky-install patterns (npx -y / dlx) stay enforced for ALL types, agents included.
+ * Manifest `source` values exempt from the non-`tsx` npx ban (verbatim curated content).
+ * Risky-install patterns stay enforced. See ADR-0005.
  */
-export const NPX_TSX_ONLY_EXEMPT_TYPES = RULES.npxTsxOnlyExemptTypes ?? []
+export const NPX_TSX_ONLY_EXEMPT_SOURCES = RULES.npxTsxOnlyExemptSources ?? []
+
+/** Whether the non-`tsx` npx ban applies to this item (source-scoped per ADR-0005). */
+export function isNpxTsxOnlyExempt(_itemType, itemSource) {
+  return Boolean(itemSource && NPX_TSX_ONLY_EXEMPT_SOURCES.includes(itemSource))
+}
+
+/** Map manifest item.path → source for repo-wide markdown walks. */
+export function buildItemPathSourceMap(items) {
+  const map = new Map()
+  for (const item of items) {
+    if (!item.path) continue
+    map.set(String(item.path).replace(/\\/g, '/'), item.source)
+  }
+  return map
+}
+
+/** Longest manifest path prefix matching a shipped markdown file. */
+export function resolveMarkdownItemSource(relPath, pathSourceMap) {
+  const norm = String(relPath).replace(/\\/g, '/')
+  let bestPrefix = ''
+  let source
+  for (const [prefix, src] of pathSourceMap) {
+    if ((norm === prefix || norm.startsWith(`${prefix}/`)) && prefix.length > bestPrefix.length) {
+      bestPrefix = prefix
+      source = src
+    }
+  }
+  return source
+}
 
 /** Insecure URL pattern. All references must use https://. */
 export const HTTP_URL_PATTERN = toRegExp(RULES.httpUrlPattern)
