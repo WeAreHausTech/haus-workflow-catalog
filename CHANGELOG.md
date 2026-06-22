@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.12.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.11.0...v2.12.0) (2026-06-22)
+
+### Added
+
+- gate audit, drop superpowers commands, ECC docker swap ([#32](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/32)) ([b9db4f2](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/b9db4f2da1d20865ae421b26e920bf5db3587364))
+
 ## [2.11.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.10.0...v2.11.0) (2026-06-22)
 
 ### Added
