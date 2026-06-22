@@ -8,6 +8,7 @@ sources:
     retrieved: 2026-06-22
     useMode: copy
     mode: mirror
+    excludeCommands: true
   - id: ecc-affaanm
     repo: https://github.com/affaan-m/ECC
     slug: ecc
@@ -49,6 +50,7 @@ sources:
       - { name: react-testing, type: skill, upstreamPath: skills/react-testing }
       - { name: laravel-tdd, type: skill, upstreamPath: skills/laravel-tdd }
       - { name: redis-patterns, type: skill, upstreamPath: skills/redis-patterns }
+      - { name: docker-patterns, type: skill, upstreamPath: skills/docker-patterns }
   - id: stripe-ai
     repo: https://github.com/stripe/ai
     slug: stripe
@@ -104,17 +106,6 @@ sources:
           type: skill,
           upstreamPath: skills/content-modeling-best-practices,
         }
-  - id: sickn33-antigravity-awesome-skills
-    repo: https://github.com/sickn33/antigravity-awesome-skills
-    slug: sickn33
-    license: MIT
-    licenseConfidence: medium
-    snapshotRef: 5ce1a1fabb96e37d68e6c62f6d5b643da80d4d71
-    retrieved: 2026-06-22
-    useMode: copy
-    mode: select
-    items:
-      - { name: docker-expert, type: skill, upstreamPath: skills/docker-expert }
   - id: wshobson-agents
     repo: https://github.com/wshobson/agents
     slug: wshobson
