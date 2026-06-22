@@ -2522,7 +2522,7 @@
     },
     {
       "id": "haus.ecc-prisma-patterns",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/ecc/prisma-patterns",
@@ -2626,7 +2626,7 @@
     },
     {
       "id": "haus.ecc-e2e-testing",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "curated",
       "type": "skill",
       "path": "skills/ecc/e2e-testing",
