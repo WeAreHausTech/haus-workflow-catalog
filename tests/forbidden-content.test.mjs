@@ -1,9 +1,8 @@
 /**
  * Scans shipped catalog markdown (skills/, agents/, templates/, commands/) for safety
- * violations driven by validation-rules.json: risky install commands, disallowed npx
- * (only `npx tsx` allowed), and http:// URLs. Mirrors the production repo-wide walk,
- * which does not flag TODO/placeholder prose. Also asserts no manifest item carries a
- * forbidden stack tag.
+ * violations driven by validation-rules.json: risky install commands and disallowed npx
+ * (only `npx tsx` allowed). Mirrors scripts/validate.mjs repo-wide walk (ADR-0001:
+ * http:// is enforced on manifest references[] only, not markdown bodies).
  *
  * This is a guard over the production rules + production content, not a reimplementation:
  * it reads validation-rules.json and reconstructs the same regexes scripts/validate.mjs uses.
@@ -66,10 +65,6 @@ function scan() {
         if (checkNonTsxNpx && ANY_NPX.test(line) && !ALLOWED_NPX.test(line)) {
           hits.push(`${at}: disallowed npx`)
         }
-        // httpUrlPattern is anchored (^http://) for validating standalone ref strings;
-        // in shipped markdown we want to catch http:// anywhere in the line (inline links),
-        // but allow local dev URLs (localhost / 127.0.0.1) which appear in command examples.
-        if (/http:\/\/(?!localhost|127\.0\.0\.1)/i.test(line)) hits.push(`${at}: http:// url`)
       })
     })
   }

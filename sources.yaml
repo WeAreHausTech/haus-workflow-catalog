@@ -47,6 +47,8 @@ sources:
       - { name: dotnet-patterns, type: skill, upstreamPath: skills/dotnet-patterns }
       - { name: e2e-testing, type: skill, upstreamPath: skills/e2e-testing }
       - { name: react-testing, type: skill, upstreamPath: skills/react-testing }
+      - { name: laravel-tdd, type: skill, upstreamPath: skills/laravel-tdd }
+      - { name: redis-patterns, type: skill, upstreamPath: skills/redis-patterns }
   - id: stripe-ai
     repo: https://github.com/stripe/ai
     slug: stripe
@@ -64,11 +66,16 @@ sources:
     license: MIT
     licenseConfidence: medium
     snapshotRef: 1356046015476711a769601079262b5635929427
-    retrieved: 2026-06-17
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
       - { name: supabase, type: skill, upstreamPath: skills/supabase }
+      - {
+          name: supabase-postgres-best-practices,
+          type: skill,
+          upstreamPath: skills/supabase-postgres-best-practices,
+        }
   - id: redis-agent-skills-extra
     repo: https://github.com/redis/agent-skills
     slug: redis
@@ -102,7 +109,7 @@ sources:
     slug: sickn33
     license: MIT
     licenseConfidence: medium
-    snapshotRef: e09cf1f9f0407961c6697fd4174c47fba76f1996
+    snapshotRef: 5ce1a1fabb96e37d68e6c62f6d5b643da80d4d71
     retrieved: 2026-06-22
     useMode: copy
     mode: select
@@ -114,7 +121,7 @@ sources:
     license: MIT
     licenseConfidence: medium
     snapshotRef: cc37bfdd292ce520ba1c44df7a3a70d5f8137236
-    retrieved: 2026-06-17
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
@@ -128,6 +135,16 @@ sources:
           type: skill,
           upstreamPath: plugins/database-design/skills/postgresql,
         }
+      - {
+          name: js-testing-patterns,
+          type: skill,
+          upstreamPath: plugins/javascript-typescript/skills/javascript-testing-patterns,
+        }
+      - {
+          name: typescript-advanced-types,
+          type: skill,
+          upstreamPath: plugins/javascript-typescript/skills/typescript-advanced-types,
+        }
   - id: getsentry-sentry-for-ai
     repo: https://github.com/getsentry/sentry-for-ai
     slug: sentry
@@ -140,18 +157,24 @@ sources:
     items:
       - { name: sentry-workflow, type: skill, upstreamPath: skills/sentry-workflow }
       - { name: sentry-php-sdk, type: skill, upstreamPath: skills/sentry-php-sdk }
+      - { name: sentry-nextjs-sdk, type: skill, upstreamPath: skills/sentry-nextjs-sdk }
+      - { name: sentry-node-sdk, type: skill, upstreamPath: skills/sentry-node-sdk }
+      - { name: sentry-nestjs-sdk, type: skill, upstreamPath: skills/sentry-nestjs-sdk }
   - id: apollographql-skills
     repo: https://github.com/apollographql/skills
     slug: apollo
     license: MIT
     licenseConfidence: high
     snapshotRef: 605089108a198e412f7f0c1926c91eb94a6d1727
-    retrieved: 2026-06-17
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
       - { name: apollo-server, type: skill, upstreamPath: skills/apollo-server }
       - { name: graphql-schema, type: skill, upstreamPath: skills/graphql-schema }
+      - { name: apollo-federation, type: skill, upstreamPath: skills/apollo-federation }
+      - { name: graphql-operations, type: skill, upstreamPath: skills/graphql-operations }
+      - { name: apollo-client, type: skill, upstreamPath: skills/apollo-client }
   - id: omcc-yeachanheo
     repo: https://github.com/yeachan-heo/oh-my-claudecode
     slug: oh-my-claudecode
