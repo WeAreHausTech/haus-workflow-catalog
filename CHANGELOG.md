@@ -9,6 +9,16 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.10.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.9.2...v2.10.0) (2026-06-22)
+
+### Added
+
+- curated tools exempt from non-tsx npx ban ([#30](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/30)) ([a5bb588](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/a5bb588eb543f2c678ecacc24e970645f4ea9502))
+
+### Changed
+
+- P2b+c+d catalog cleanup — stripe trim, ECC sync, WP drop ([fbc7209](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/fbc7209060913d0e5eadf8ad2f77f77319eb06e4))
+
 ## [2.9.2](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.9.1...v2.9.2) (2026-06-22)
 
 ### Changed
