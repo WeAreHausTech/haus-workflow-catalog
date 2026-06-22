@@ -4,8 +4,8 @@ sources:
     slug: superpowers
     license: MIT
     licenseConfidence: high
-    snapshotRef: 20c0b1ed71cb073c847432fe01379f48c5278a5f
-    retrieved: 2026-06-15
+    snapshotRef: 2a392d4b1ec35440116477528f7ff91772cda7a3
+    retrieved: 2026-06-22
     useMode: copy
     mode: mirror
   - id: ecc-affaanm
@@ -13,8 +13,8 @@ sources:
     slug: ecc
     license: MIT
     licenseConfidence: high
-    snapshotRef: ec92b528471df708c2384ebbcc82b390b60f535a
-    retrieved: 2026-06-17
+    snapshotRef: 71d22d0a77b7e0684f4e51cba03749b788993cdb
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
@@ -42,19 +42,22 @@ sources:
           upstreamPath: skills/laravel-plugin-discovery,
         }
       - { name: csharp-testing, type: skill, upstreamPath: skills/csharp-testing }
+      - { name: prisma-patterns, type: skill, upstreamPath: skills/prisma-patterns }
+      - { name: vue-patterns, type: skill, upstreamPath: skills/vue-patterns }
+      - { name: dotnet-patterns, type: skill, upstreamPath: skills/dotnet-patterns }
+      - { name: e2e-testing, type: skill, upstreamPath: skills/e2e-testing }
+      - { name: react-testing, type: skill, upstreamPath: skills/react-testing }
   - id: stripe-ai
     repo: https://github.com/stripe/ai
     slug: stripe
     license: MIT
     licenseConfidence: medium
-    snapshotRef: 7e7f72eb42e06f79e7bc75f86e9395f4c8232c00
-    retrieved: 2026-06-17
+    snapshotRef: d9527bfc2d0993f3d2a650501e53e4f68d179ca3
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
       - { name: stripe-best-practices, type: skill, upstreamPath: skills/stripe-best-practices }
-      - { name: upgrade-stripe, type: skill, upstreamPath: skills/upgrade-stripe }
-      - { name: stripe-projects, type: skill, upstreamPath: skills/stripe-projects }
   - id: supabase-agent-skills
     repo: https://github.com/supabase/agent-skills
     slug: supabase
@@ -84,8 +87,8 @@ sources:
     slug: sanity
     license: MIT
     licenseConfidence: medium
-    snapshotRef: 2d7b7c08a31a6e5b613e33a9edc76456e4d7c052
-    retrieved: 2026-06-17
+    snapshotRef: 2ec17ddc6034073b2974e6dbf691acb3bcc8b9fd
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
@@ -99,8 +102,8 @@ sources:
     slug: sickn33
     license: MIT
     licenseConfidence: medium
-    snapshotRef: 6042393e48713b48952566cf2d4e3e28d4e50159
-    retrieved: 2026-06-17
+    snapshotRef: e09cf1f9f0407961c6697fd4174c47fba76f1996
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
@@ -130,8 +133,8 @@ sources:
     slug: sentry
     license: MIT
     licenseConfidence: high
-    snapshotRef: 34da65c94c93aed40a20ae85d9e1d1935591ad39
-    retrieved: 2026-06-17
+    snapshotRef: 9ab3551758913a4144517d4fafb71476a48c64f8
+    retrieved: 2026-06-22
     useMode: copy
     mode: select
     items:
