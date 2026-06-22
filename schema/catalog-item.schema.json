@@ -152,6 +152,15 @@
       "type": "string",
       "description": "Ecosystem family for cross-item conflict detection (e.g. nextjs, laravel, vendure, dotnet, nx, turbo). Required for all non-default items."
     },
+    "optInTier": {
+      "type": "string",
+      "enum": ["workflow", "ops", "review", "design"],
+      "description": "Coarse opt-in category for surfacing role-gated (non-default) items in conversational setup UX. Items that only install via a role gate carry this so the CLI can group them. Set together with optInGroup."
+    },
+    "optInGroup": {
+      "type": "string",
+      "description": "Human-readable group label shown when offering this item as an opt-in (e.g. 'Code review workflow', 'Redis security & observability'). Items toggled together share a group. Set together with optInTier."
+    },
     "reviewStatus": {
       "type": "string",
       "enum": ["approved", "candidate", "needs-review", "rejected", "deprecated"],

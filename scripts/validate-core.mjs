@@ -100,6 +100,51 @@ function auditCuratedRequiresAny(items) {
   return failures
 }
 
+const OPT_IN_TIERS = new Set(['workflow', 'ops', 'review', 'design'])
+
+/**
+ * Opt-in metadata contract (P5-0). Role-gated non-default items surface in the
+ * conversational setup UX grouped by optInGroup, so the pair must be present,
+ * consistent, and never on a baseline (default:true) item.
+ */
+function auditOptInMetadata(items) {
+  const failures = []
+  for (const item of items) {
+    const hasTier = item.optInTier !== undefined
+    const hasGroup = item.optInGroup !== undefined
+
+    if (hasTier !== hasGroup) {
+      failures.push(`${item.id}: optInTier and optInGroup must be set together`)
+    }
+    if (hasTier) {
+      if (!OPT_IN_TIERS.has(item.optInTier)) {
+        failures.push(
+          `${item.id}: invalid optInTier "${item.optInTier}" (expected one of ${[...OPT_IN_TIERS].join(', ')})`,
+        )
+      }
+      if (typeof item.optInGroup !== 'string' || item.optInGroup.length === 0) {
+        failures.push(`${item.id}: optInGroup must be a non-empty string`)
+      }
+      if (item.default === true) {
+        failures.push(`${item.id}: opt-in items (optInTier set) must not be default:true`)
+      }
+      if (typeof item.purpose !== 'string' || item.purpose.length === 0) {
+        failures.push(`${item.id}: opt-in items (optInTier set) must have a non-empty purpose`)
+      }
+    }
+
+    // Completeness: an item reachable only via a role gate (no stack/dependency
+    // auto-install path) and not in the baseline IS opt-in tier — it must carry
+    // optInTier/optInGroup so the setup UX can offer it.
+    const requiresAny = Array.isArray(item.requiresAny) ? item.requiresAny : []
+    const roleOnly = requiresAny.length > 0 && requiresAny.every((clause) => clause && clause.role)
+    if (item.default !== true && roleOnly && !hasTier) {
+      failures.push(`${item.id}: role-gated opt-in item missing optInTier/optInGroup`)
+    }
+  }
+  return failures
+}
+
 function auditManifestStructure(manifestVersion, items) {
   const failures = []
   const seenIds = new Map()
@@ -348,6 +393,7 @@ export function validateCatalog(root, manifest) {
   failures.push(
     ...auditManifestStructure(data.version, items),
     ...auditCuratedRequiresAny(items),
+    ...auditOptInMetadata(items),
     ...auditForbiddenStacks(items),
     ...auditShippedFiles(root, items),
     ...auditMarkdownContent(root, items),
