@@ -8,8 +8,9 @@ name: Upstream catalog sync
 
 on:
   schedule:
-    # Mondays at 06:00 UTC.
-    - cron: '0 6 * * 1'
+    # Sundays at 06:00.
+    - cron: '0 6 * * 0'
+      timezone: Europe/Stockholm
   workflow_dispatch:
 
 concurrency:
