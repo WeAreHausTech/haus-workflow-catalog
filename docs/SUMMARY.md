@@ -34,7 +34,9 @@ Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templat
 | [adr/README.md](adr/README.md)                                                                           | ADR index                                       |
 | [adr/0001-curated-verbatim-skill-import.md](adr/0001-curated-verbatim-skill-import.md)                   | Curated items copied verbatim; validation split |
 | [adr/0002-multi-source-upstream-sync-select-mode.md](adr/0002-multi-source-upstream-sync-select-mode.md) | Multi-source upstream sync design               |
-| [adr/0003-npx-tsx-exemption-for-agents.md](adr/0003-npx-tsx-exemption-for-agents.md)                     | npx tsx exemption for agent items               |
+| [adr/0003-npx-tsx-exemption-for-agents.md](adr/0003-npx-tsx-exemption-for-agents.md)                     | npx tsx exemption by agent type (superseded)    |
+| [adr/0004-remove-catalog-item-type-rule.md](adr/0004-remove-catalog-item-type-rule.md)                   | Remove unused `rule` catalog item type          |
+| [adr/0005-npx-tsx-exemption-for-curated-skills.md](adr/0005-npx-tsx-exemption-for-curated-skills.md)     | npx tsx exemption for curated content (current) |
 
 ## Runbook
 
