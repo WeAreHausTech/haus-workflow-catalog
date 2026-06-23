@@ -9,6 +9,32 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [3.0.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.13.1...v3.0.0) (2026-06-23)
+
+### ⚠ BREAKING CHANGES
+
+- **catalog:** consumers with haus.typescript5-patterns or
+  haus.nx21-monorepo-patterns in haus.lock.json must re-run
+  `haus update --apply` to pick up the new ids.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+
+- fix(catalog): bump versions for edited skill items
+
+turbo-monorepo-patterns scope.md changed (cross-ref to renamed nx skill) but
+its version was not bumped, failing the check-item-versions CI gate. Also bump
+the two renamed skills whose shipped content changed.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+
+- remove manual catalog version bump
+
+- remove manual version bump
+
+### Added
+
+- **catalog:** generalize version-pinned skill ids, drop agent-tools docs ([#35](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/35)) ([ecb7968](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/ecb79682309c24c75b6f40acc8f3835aa760d0bf))
+
 ## [2.13.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.13.0...v2.13.1) (2026-06-23)
 
 ### Changed
