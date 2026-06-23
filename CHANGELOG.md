@@ -9,6 +9,13 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [2.13.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.13.0...v2.13.1) (2026-06-23)
+
+### Changed
+
+- **catalog:** sync upstream sources ([#34](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/34)) ([0874d52](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/0874d52d09f631eb76890d2eb1d68d1eb89aa730))
+- update upstream sync workflow documentation ([a1c3848](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/a1c38484c160ae2145721bac14c9b30a3ffd1cb3))
+
 ## [2.13.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.12.2...v2.13.0) (2026-06-22)
 
 ### Added
