@@ -25,7 +25,7 @@ jobs:
     steps:
       # persist-credentials: false — required so create-pull-request pushes with
       # github.token, not the workflow_dispatch actor's cached credentials.
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
