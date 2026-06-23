@@ -1,8 +1,6 @@
 name: Upstream catalog sync
 
-# Weekly sync of curated items from every source in sources.yaml:
-#   - superpowers-pcvelz (mode: mirror) — skills + commands
-#   - ecc-affaanm, omcc-yeachanheo (mode: select) — curated agents
+# Weekly sync of upstream catalog items from every source in sources.yaml:
 # scripts/sync-upstream.mjs clones each upstream HEAD, diffs the local catalog against
 # that snapshot, and on --apply re-copies drifted files + updates sources.yaml.
 
