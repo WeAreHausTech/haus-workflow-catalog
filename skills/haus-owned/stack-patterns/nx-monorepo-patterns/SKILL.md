@@ -1,9 +1,9 @@
 ---
-name: nx21-monorepo-patterns
-description: Nx 21 monorepo router. Use for project graph, targets, generators, and workspace orchestration changes.
+name: nx-monorepo-patterns
+description: Nx monorepo router. Use for project graph, targets, generators, and workspace orchestration changes.
 ---
 
-# Nx21 Monorepo Patterns
+# Nx Monorepo Patterns
 
 ## Use when
 
