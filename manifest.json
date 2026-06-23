@@ -1333,7 +1333,7 @@
     },
     {
       "id": "haus.nx-monorepo-patterns",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/nx-monorepo-patterns",
@@ -2498,7 +2498,7 @@
     },
     {
       "id": "haus.turbo-monorepo-patterns",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/turbo-monorepo-patterns",
@@ -2526,7 +2526,7 @@
     },
     {
       "id": "haus.typescript-patterns",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": "haus",
       "type": "skill",
       "path": "skills/haus-owned/stack-patterns/typescript-patterns",
