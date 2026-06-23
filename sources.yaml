@@ -55,8 +55,8 @@ sources:
     slug: stripe
     license: MIT
     licenseConfidence: medium
-    snapshotRef: d9527bfc2d0993f3d2a650501e53e4f68d179ca3
-    retrieved: 2026-06-22
+    snapshotRef: 2cf8986d67dbb0eb0d92f16ac7d8c99841000806
+    retrieved: 2026-06-23
     useMode: copy
     mode: select
     items:
@@ -140,8 +140,8 @@ sources:
     slug: sentry
     license: MIT
     licenseConfidence: high
-    snapshotRef: 9ab3551758913a4144517d4fafb71476a48c64f8
-    retrieved: 2026-06-22
+    snapshotRef: bd84576db74e3e1d13361c7eda3bb303ae017b90
+    retrieved: 2026-06-23
     useMode: copy
     mode: select
     items:
@@ -170,8 +170,8 @@ sources:
     slug: oh-my-claudecode
     license: MIT
     licenseConfidence: high
-    snapshotRef: 50f6ff05eb5d9ebed66f05d8c4580c0b119f37af
-    retrieved: 2026-06-15
+    snapshotRef: 542b7a4cf56fb1618d3b397603cca93bfdaa1df5
+    retrieved: 2026-06-23
     useMode: copy
     mode: select
     items:
