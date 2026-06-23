@@ -14,7 +14,7 @@
 - Turborepo: task graph, remote caching, `--filter`, `--affected` (Turbo 2+)
 - Pipeline: `build`, `test`, `lint`, `dev`, `typecheck` task coordination
 - Not in scope: app feature logic inside one package with no pipeline impact
-- Not in scope: Nx target config (use nx21-monorepo-patterns)
+- Not in scope: Nx target config (use nx-monorepo-patterns)
 
 ## Triggers
 
