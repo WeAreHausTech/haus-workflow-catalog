@@ -47,7 +47,7 @@ Both repos must land in order:
 3. **Fixture sync** — catalog merge dispatches sync; CLI fixture already identical → no-op PR.
    `contract-drift` on CLI main green.
 
-See also `haus-workflow/docs/adr/0001-validation-rules-single-source.md` (cross-reference).
+See also `haus-workflow/docs/decisions/0001-validation-rules-single-source.md` (cross-reference).
 
 ## Validation rules: authoring vs safety
 
