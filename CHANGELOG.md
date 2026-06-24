@@ -9,6 +9,12 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [3.2.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v3.1.0...v3.2.0) (2026-06-24)
+
+### Added
+
+- **skills:** add Reference Documentation section to llms.txt-referenced skills ([#39](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/39)) ([5478798](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/547879850b487046476f58eef45819bd5aaa102b))
+
 ## [3.1.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v3.0.0...v3.1.0) (2026-06-24)
 
 ### Added
