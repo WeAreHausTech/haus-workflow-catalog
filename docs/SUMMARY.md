@@ -30,14 +30,17 @@ Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templat
 
 ## Decision log
 
-| File                                                                                                     | Description                                     |
-| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [adr/README.md](adr/README.md)                                                                           | ADR index                                       |
-| [adr/0001-curated-verbatim-skill-import.md](adr/0001-curated-verbatim-skill-import.md)                   | Curated items copied verbatim; validation split |
-| [adr/0002-multi-source-upstream-sync-select-mode.md](adr/0002-multi-source-upstream-sync-select-mode.md) | Multi-source upstream sync design               |
-| [adr/0003-npx-tsx-exemption-for-agents.md](adr/0003-npx-tsx-exemption-for-agents.md)                     | npx tsx exemption by agent type (superseded)    |
-| [adr/0004-remove-catalog-item-type-rule.md](adr/0004-remove-catalog-item-type-rule.md)                   | Remove unused `rule` catalog item type          |
-| [adr/0005-npx-tsx-exemption-for-curated-skills.md](adr/0005-npx-tsx-exemption-for-curated-skills.md)     | npx tsx exemption for curated content (current) |
+| File                                                                                                                 | Description                                     |
+| -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| [decisions/README.md](decisions/README.md)                                                                           | ADR index                                       |
+| [decisions/0001-curated-verbatim-skill-import.md](decisions/0001-curated-verbatim-skill-import.md)                   | Curated items copied verbatim; validation split |
+| [decisions/0002-multi-source-upstream-sync-select-mode.md](decisions/0002-multi-source-upstream-sync-select-mode.md) | Multi-source upstream sync design               |
+| [decisions/0003-npx-tsx-exemption-for-agents.md](decisions/0003-npx-tsx-exemption-for-agents.md)                     | npx tsx exemption by agent type (superseded)    |
+| [decisions/0004-remove-catalog-item-type-rule.md](decisions/0004-remove-catalog-item-type-rule.md)                   | Remove unused `rule` catalog item type          |
+| [decisions/0005-npx-tsx-exemption-for-curated-skills.md](decisions/0005-npx-tsx-exemption-for-curated-skills.md)     | npx tsx exemption for curated content (current) |
+| [decisions/0006-requiresany-gate-audit.md](decisions/0006-requiresany-gate-audit.md)                                 | requiresAny gate audit convention               |
+| [decisions/0007-baseline-skill-tiering.md](decisions/0007-baseline-skill-tiering.md)                                 | Baseline skill/agent tiering                    |
+| [decisions/0008-adr-enforcement-model.md](decisions/0008-adr-enforcement-model.md)                                   | ADR enforcement model (haus product)            |
 
 ## Security
 

@@ -1,6 +1,8 @@
-# Paste into `.github/workflows/ci.yml` after installing `@haus-tech/haus-workflow` in CI.
+# Paste under `jobs:` in `.github/workflows/ci.yml` (sibling to `build:` / `test:`).
+# Prerequisite: `haus` on PATH — e.g. `npm install -g @haus-tech/haus-workflow@latest`.
 #
-# Optional lefthook pre-commit (merge into lefthook.yml):
+# Optional lefthook pre-commit — merge under `pre-commit.commands` in lefthook.yml:
+#
 #   decisions-check:
 #     run: haus decisions check --staged
 #     fail_text: 'Staged change needs an ADR. Run `haus decisions suggest`.'
@@ -18,6 +20,10 @@ decisions-gate:
     - name: Install haus CLI
       run: npm install -g @haus-tech/haus-workflow@latest
     - name: Require ADR for decision-worthy changes
-      run: haus decisions check --range origin/${{ github.base_ref }}..HEAD
       env:
         PR_BODY: ${{ github.event.pull_request.body }}
+        BASE_REF: ${{ github.event.pull_request.base.ref }}
+      run: |
+        set -euo pipefail
+        git fetch --no-tags origin "$BASE_REF"
+        haus decisions check --range "origin/$BASE_REF..HEAD"
