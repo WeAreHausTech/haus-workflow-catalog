@@ -38,3 +38,17 @@ description: Nx monorepo router. Use for project graph, targets, generators, and
 
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.nx-monorepo-patterns
+```
+
+Then read `.haus-workflow/llms-cache/nx-dev-llms-txt.md` for current API reference.
+
+Source: https://nx.dev/llms.txt

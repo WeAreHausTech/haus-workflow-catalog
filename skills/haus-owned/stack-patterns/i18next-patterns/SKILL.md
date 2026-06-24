@@ -46,3 +46,17 @@ description: i18next router. Use for translation namespace structure, key conven
 - references/conventions.md
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.i18next-patterns
+```
+
+Then read `.haus-workflow/llms-cache/www-i18next-com-llms-txt.md` for current API reference.
+
+Source: https://www.i18next.com/llms.txt

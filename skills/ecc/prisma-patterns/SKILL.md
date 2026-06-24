@@ -370,3 +370,17 @@ await prisma.post.deleteMany({ where: { authorId: userId } });
 - `postgres-patterns` — PostgreSQL-level indexing and connection tuning
 - `database-migrations` — multi-step migration planning for production
 - `backend-patterns` — general API and service layer design
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.ecc-prisma-patterns
+```
+
+Then read `.haus-workflow/llms-cache/www-prisma-io-llms-txt.md` for current API reference.
+
+Source: https://www.prisma.io/llms.txt

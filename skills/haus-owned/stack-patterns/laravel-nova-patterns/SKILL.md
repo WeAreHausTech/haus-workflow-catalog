@@ -38,3 +38,17 @@ description: Laravel Nova router. Use for admin resources, actions, fields, filt
 
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.laravel-nova-patterns
+```
+
+Then read `.haus-workflow/llms-cache/nova-laravel-com-docs-llms-txt.md` for current API reference.
+
+Source: https://nova.laravel.com/docs/llms.txt

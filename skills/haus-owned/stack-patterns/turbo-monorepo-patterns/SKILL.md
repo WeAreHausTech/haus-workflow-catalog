@@ -38,3 +38,17 @@ description: Turbo monorepo router. Use for pipeline graph, package tasks, and c
 
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.turbo-monorepo-patterns
+```
+
+Then read `.haus-workflow/llms-cache/turbo-build-docs-llms-txt.md` for current API reference.
+
+Source: https://turbo.build/docs/llms.txt

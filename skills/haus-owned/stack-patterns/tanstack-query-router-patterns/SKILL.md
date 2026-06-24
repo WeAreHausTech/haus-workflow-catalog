@@ -38,3 +38,17 @@ description: TanStack Query/Router router. Use for query keys, loaders, route st
 
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.tanstack-query-router-patterns
+```
+
+Then read `.haus-workflow/llms-cache/tanstack-com-llms-txt.md` for current API reference.
+
+Source: https://tanstack.com/llms.txt

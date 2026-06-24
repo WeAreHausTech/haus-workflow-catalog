@@ -38,3 +38,17 @@ description: Storybook router. Use for component stories, controls, docs stories
 
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.storybook-patterns
+```
+
+Then read `.haus-workflow/llms-cache/storybook-js-org-llms-txt.md` for current API reference.
+
+Source: https://storybook.js.org/llms.txt

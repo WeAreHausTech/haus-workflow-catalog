@@ -30,3 +30,17 @@ Start with the reference that matches the modeling decision in front of you, ins
 - `references/reference-vs-embedding.md` — When to use references vs embedded objects
 - `references/content-reuse.md` — Content reuse patterns and the reuse spectrum
 - `references/taxonomy-classification.md` — Flat, hierarchical, and faceted classification
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.sanity-content-modeling-best-practices
+```
+
+Then read `.haus-workflow/llms-cache/docs-sanity-io-llms-txt.md` for current API reference.
+
+Source: https://docs.sanity.io/llms.txt

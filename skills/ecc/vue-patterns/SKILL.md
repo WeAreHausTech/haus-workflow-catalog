@@ -469,3 +469,17 @@ const AsyncComp = defineAsyncComponent({
 - `frontend-patterns` — Cross-framework frontend architecture
 - `typescript` — TypeScript best practices applied to Vue projects
 - `coding-standards` — General code quality standards
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.ecc-vue-patterns
+```
+
+Then read `.haus-workflow/llms-cache/vuejs-org-llms-txt.md` for current API reference.
+
+Source: https://vuejs.org/llms.txt
