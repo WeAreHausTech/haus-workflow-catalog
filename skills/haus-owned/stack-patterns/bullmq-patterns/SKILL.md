@@ -47,3 +47,17 @@ description: BullMQ router. Use for queue definitions, workers, schedulers, repe
 - references/conventions.md
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.bullmq-patterns
+```
+
+Then read `.haus-workflow/llms-cache/docs-bullmq-io-llms-txt.md` for current API reference.
+
+Source: https://docs.bullmq.io/llms.txt

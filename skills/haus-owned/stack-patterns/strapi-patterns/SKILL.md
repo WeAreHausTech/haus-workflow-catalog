@@ -47,3 +47,17 @@ description: Strapi v5 router. Use for content type schemas, controllers, servic
 - references/conventions.md
 - references/scope.md
 - references/workflow.md
+
+## Reference Documentation
+
+Up-to-date API docs are cached locally by haus.
+
+To refresh (uses etag — fast if unchanged):
+
+```bash
+haus fetch-refs --id haus.strapi-patterns
+```
+
+Then read `.haus-workflow/llms-cache/docs-strapi-io-llms-txt.md` for current API reference.
+
+Source: https://docs.strapi.io/llms.txt
