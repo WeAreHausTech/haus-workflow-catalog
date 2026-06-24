@@ -9,6 +9,16 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [3.1.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v3.0.0...v3.1.0) (2026-06-24)
+
+### Added
+
+- **decisions:** ship ADR templates, skill, triggers, and docs/decisions path ([#38](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/38)) ([b164659](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/b164659f69454cf984d95839931bd362781f9bfb))
+
+### Changed
+
+- add dependabot configuration for GitHub Actions and npm updates ([33ee8f2](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/33ee8f2fb34b3343200d169a10d2c2981acdbd6a))
+
 ## [3.0.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v2.13.1...v3.0.0) (2026-06-23)
 
 ### ⚠ BREAKING CHANGES
