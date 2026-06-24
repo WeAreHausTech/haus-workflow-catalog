@@ -10,7 +10,7 @@ Content catalog for `@haus-tech/haus-workflow`. Provides skills, agents, templat
   - **Make a code change / add an item** → Development workflow
   - **Release / deploy** → Deployment
   - **Security / content policy** → [security.md](security.md)
-  - **Understand a past decision** → ADRs in `docs/adr/`
+  - **Understand a past decision** → ADRs in `docs/decisions/`
   - **Fix a recurring failure** → `docs/runbook.md`
 - Prefer path references over duplicating source; read code for implementation detail.
 - If docs conflict with code or user intent, ask before making broad changes.
