@@ -14,8 +14,8 @@ sources:
     slug: ecc
     license: MIT
     licenseConfidence: high
-    snapshotRef: 71d22d0a77b7e0684f4e51cba03749b788993cdb
-    retrieved: 2026-06-22
+    snapshotRef: 2bc924faf2f8e893bfe0af86b1931283693c30ae
+    retrieved: 2026-06-28
     useMode: copy
     mode: select
     items:
@@ -55,8 +55,8 @@ sources:
     slug: stripe
     license: MIT
     licenseConfidence: medium
-    snapshotRef: 2cf8986d67dbb0eb0d92f16ac7d8c99841000806
-    retrieved: 2026-06-23
+    snapshotRef: f54c9e6c0e8b6cfe4e648745eec68ecab3ddc994
+    retrieved: 2026-06-28
     useMode: copy
     mode: select
     items:
@@ -82,8 +82,8 @@ sources:
     slug: redis
     license: MIT
     licenseConfidence: medium
-    snapshotRef: 5ca2e1a2d82a768221e8f71a02e3ca095a37d38e
-    retrieved: 2026-06-17
+    snapshotRef: 3d6f25505ea2adff4dd62d5a0e7f4a5b076fa047
+    retrieved: 2026-06-28
     useMode: copy
     mode: select
     items:
@@ -110,8 +110,8 @@ sources:
     slug: wshobson
     license: MIT
     licenseConfidence: medium
-    snapshotRef: cc37bfdd292ce520ba1c44df7a3a70d5f8137236
-    retrieved: 2026-06-22
+    snapshotRef: 5cc2549a50fc672230efd0a0307e2fd27ffba792
+    retrieved: 2026-06-28
     useMode: copy
     mode: select
     items:
@@ -140,8 +140,8 @@ sources:
     slug: sentry
     license: MIT
     licenseConfidence: high
-    snapshotRef: bd84576db74e3e1d13361c7eda3bb303ae017b90
-    retrieved: 2026-06-23
+    snapshotRef: cc302403ebf647fd21c3ca736e1ec7ef6e4ed5a3
+    retrieved: 2026-06-28
     useMode: copy
     mode: select
     items:
@@ -170,8 +170,8 @@ sources:
     slug: oh-my-claudecode
     license: MIT
     licenseConfidence: high
-    snapshotRef: 542b7a4cf56fb1618d3b397603cca93bfdaa1df5
-    retrieved: 2026-06-23
+    snapshotRef: 6c59219cced3ddd857334d2a7fb78099f2d67e71
+    retrieved: 2026-06-28
     useMode: copy
     mode: select
     items:
