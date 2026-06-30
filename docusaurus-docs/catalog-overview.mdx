@@ -1,0 +1,44 @@
+---
+sidebar_position: 1
+title: Catalog overview
+description: What the haus-workflow-catalog contains and how it is structured.
+---
+
+# Catalog overview
+
+The **haus-workflow-catalog** is the source of truth for all context assets distributed by the [`haus-workflow`](/docs/agent-harness/haus-workflow/README) CLI.
+
+## Contents
+
+**94 catalog items:**
+
+| Type      | Count | Notes                                                                |
+| --------- | ----- | -------------------------------------------------------------------- |
+| Skills    | 73    | 21 first-party (`haus`) + 52 curated                                 |
+| Agents    | 15    | Curated: ECC + oh-my-claudecode                                      |
+| Templates | 4     | First-party (`haus`): agentic workflow standard, CLAUDE.md scaffolds |
+| Configs   | 2     | First-party (`haus`): security rules, settings merges                |
+
+## Structure
+
+```
+manifest.json          — catalog item registry (source of truth)
+validation-rules.json  — canonical validation rules
+sources.yaml           — curated upstream snapshots
+skills/
+  haus-owned/          — first-party Haus skills
+  superpowers/         — verbatim curated skills (pcvelz/superpowers)
+agents/
+  ecc/                 — ECC agents (affaan-m/ECC)
+  oh-my-claudecode/    — oh-my-claudecode agents
+templates/             — managed file templates
+```
+
+## Item sources
+
+| Source label | Count | Origin                                                  |
+| ------------ | ----- | ------------------------------------------------------- |
+| `haus`       | 27    | First-party: 21 skills + 4 templates + 2 configs        |
+| `curated`    | 67    | Verbatim upstream: superpowers + ECC + oh-my-claudecode |
+
+Curated items are imported verbatim from upstream repos. Provenance tracked in `sources.yaml`.
