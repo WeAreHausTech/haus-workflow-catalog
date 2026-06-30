@@ -204,9 +204,13 @@ function auditManifestStructure(manifestVersion, items) {
       }
 
       const isHaus = item.source === 'haus'
-      const isCuratedApproved = item.source === 'curated' && item.reviewStatus === 'approved'
+      const isCuratedApproved =
+        item.source === 'curated' &&
+        (item.reviewStatus === 'approved' || item.reviewStatus === 'deprecated')
       if (!isHaus && !isCuratedApproved) {
-        failures.push(`${item.id}: source must be "haus" or curated with reviewStatus "approved"`)
+        failures.push(
+          `${item.id}: source must be "haus" or curated with reviewStatus "approved" or "deprecated"`,
+        )
       }
     }
 
