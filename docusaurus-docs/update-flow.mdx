@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+title: Update flow
+description: How haus update fetches, caches, and re-applies catalog items.
+---
+
+# Update flow
+
+`haus update` keeps your project's `.claude/` in sync with the latest catalog.
+
+```mermaid
+sequenceDiagram
+  participant dev as Developer
+  participant cli as haus CLI
+  participant catalog as haus-workflow-catalog (GitHub)
+  participant cache as ~/.haus-workflow/cache/
+  participant project as .claude/ (project)
+
+  dev->>cli: haus update
+  cli->>catalog: fetch manifest.json
+  catalog-->>cli: latest manifest
+  cli->>catalog: fetch changed items (by hash)
+  catalog-->>cache: skill/agent/template files
+  cli->>project: re-apply from recommendation.json
+  cli-->>dev: summary of changes
+```
+
+## Lock file integrity
+
+Each applied item is recorded in `.haus-workflow/haus.lock.json` with a content hash. On re-apply:
+
+- **Hash matches lock** → item is overwritable; update proceeds
+- **Hash differs from lock** → item was user-edited; update skips and warns
+
+This means you can safely edit catalog-installed files locally — haus will not silently overwrite your changes.
+
+## Offline fallback
+
+`haus-workflow` ships a bundled fallback `manifest.json` (at the npm package version). If the catalog fetch fails, haus falls back to the bundled manifest and warns. Items that are missing from the local cache are skipped.
