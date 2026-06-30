@@ -9,6 +9,16 @@ Per-item skill/agent versions are tracked in `manifest.json`, not here.
 
 ---
 
+## [3.2.1](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v3.2.0...v3.2.1) (2026-06-30)
+
+### Fixed
+
+- **security:** audit hardening — validator, release CI, doc fixes ([#42](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/42)) ([911f17a](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/911f17a07996704be0c5c203f3d9ca75d5d609a9))
+
+### Changed
+
+- **catalog:** sync upstream sources ([#40](https://github.com/WeAreHausTech/haus-workflow-catalog/issues/40)) ([b856b02](https://github.com/WeAreHausTech/haus-workflow-catalog/commit/b856b02e240a284d3c7f98347c8ed1cc4cbcf01f))
+
 ## [3.2.0](https://github.com/WeAreHausTech/haus-workflow-catalog/compare/v3.1.0...v3.2.0) (2026-06-24)
 
 ### Added
