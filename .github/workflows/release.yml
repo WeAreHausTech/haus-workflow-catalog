@@ -33,11 +33,11 @@ jobs:
         run: |
           BASE="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
           ARCHIVE="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
-          curl -sSfL "${BASE}/${ARCHIVE}" -o /tmp/gitleaks.tar.gz
+          curl -sSfL "${BASE}/${ARCHIVE}" -o "/tmp/${ARCHIVE}"
           curl -sSfL "${BASE}/gitleaks_${GITLEAKS_VERSION}_checksums.txt" -o /tmp/gitleaks_checksums.txt
-          grep "${ARCHIVE}" /tmp/gitleaks_checksums.txt | sha256sum --check
-          tar -xz -C /usr/local/bin gitleaks < /tmp/gitleaks.tar.gz
-          rm /tmp/gitleaks.tar.gz /tmp/gitleaks_checksums.txt
+          cd /tmp && grep "${ARCHIVE}" gitleaks_checksums.txt | sha256sum --check && cd -
+          tar -xz -C /usr/local/bin gitleaks < "/tmp/${ARCHIVE}"
+          rm "/tmp/${ARCHIVE}" /tmp/gitleaks_checksums.txt
           gitleaks version
 
       - name: Detect secrets
