@@ -110,7 +110,7 @@ test('rejects non-default curated item without requiresAny', () => {
         type: 'agent',
         source: 'curated',
         version: '1.0.0',
-        path: 'agents/ecc/example.md',
+        path: 'agents/ecc/a11y-architect.md',
         title: 'Example',
         tags: ['agent'],
         repoRoles: [],
@@ -146,4 +146,34 @@ test('rejects a config item not under configs/', () => {
 test('rejects a config item with non-zero tokenEstimate', () => {
   const failures = configFailures(configManifest({ tokenEstimate: 42 }))
   assert.ok(failures.some((f) => f.includes('tokenEstimate: 0')))
+})
+
+test('accepts a curated item with reviewStatus deprecated', () => {
+  const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
+  const result = validateCatalog(root, {
+    version: '1.0.0',
+    items: [
+      {
+        id: 'haus.ecc-deprecated-example',
+        type: 'agent',
+        source: 'curated',
+        version: '1.0.0',
+        path: 'agents/ecc/a11y-architect.md',
+        title: 'Deprecated Example',
+        tags: ['agent'],
+        repoRoles: [],
+        tokenEstimate: 100,
+        reviewStatus: 'deprecated',
+        riskLevel: 'low',
+        useMode: 'copy',
+        license: 'MIT',
+        licenseConfidence: 'high',
+        originSourceId: 'ecc-affaanm',
+        originUrl: 'https://github.com/example/repo/blob/sha/agents/example.md',
+        requiresAny: [{ stack: 'typescript' }],
+      },
+    ],
+  })
+  const itemFailures = result.failures.filter((f) => f.includes('haus.ecc-deprecated-example'))
+  assert.deepEqual(itemFailures, [])
 })

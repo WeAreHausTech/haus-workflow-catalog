@@ -69,3 +69,24 @@ After apply: `sources.yaml` `snapshotRef` → upstream HEAD, `retrieved` → tod
 
 Pushes to `main` that touch `manifest.json` or `validation-rules.json` dispatch
 `sync-catalog-fixture` in `haus-workflow`. See ADR-0001 for landing order with CLI releases.
+
+## Curated sync PR review checklist
+
+Curated sync PRs (opened by the `upstream-sync` workflow, branch
+`chore/upstream-superpowers-sync`, or any manually-triggered `--apply` run) bypass
+the automated npx guard. The exemption is declared in `validation-rules.json`
+as `npxTsxOnlyExemptSources: ["curated"]` (loaded via `scripts/validation-rules.mjs`),
+which skips the repo-wide npx allowlist check for curated content.
+
+**Consequence:** a new `npx <dangerous-command>` invocation can enter the catalog
+through a curated sync without triggering any CI failure.
+
+**Reviewer MUST do manually on every curated sync PR:**
+
+1. Open the PR diff and search (`Ctrl+F` / GitHub search box) for `npx` in added lines.
+2. Confirm every new `npx` call matches the only approved pattern: `npx tsx`.
+3. If any other `npx <anything>` appears in added content, block the merge, remove
+   the offending file from the sync, and open a tracking issue against the upstream source.
+
+This check cannot be automated away without removing the exemption, so it is a
+required manual step for every curated sync review.

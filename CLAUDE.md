@@ -40,7 +40,6 @@ skills/
   superpowers/         — verbatim curated skills (do not hand-edit)
 agents/
   <source-slug>/       — verbatim curated agents, e.g. ecc/, oh-my-claudecode/ (do not hand-edit)
-commands/superpowers/  — verbatim curated slash commands
 templates/             — managed file templates
 configs/               — project-root tooling configs (eslint/, prettier/); type: config, distributed via CLI `haus scaffold` (not `haus apply`)
 scripts/               — validate.mjs, sync-upstream.mjs, validation-rules.mjs

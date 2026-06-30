@@ -6,12 +6,12 @@ Catalog of skills, agents, and templates distributed by [`@haus-tech/haus-workfl
 
 ## Catalog
 
-**79 items**: 60 skills, 11 agents, 2 templates, 6 commands. (Current manifest version lives in `manifest.json`.)
+**94 items**: 73 skills, 15 agents, 4 templates, 2 configs. (Current manifest version lives in `manifest.json`.)
 
-| Source    | Count | Notes                                                                                                                                                                       |
-| --------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `haus`    | 46    | First-party stack skills, templates                                                                                                                                         |
-| `curated` | 33    | Verbatim upstream import: 16 skills + 6 commands (superpowers) + 11 agents (ECC, oh-my-claudecode) under `skills/superpowers/`, `commands/superpowers/`, `agents/<source>/` |
+| Source    | Count | Notes                                                                                                                   |
+| --------- | ----- | ----------------------------------------------------------------------------------------------------------------------- |
+| `haus`    | 27    | First-party stack skills, templates, configs                                                                            |
+| `curated` | 67    | Verbatim upstream import: 52 skills + 15 agents (ECC, oh-my-claudecode) under `skills/superpowers/`, `agents/<source>/` |
 
 See `manifest.json` for the full list. Curated provenance: `sources.yaml` → `superpowers-pcvelz` (mirror), `ecc-affaanm` + `omcc-yeachanheo` (select).
 
@@ -29,8 +29,6 @@ skills/
 agents/
   ecc/                 — verbatim curated agents (affaan-m/ECC)
   oh-my-claudecode/    — verbatim curated agents (yeachan-heo/oh-my-claudecode)
-commands/
-  superpowers/         — verbatim curated slash commands
 templates/             — managed file templates (agentic-workflow-standard.md etc.)
 scripts/               — validation (validate.mjs) + upstream sync (sync-upstream.mjs)
 schema/                — JSON schemas for manifest, catalog items, lock file

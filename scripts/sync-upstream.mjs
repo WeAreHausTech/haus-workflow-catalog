@@ -1,4 +1,21 @@
 #!/usr/bin/env node
+// ---------------------------------------------------------------------------
+// REVIEWER NOTE — curated sync PRs bypass the automated npx guard
+//
+// `npxTsxOnlyExemptSources: ["curated"]` (in validation-rules.json) skips the repo-wide npx allowlist check for
+// content that arrives via a curated sync PR (mode: select / mode: mirror from
+// sources.yaml). This means the automated safety gate does NOT catch a new
+// `npx` invocation that sneaks in through a curated sync.
+//
+// When reviewing ANY curated sync PR:
+//   1. Open the PR diff and search for `npx` in added lines (+).
+//   2. Confirm every new `npx` call matches the approved pattern (`npx tsx`).
+//   3. Flag and block the merge if an unexpected `npx <anything-else>` appears.
+//
+// This check cannot be automated away without removing the exemption, so it
+// MUST be done manually on every curated sync review.
+// ---------------------------------------------------------------------------
+
 /**
  * Sync curated catalog items from upstream sources declared in sources.yaml.
  *
