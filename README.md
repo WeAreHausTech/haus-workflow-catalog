@@ -29,8 +29,6 @@ skills/
 agents/
   ecc/                 — verbatim curated agents (affaan-m/ECC)
   oh-my-claudecode/    — verbatim curated agents (yeachan-heo/oh-my-claudecode)
-commands/
-  superpowers/         — verbatim curated slash commands
 templates/             — managed file templates (agentic-workflow-standard.md etc.)
 scripts/               — validation (validate.mjs) + upstream sync (sync-upstream.mjs)
 schema/                — JSON schemas for manifest, catalog items, lock file
