@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------------------
 // REVIEWER NOTE — curated sync PRs bypass the automated npx guard
 //
-// `npxTsxOnlyExempt: ['curated']` skips the repo-wide npx allowlist check for
+// `npxTsxOnlyExemptSources: ["curated"]` (in validation-rules.json) skips the repo-wide npx allowlist check for
 // content that arrives via a curated sync PR (mode: select / mode: mirror from
 // sources.yaml). This means the automated safety gate does NOT catch a new
 // `npx` invocation that sneaks in through a curated sync.

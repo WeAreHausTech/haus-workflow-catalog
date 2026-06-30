@@ -74,9 +74,9 @@ Pushes to `main` that touch `manifest.json` or `validation-rules.json` dispatch
 
 Curated sync PRs (opened by the `upstream-sync` workflow, branch
 `chore/upstream-superpowers-sync`, or any manually-triggered `--apply` run) bypass
-the automated npx guard. The exemption is declared in `scripts/forbidden-content.mjs`
-as `npxTsxOnlyExempt: ['curated']`, which skips the repo-wide npx allowlist check
-for curated content.
+the automated npx guard. The exemption is declared in `validation-rules.json`
+as `npxTsxOnlyExemptSources: ["curated"]` (loaded via `scripts/validation-rules.mjs`),
+which skips the repo-wide npx allowlist check for curated content.
 
 **Consequence:** a new `npx <dangerous-command>` invocation can enter the catalog
 through a curated sync without triggering any CI failure.

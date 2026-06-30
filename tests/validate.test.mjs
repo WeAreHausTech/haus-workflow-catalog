@@ -110,7 +110,7 @@ test('rejects non-default curated item without requiresAny', () => {
         type: 'agent',
         source: 'curated',
         version: '1.0.0',
-        path: 'agents/ecc/example.md',
+        path: 'agents/ecc/a11y-architect.md',
         title: 'Example',
         tags: ['agent'],
         repoRoles: [],
@@ -158,7 +158,7 @@ test('accepts a curated item with reviewStatus deprecated', () => {
         type: 'agent',
         source: 'curated',
         version: '1.0.0',
-        path: 'agents/ecc/example.md',
+        path: 'agents/ecc/a11y-architect.md',
         title: 'Deprecated Example',
         tags: ['agent'],
         repoRoles: [],
@@ -170,12 +170,10 @@ test('accepts a curated item with reviewStatus deprecated', () => {
         licenseConfidence: 'high',
         originSourceId: 'ecc-affaanm',
         originUrl: 'https://github.com/example/repo/blob/sha/agents/example.md',
-        requiresAny: ['typescript'],
+        requiresAny: [{ stack: 'typescript' }],
       },
     ],
   })
-  const sourceFailures = result.failures.filter(
-    (f) => f.includes('haus.ecc-deprecated-example') && f.includes('source must be'),
-  )
-  assert.deepEqual(sourceFailures, [])
+  const itemFailures = result.failures.filter((f) => f.includes('haus.ecc-deprecated-example'))
+  assert.deepEqual(itemFailures, [])
 })
