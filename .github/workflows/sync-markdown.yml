@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           SRC_DIR="docusaurus-docs"
-          DEST_DIR="../wearehaustech.github.io/docs/agent-harness/haus-workflow-catalog"
+          DEST_DIR="../wearehaustech.github.io/docs/haus-workflow/catalog"
           PROTECTED_BASENAMES="README.mdx"
 
           FULL_SYNC=false
@@ -109,6 +109,6 @@ jobs:
           cd ../wearehaustech.github.io
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add docs/agent-harness/haus-workflow-catalog/
-          git commit -m "docs(agent-harness): sync haus-workflow-catalog docusaurus-docs" || echo "No changes to commit"
+          git add docs/haus-workflow/catalog/
+          git commit -m "docs(haus-workflow-catalog): sync docusaurus-docs" || echo "No changes to commit"
           git push
